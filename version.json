@@ -1,0 +1,5 @@
+{
+ "version": "1.4.0",
+ "released": "2026-10-30",
+ "notes": "Classic enterprise design, Completed status for compliance tasks, user ID + password sign-in with encrypted data, encrypted backups and in-app updates."
+}

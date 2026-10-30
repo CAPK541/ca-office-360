@@ -9,7 +9,7 @@ App address (after step 1): **https://capk541.github.io/ca-office-360/**
 4. Open the repo's **Settings → Pages**. Under *Build and deployment* choose **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
 5. After 1–2 minutes the app opens at the address above.
 
-Updating later: upload the new files the same way (GitHub replaces the old ones). Open apps pick up the new version the next time they are reopened.
+Updating later: upload the new files the same way (GitHub replaces the old ones, keep your own `config.js`). Devices load the new version the next time they open the app online; **Administration → App updates → Check for updates** (or your name at top right → *Check for updates*) fetches it immediately. Updating never changes your data.
 
 ## 2. Install on each device (no Claude account needed)
 - **iPhone / iPad:** open the address in **Safari** → **Share** → **Add to Home Screen** → **Add**.
@@ -39,14 +39,19 @@ Needed only for the Google Drive option. Use the office Google account.
 7. Put the three values into **config.js** in the GitHub repo (pencil icon → edit → *Commit*), or send them to Claude to do it. They are public identifiers, not passwords.
 
 ## 5. Add staff (Google Drive option)
-1. Owner: Administration → **Users & roles** → enter the staff member's Google email and role → **Invite and share**. Google emails them the link.
-2. Staff: install the app → **Google Drive** → sign in → **Open office data shared with me** → tick `CA_Office_360_data.json` (and the `Documents` folder) → *Select*.
+1. Owner: Administration → **Users & security** → enter the staff member's Google email and role → **Invite and share**. Google emails them the link. Then set their **temporary password** in the Users list and tell it to them in person or by phone (never by email).
+2. Staff: install the app → **Google Drive** → sign in → **Open office data shared with me** → tick `CA_Office_360_data.json` (and the `Documents` folder) → *Select* → sign in with their email and temporary password → choose their own password.
 3. Roles decide what each person sees in the app (for example, staff don't see billing). Anyone the Drive file is shared with can also open it in Google Drive, so share only with your team. Remove someone with **Remove access**.
 
-## 6. Security on devices
-- Set a **device PIN** (Administration → Notifications & security). The app locks after inactivity.
-- Passwords, OTPs and recovery codes are never stored — the portal register keeps only *where* each password is kept.
-- Download a **full backup** regularly and keep it in an encrypted location.
+## 6. Sign-in and security
+- **First open after installing or updating:** the administrator must create a user ID and password (*Protect your practice data*). From then on the app asks for a user ID and password every time it opens.
+- A **recovery key** is shown once. Write it on paper or keep it in a password manager — it is the only way back in if every administrator forgets their password. Never store it in the app, email or a spreadsheet.
+- All office data is **encrypted (AES-256)** before it is saved on the device, in the data folder or in Google Drive. Passwords are never stored — only a one-way derived key (PBKDF2, 310,000 rounds).
+- **5 wrong passwords** lock sign-in on that device for 15 minutes. The app **locks after inactivity** (default 15 minutes; Administration → Users & security) and asks for the password again.
+- Each person gets their own sign-in and role: Administration → **Users & security** → *Add a user* (temporary password, changed at first sign-in). Disable or remove people there; every sign-in and change is in the audit trail.
+- **Backups** ask for a password and are encrypted. Keep that password separately — a backup cannot be restored without it.
+- After turning sign-in on: delete older unencrypted versions of the Drive data file (Drive → right-click → *Manage versions*) or older files in the folder's `Backups`.
+- Passwords, OTPs and recovery codes for **government portals** are never stored — the portal register keeps only *where* each password is kept.
 
 ## 7. Assistant
 The free **CA Assistant** answers common questions from your records (receivables, overdue invoices, pending GST/TDS/ROC work, missing documents, workload, weekly priorities, data checks, reminders) and explains common tax terms. It uses built-in rules, not an AI model. Inside claude.ai the same app uses Claude (Ask CA AI) instead.
