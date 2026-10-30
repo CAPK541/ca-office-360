@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>CA Office 360</title>
 <meta name="description" content="Practice management for an Indian Chartered Accountant's office">
-<meta name="theme-color" content="#142142">
+<meta name="theme-color" content="#6d28d9">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,50 +14,52 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Nunito+Sans:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Nunito+Sans:wght@400;600;700;800&display=swap">
 <style>html{color-scheme:light;-webkit-text-size-adjust:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}
-/* Layout: fixed ledger-ink sidebar + scrolling work area; phones get a bottom tab bar and full-screen sheets. */
-/* Layout: classic navy ledger sidebar with colour-coded modules; bright, tinted cards on a warm paper ground; phones get a bottom tab bar and full-screen sheets. */
+/* Layout: vivid indigo→fuchsia gradient sidebar, gradient page banners per module, candy-coloured KPI tiles on a soft lavender ground; phones get a bottom tab bar and full-screen sheets. */
 :root {
-  --bg: #f4f1ea; --surface: #ffffff; --surface-2: #f7f4ee; --surface-3: #ebe5d9; --line: #ddd5c6; --line-2: #ece6db;
-  --ink: #1d2433; --ink-2: #3a4356; --muted: #646d80; --faint: #959cab;
-  --accent: #23479b; --accent-2: #1a3678; --accent-soft: #e3eafb; --accent-ink: #ffffff;
-  --saffron: #c58a12; --saffron-soft: #fbf0d6; --gold: #c9a24a;
-  --nav-bg: #142142; --nav-bg-2: #213465; --nav-ink: #d9e0f2; --nav-muted: #93a1c6; --nav-active: #ffffff;
-  --red: #c0392b; --red-soft: #fbe5e2; --amber: #b46a07; --amber-soft: #fdf0d9; --green: #1e8449; --green-soft: #def4e6;
-  --blue: #2463c9; --blue-soft: #e2ecfb; --violet: #7a3fb8; --violet-soft: #efe5fa; --cyan: #0e7f92; --cyan-soft: #dcf2f6; --slate: #5a6478; --slate-soft: #eceef3;
-  --c1: #23479b; --c2: #e08e0b; --c3: #1e9e6a; --c4: #c2185b; --c5: #7a3fb8; --c6: #0e8fa3; --c7: #d35400; --c8: #5d7c1f;
-  --m-dash: #23479b; --m-cli: #0e8fa3; --m-key: #7a3fb8; --m-inv: #2463c9; --m-rcpt: #1e8449; --m-recv: #d35400; --m-comp: #c0392b; --m-staff: #0e7f92; --m-docs: #c58a12; --m-rep: #5b4bc4; --m-ai: #c2185b; --m-io: #4a6a8a; --m-adm: #5a6478;
-  --shadow: 0 1px 2px rgba(29, 36, 51, .06), 0 6px 18px rgba(29, 36, 51, .07);
-  --shadow-lg: 0 18px 60px rgba(20, 33, 66, .25);
-  --scrim: rgba(14, 22, 44, .5);
-  --f-display: "Merriweather", Georgia, "Times New Roman", serif;
+  --bg: #f5f3ff; --surface: #ffffff; --surface-2: #f8f7fe; --surface-3: #eceafb; --line: #e1ddf5; --line-2: #eeebfa;
+  --ink: #1f1b3d; --ink-2: #3c3766; --muted: #67638c; --faint: #9a96ba;
+  --accent: #6d28d9; --accent-2: #5b21b6; --accent-soft: #efe7ff; --accent-ink: #ffffff; --pink: #db2777;
+  --saffron: #d97706; --saffron-soft: #fff3dc; --gold: #f59e0b;
+  --nav-bg: #3b1fa8; --nav-bg-2: rgba(255,255,255,.16); --nav-g1: #4338ca; --nav-g2: #7c3aed; --nav-g3: #be185d; --nav-ink: #f4f1ff; --nav-muted: #d9d1ff; --nav-active: #ffffff;
+  --red: #dc2626; --red-soft: #ffe6e6; --amber: #c2410c; --amber-soft: #fff0df; --green: #059669; --green-soft: #dcfaee;
+  --blue: #2563eb; --blue-soft: #e3edff; --violet: #7c3aed; --violet-soft: #f0e8ff; --cyan: #0e7490; --cyan-soft: #dbf6fb; --slate: #55607a; --slate-soft: #eef0f6;
+  --c1: #4f46e5; --c2: #ea580c; --c3: #059669; --c4: #db2777; --c5: #7c3aed; --c6: #0e7490; --c7: #b45309; --c8: #2563eb;
+  --m-dash: #6d28d9; --m-cli: #0891b2; --m-key: #8b5cf6; --m-inv: #2563eb; --m-rcpt: #059669; --m-recv: #ea580c; --m-comp: #e11d48; --m-staff: #0d9488; --m-docs: #d97706; --m-rep: #9333ea; --m-ai: #db2777; --m-io: #4f46e5; --m-adm: #0369a1;
+  --blob1: rgba(167, 139, 250, .22); --blob2: rgba(244, 114, 182, .16); --blob3: rgba(56, 189, 248, .14);
+  --shadow: 0 1px 2px rgba(49, 31, 120, .05), 0 8px 24px rgba(79, 52, 190, .08);
+  --shadow-lg: 0 24px 60px rgba(49, 31, 120, .28);
+  --scrim: rgba(24, 16, 64, .45);
+  --f-display: "Nunito", "Segoe UI Rounded", "Segoe UI", system-ui, -apple-system, sans-serif;
   --f-body: "Nunito Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --r: 10px; --r-sm: 7px; --r-lg: 14px;
-  --side: 262px; --top: 62px; --tab: 64px;
+  --r: 12px; --r-sm: 9px; --r-lg: 18px;
+  --side: 264px; --top: 64px; --tab: 66px;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0f1422; --surface: #161d2f; --surface-2: #1c2439; --surface-3: #263049; --line: #2c3753; --line-2: #222b43;
-  --ink: #e8ecf5; --ink-2: #c7cfe0; --muted: #98a2ba; --faint: #6f7a93;
-  --accent: #7ea1f2; --accent-2: #a9c0f7; --accent-soft: #1d2b52; --accent-ink: #0d1529;
-  --saffron: #f0b445; --saffron-soft: #3a2c10; --gold: #e3c06e;
-  --nav-bg: #0b1122; --nav-bg-2: #1a2648; --nav-ink: #cdd6ee; --nav-muted: #8592b6; --nav-active: #ffffff;
-  --red: #f1786b; --red-soft: #3d1c1a; --amber: #f0b445; --amber-soft: #3a2c10; --green: #58c98a; --green-soft: #133022; --blue: #7ea7f5; --blue-soft: #18284d; --violet: #b996ef; --violet-soft: #2a1f45; --cyan: #5bc8db; --cyan-soft: #0f2d36; --slate: #a6b0c4; --slate-soft: #222a3e;
-  --c1: #7ea1f2; --c2: #f0b445; --c3: #58c98a; --c4: #ee7aa6; --c5: #b996ef; --c6: #5bc8db; --c7: #f08a4b; --c8: #a9c96a;
-  --m-dash: #7ea1f2; --m-cli: #5bc8db; --m-key: #b996ef; --m-inv: #7ea7f5; --m-rcpt: #58c98a; --m-recv: #f08a4b; --m-comp: #f1786b; --m-staff: #5bc8db; --m-docs: #f0b445; --m-rep: #a49af0; --m-ai: #ee7aa6; --m-io: #94b0cf; --m-adm: #a6b0c4;
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); --shadow-lg: 0 20px 60px rgba(0,0,0,.55); --scrim: rgba(0,0,0,.6);
+  --bg: #100d24; --surface: #19163a; --surface-2: #1f1b45; --surface-3: #2a2556; --line: #332d63; --line-2: #262150;
+  --ink: #f0eeff; --ink-2: #d2ccf5; --muted: #a49fcf; --faint: #7a75a8;
+  --accent: #a78bfa; --accent-2: #c4b5fd; --accent-soft: #2e2366; --accent-ink: #160f38; --pink: #f472b6;
+  --saffron: #fbbf24; --saffron-soft: #3a2a0c; --gold: #fbbf24;
+  --nav-bg: #1e1452; --nav-bg-2: rgba(255,255,255,.12); --nav-g1: #312e81; --nav-g2: #5b21b6; --nav-g3: #831843; --nav-ink: #ece8ff; --nav-muted: #b9b0ea; --nav-active: #ffffff;
+  --red: #f87171; --red-soft: #3f1520; --amber: #fb923c; --amber-soft: #3b2010; --green: #34d399; --green-soft: #0f3326; --blue: #60a5fa; --blue-soft: #15275a; --violet: #c4b5fd; --violet-soft: #2e2366; --cyan: #22d3ee; --cyan-soft: #0b3340; --slate: #b2bad0; --slate-soft: #262a46;
+  --c1: #5b54e8; --c2: #e0611c; --c3: #0b9a6d; --c4: #d63384; --c5: #8048e8; --c6: #13809c; --c7: #c26a12; --c8: #3570e8;
+  --m-dash: #a78bfa; --m-cli: #22d3ee; --m-key: #c4b5fd; --m-inv: #60a5fa; --m-rcpt: #34d399; --m-recv: #fb923c; --m-comp: #fb7185; --m-staff: #2dd4bf; --m-docs: #fbbf24; --m-rep: #d8b4fe; --m-ai: #f472b6; --m-io: #a5b4fc; --m-adm: #cbd5e1;
+  --blob1: rgba(124, 58, 237, .22); --blob2: rgba(219, 39, 119, .14); --blob3: rgba(14, 116, 144, .16);
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 10px 28px rgba(0,0,0,.3); --shadow-lg: 0 24px 60px rgba(0,0,0,.6); --scrim: rgba(0,0,0,.6);
   color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --bg: #0f1422; --surface: #161d2f; --surface-2: #1c2439; --surface-3: #263049; --line: #2c3753; --line-2: #222b43;
-  --ink: #e8ecf5; --ink-2: #c7cfe0; --muted: #98a2ba; --faint: #6f7a93;
-  --accent: #7ea1f2; --accent-2: #a9c0f7; --accent-soft: #1d2b52; --accent-ink: #0d1529;
-  --saffron: #f0b445; --saffron-soft: #3a2c10; --gold: #e3c06e;
-  --nav-bg: #0b1122; --nav-bg-2: #1a2648; --nav-ink: #cdd6ee; --nav-muted: #8592b6; --nav-active: #ffffff;
-  --red: #f1786b; --red-soft: #3d1c1a; --amber: #f0b445; --amber-soft: #3a2c10; --green: #58c98a; --green-soft: #133022; --blue: #7ea7f5; --blue-soft: #18284d; --violet: #b996ef; --violet-soft: #2a1f45; --cyan: #5bc8db; --cyan-soft: #0f2d36; --slate: #a6b0c4; --slate-soft: #222a3e;
-  --c1: #7ea1f2; --c2: #f0b445; --c3: #58c98a; --c4: #ee7aa6; --c5: #b996ef; --c6: #5bc8db; --c7: #f08a4b; --c8: #a9c96a;
-  --m-dash: #7ea1f2; --m-cli: #5bc8db; --m-key: #b996ef; --m-inv: #7ea7f5; --m-rcpt: #58c98a; --m-recv: #f08a4b; --m-comp: #f1786b; --m-staff: #5bc8db; --m-docs: #f0b445; --m-rep: #a49af0; --m-ai: #ee7aa6; --m-io: #94b0cf; --m-adm: #a6b0c4;
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); --shadow-lg: 0 20px 60px rgba(0,0,0,.55); --scrim: rgba(0,0,0,.6);
+  --bg: #100d24; --surface: #19163a; --surface-2: #1f1b45; --surface-3: #2a2556; --line: #332d63; --line-2: #262150;
+  --ink: #f0eeff; --ink-2: #d2ccf5; --muted: #a49fcf; --faint: #7a75a8;
+  --accent: #a78bfa; --accent-2: #c4b5fd; --accent-soft: #2e2366; --accent-ink: #160f38; --pink: #f472b6;
+  --saffron: #fbbf24; --saffron-soft: #3a2a0c; --gold: #fbbf24;
+  --nav-bg: #1e1452; --nav-bg-2: rgba(255,255,255,.12); --nav-g1: #312e81; --nav-g2: #5b21b6; --nav-g3: #831843; --nav-ink: #ece8ff; --nav-muted: #b9b0ea; --nav-active: #ffffff;
+  --red: #f87171; --red-soft: #3f1520; --amber: #fb923c; --amber-soft: #3b2010; --green: #34d399; --green-soft: #0f3326; --blue: #60a5fa; --blue-soft: #15275a; --violet: #c4b5fd; --violet-soft: #2e2366; --cyan: #22d3ee; --cyan-soft: #0b3340; --slate: #b2bad0; --slate-soft: #262a46;
+  --c1: #5b54e8; --c2: #e0611c; --c3: #0b9a6d; --c4: #d63384; --c5: #8048e8; --c6: #13809c; --c7: #c26a12; --c8: #3570e8;
+  --m-dash: #a78bfa; --m-cli: #22d3ee; --m-key: #c4b5fd; --m-inv: #60a5fa; --m-rcpt: #34d399; --m-recv: #fb923c; --m-comp: #fb7185; --m-staff: #2dd4bf; --m-docs: #fbbf24; --m-rep: #d8b4fe; --m-ai: #f472b6; --m-io: #a5b4fc; --m-adm: #cbd5e1;
+  --blob1: rgba(124, 58, 237, .22); --blob2: rgba(219, 39, 119, .14); --blob3: rgba(14, 116, 144, .16);
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 10px 28px rgba(0,0,0,.3); --shadow-lg: 0 24px 60px rgba(0,0,0,.6); --scrim: rgba(0,0,0,.6);
   color-scheme: dark; }
 
 * { box-sizing: border-box; }
@@ -381,67 +383,158 @@ details.card > summary::-webkit-details-marker { display: none; }
 .lock .inp { color: var(--ink); }
 
 
-/* ---------- classic colourful skin ---------- */
-h1 { font-size: 1.55rem; font-weight: 700; letter-spacing: 0; }
-h2 { font-size: 1.08rem; font-weight: 700; letter-spacing: 0; }
-h3 { font-size: .98rem; font-weight: 700; letter-spacing: 0; }
-body { font-size: 14.5px; }
-.side { background: linear-gradient(180deg, #17264d 0%, var(--nav-bg) 55%, #0f1a36 100%); border-right: 3px solid var(--gold); }
-.brand-mark { background: linear-gradient(135deg, var(--gold), #9c7a2a); box-shadow: inset 0 0 0 2px rgba(255,255,255,.25); }
-.brand-name { font-family: var(--f-display); }
-.nav a { gap: 10px; }
-.nav .nav-ic { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: color-mix(in srgb, var(--mc, #8aa) 26%, transparent); color: #fff; flex: none; }
-.nav .nav-ic svg { width: 16px; height: 16px; opacity: 1; }
-.nav a.on { background: rgba(255,255,255,.1); box-shadow: inset 3px 0 0 var(--gold); }
-.nav a.on .nav-ic { background: var(--mc); }
-.nav-sec { color: var(--gold); opacity: .85; }
-.top { box-shadow: 0 1px 0 var(--line), 0 2px 10px rgba(20,33,66,.04); border-bottom: 0; }
-.page-head { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; border-left: 6px solid var(--pc, var(--accent)); box-shadow: var(--shadow); align-items: center; }
-.ph-ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--pc, var(--accent)) 14%, var(--surface)); color: var(--pc, var(--accent)); flex: none; }
-.ph-ic svg { width: 24px; height: 24px; }
-.ph-help { font-size: 13px; color: var(--muted); max-width: 70ch; }
-.page-head .eyebrow { color: var(--pc, var(--accent)); }
-.card { box-shadow: var(--shadow); border-color: var(--line-2); }
+/* ---------- friendly colourful skin ---------- */
+body { background-color: var(--bg); background-image: radial-gradient(900px 500px at 105% -10%, var(--blob1), transparent 60%), radial-gradient(700px 420px at -10% 110%, var(--blob2), transparent 60%), radial-gradient(600px 400px at 50% 50%, var(--blob3), transparent 70%); background-attachment: fixed; font-size: 14.5px; }
+h1, h2, h3, h4 { font-family: var(--f-display); letter-spacing: 0; }
+h1 { font-size: 1.7rem; font-weight: 900; } h2 { font-size: 1.12rem; font-weight: 800; } h3 { font-size: 1rem; font-weight: 800; }
+.eyebrow { font-weight: 800; letter-spacing: .08em; }
+/* sidebar */
+.side { background: linear-gradient(170deg, var(--nav-g1) 0%, var(--nav-g2) 55%, var(--nav-g3) 100%); border-right: 0; box-shadow: 4px 0 24px rgba(76, 29, 149, .18); }
+.brand { border-bottom: 1px solid rgba(255,255,255,.14); }
+.brand-mark { background: #fff; color: var(--nav-g2); border-radius: 14px; width: 42px; height: 42px; font-family: var(--f-display); font-weight: 900; font-size: 16px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.brand-name { font-family: var(--f-display); font-weight: 900; font-size: 15.5px; }
+.brand-sub { color: var(--nav-muted); }
+.nav { gap: 3px; padding: 10px; }
+.nav-sec { color: var(--nav-muted); opacity: 1; font-weight: 900; letter-spacing: .12em; padding: 14px 10px 6px; }
+.nav a { gap: 11px; border-radius: 14px; padding: 7px 10px; font-weight: 700; color: var(--nav-ink); transition: background .15s, transform .15s; }
+.nav a:hover { background: rgba(255,255,255,.12); transform: translateX(2px); }
+.nav .nav-ic { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,.18); color: #fff; flex: none; }
+.nav .nav-ic svg { width: 17px; height: 17px; opacity: 1; }
+.nav a.on { background: #fff; color: var(--mc, var(--accent)); box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+:root[data-theme="dark"] .nav a.on { background: rgba(255,255,255,.95); color: #2e1065; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .nav a.on { background: rgba(255,255,255,.95); color: #2e1065; } }
+.nav a.on .nav-ic { background: var(--mc, var(--accent)); box-shadow: 0 4px 10px color-mix(in srgb, var(--mc, var(--accent)) 45%, transparent); }
+.nav .cnt { background: #fff; color: #e11d48; border-radius: 10px; padding: 1px 7px; }
+.nav a.on .cnt { background: #e11d48; color: #fff; }
+.side-foot { border-top: 1px solid rgba(255,255,255,.14); color: var(--nav-muted); }
+/* top bar */
+.top { background: color-mix(in srgb, var(--surface) 82%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line-2); box-shadow: none; }
+.search input { border-radius: 999px; background: var(--surface-2); border-color: var(--line); padding-left: 38px; }
+.search svg { left: 13px; color: var(--accent); }
+.icon-btn { border-radius: 12px; border-color: var(--line); color: var(--accent); }
+.icon-btn:hover { background: var(--accent-soft); }
+.fy-sel { border-radius: 12px; color: var(--accent-2); border-color: color-mix(in srgb, var(--accent) 30%, var(--line)); background: var(--accent-soft); font-weight: 800; }
+.me { border-radius: 999px; background: var(--surface); }
+/* page banner */
+.page-head { --pc: var(--accent); position: relative; overflow: hidden; border: 0; border-radius: 22px; padding: 18px 20px; align-items: center; color: #fff;
+  background: linear-gradient(115deg, var(--pc) 0%, color-mix(in srgb, var(--pc) 65%, #ec4899) 100%); box-shadow: 0 12px 30px color-mix(in srgb, var(--pc) 28%, transparent); }
+.page-head::after { content: ""; position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: rgba(255,255,255,.12); pointer-events: none; }
+.page-head::before { content: ""; position: absolute; right: 120px; bottom: -90px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.08); pointer-events: none; }
+.page-head > * { position: relative; z-index: 1; }
+.page-head h1 { color: #fff; }
+.page-head .eyebrow { color: rgba(255,255,255,.85); }
+.ph-ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: rgba(255,255,255,.22); color: #fff; flex: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); }
+.ph-ic svg { width: 26px; height: 26px; }
+.ph-help { font-size: 13.5px; color: rgba(255,255,255,.9); max-width: 70ch; }
+.page-head .btn { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.4); color: #fff; box-shadow: none; }
+.page-head .btn:hover { background: rgba(255,255,255,.3); }
+.page-head .btn.pri { background: #fff; color: var(--pc); border-color: #fff; box-shadow: 0 6px 16px rgba(0,0,0,.15); }
+.page-head .btn.pri:hover { background: #fffaf0; }
+.page-head .inp, .page-head select { background: rgba(255,255,255,.95); color: #1f1b3d; }
+/* cards & sections */
+.card { border-radius: var(--r-lg); border: 1px solid var(--line-2); box-shadow: var(--shadow); }
 .card-h h2, .card-h h3 { display: flex; align-items: center; gap: 8px; }
-.card-h h2::before { content: ""; width: 4px; height: 18px; border-radius: 3px; background: var(--gold); display: inline-block; }
-.kpi { --kc: var(--c1); border: 1px solid color-mix(in srgb, var(--kc) 22%, var(--line)); background: linear-gradient(160deg, color-mix(in srgb, var(--kc) 11%, var(--surface)) 0%, var(--surface) 70%); border-top: 4px solid var(--kc); }
-.kpis .kpi:nth-child(8n+2) { --kc: var(--c2); } .kpis .kpi:nth-child(8n+3) { --kc: var(--c3); } .kpis .kpi:nth-child(8n+4) { --kc: var(--c4); } .kpis .kpi:nth-child(8n+5) { --kc: var(--c5); } .kpis .kpi:nth-child(8n+6) { --kc: var(--c6); } .kpis .kpi:nth-child(8n+7) { --kc: var(--c7); } .kpis .kpi:nth-child(8n+8) { --kc: var(--c8); }
-.kpi.red { --kc: var(--red); } .kpi.green { --kc: var(--green); } .kpi.amber { --kc: var(--amber); }
-.kpi .k-val { font-family: var(--f-display); color: color-mix(in srgb, var(--kc) 70%, var(--ink)); }
-.kpi .k-lbl i { background: var(--kc) !important; }
-.btn { border-radius: 9px; font-weight: 700; }
-.btn.pri { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 88%, #fff), var(--accent)); box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 2px 6px color-mix(in srgb, var(--accent) 30%, transparent); }
-.btn.big { height: 46px; padding: 0 20px; font-size: 15px; }
-.tbl th { background: color-mix(in srgb, var(--nav-bg) 7%, var(--surface)); color: var(--ink-2); }
-.tbl tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 60%, transparent); }
-.tbl tr.click:hover td { background: var(--accent-soft) !important; }
-.sect { box-shadow: var(--shadow); border-color: var(--line-2); }
+.card-h h2::before { content: ""; width: 10px; height: 10px; border-radius: 4px; background: linear-gradient(135deg, var(--accent), var(--pink)); display: inline-block; }
+.sect { border-radius: var(--r-lg); box-shadow: var(--shadow); border-color: var(--line-2); border-top: 4px solid var(--sc, var(--accent)); }
 .sect > h3 { color: var(--sc, var(--accent-2)); padding-bottom: 6px; border-bottom: 1px dashed var(--line); }
-.sect > h3 .num-badge { width: 24px; height: 24px; border-radius: 50%; display: inline-grid; place-items: center; font-size: 12px; color: #fff; background: var(--sc, var(--accent)); font-family: var(--f-body); }
+.sect > h3 .num-badge { width: 26px; height: 26px; border-radius: 9px; display: inline-grid; place-items: center; font-size: 12.5px; color: #fff; background: var(--sc, var(--accent)); font-family: var(--f-display); font-weight: 900; }
 .sect .sect-help { font-size: 12.5px; color: var(--muted); margin-top: -4px; }
+/* KPI tiles: candy gradients */
+.kpis { gap: 14px; }
+.kpi { --kc: var(--c1); border: 0; border-radius: 20px; padding: 16px 16px 14px; color: #fff; background: linear-gradient(135deg, var(--kc) 0%, color-mix(in srgb, var(--kc) 72%, #ff4fa0) 100%); box-shadow: 0 10px 22px color-mix(in srgb, var(--kc) 30%, transparent); transition: transform .15s, box-shadow .15s; }
+.kpi::after { content: ""; position: absolute; right: -26px; top: -26px; width: 92px; height: 92px; border-radius: 50%; background: rgba(255,255,255,.16); }
+.kpi:hover { transform: translateY(-3px); border-color: transparent; box-shadow: 0 16px 30px color-mix(in srgb, var(--kc) 38%, transparent); }
+.kpis .kpi:nth-child(8n+2) { --kc: var(--c2); } .kpis .kpi:nth-child(8n+3) { --kc: var(--c3); } .kpis .kpi:nth-child(8n+4) { --kc: var(--c4); } .kpis .kpi:nth-child(8n+5) { --kc: var(--c5); } .kpis .kpi:nth-child(8n+6) { --kc: var(--c6); } .kpis .kpi:nth-child(8n+7) { --kc: var(--c7); } .kpis .kpi:nth-child(8n+8) { --kc: var(--c8); }
+.kpi.red { --kc: #dc2626; } .kpi.green { --kc: #059669; } .kpi.amber { --kc: #c2410c; }
+.kpi .k-lbl { color: rgba(255,255,255,.92); font-weight: 800; }
+.kpi .k-lbl i { background: #fff !important; opacity: .85; }
+.kpi .k-val, .kpi.red .k-val, .kpi.green .k-val, .kpi.amber .k-val { font-family: var(--f-display); font-weight: 900; color: #fff; font-size: 1.65rem; }
+.kpi .k-sub, .kpi .k-sub b { color: rgba(255,255,255,.9); }
+/* buttons & inputs */
+.btn { border-radius: 999px; font-weight: 800; padding: 0 16px; transition: transform .12s, box-shadow .12s, background .12s; }
+.btn:active { transform: translateY(1px); }
+.btn.pri { background: linear-gradient(135deg, var(--accent), var(--pink)); border-color: transparent; color: #fff; box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 30%, transparent); }
+.btn.pri:hover { background: linear-gradient(135deg, var(--accent-2), var(--pink)); filter: brightness(1.05); }
+.btn.ok { background: var(--green); border-color: var(--green); color: #fff; }
+.btn.ok:hover { filter: brightness(1.08); background: var(--green); }
+.btn.big { height: 48px; padding: 0 24px; font-size: 15px; }
+.btn.sm { padding: 0 12px; } .btn.xs { border-radius: 999px; padding: 0 10px; }
+.inp, select.inp, textarea.inp { border-radius: 12px; background: var(--surface); border-color: var(--line); }
+.inp:focus { box-shadow: 0 0 0 4px var(--accent-soft); }
+.inp:disabled, select.inp:disabled { background: repeating-linear-gradient(135deg, var(--surface-2), var(--surface-2) 8px, var(--surface-3) 8px, var(--surface-3) 9px); color: var(--faint); cursor: not-allowed; }
+.chk input { accent-color: var(--accent); }
+.chk.dis { opacity: .55; cursor: not-allowed; }
+.seg { border-radius: 999px; padding: 3px; gap: 2px; background: var(--surface-2); }
+.seg button { border-radius: 999px; height: 32px; }
+.seg button.on { background: linear-gradient(135deg, var(--accent), var(--pink)); color: #fff; }
+:root[data-theme="dark"] .seg button.on { color: #fff; }
+.tabs { gap: 6px; border-bottom: 0; padding: 8px !important; }
+.tabs button { border-radius: 999px; border-bottom: 0; padding: 8px 14px; }
+.tabs button.on { background: var(--accent-soft); color: var(--accent-2); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 35%, transparent); }
+:root[data-theme="dark"] .tabs button.on { color: var(--accent-2); }
+.chip { border-radius: 999px; background: var(--accent-soft); border-color: transparent; color: var(--accent-2); }
+.badge { font-weight: 800; }
+.tag { border-radius: 999px; padding: 0 8px; background: var(--accent-soft); color: var(--accent-2); border-color: transparent; }
+/* tables */
+.tbl-wrap { border-top: 0; }
+.tbl th { background: var(--accent-soft); color: var(--accent-2); font-weight: 800; border-bottom: 0; }
+.tbl th:first-child { border-top-left-radius: 12px; } .tbl th:last-child { border-top-right-radius: 12px; }
+.tbl tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 70%, transparent); }
+.tbl tr.click:hover td { background: color-mix(in srgb, var(--accent-soft) 80%, transparent) !important; }
+.tbl tfoot td { background: var(--surface-3); }
+.tbl .yes { color: var(--green); font-weight: 900; font-size: 15px; } .tbl .no { color: var(--faint); }
+.tbl-search { display: flex; align-items: center; gap: 8px; padding: 6px 16px 10px; position: relative; }
+.tbl-search svg { position: absolute; left: 30px; color: var(--accent); width: 17px; height: 17px; pointer-events: none; }
+.tbl-search .inp { max-width: 420px; height: 38px; padding-left: 38px; border-radius: 999px; background: var(--surface-2); }
+.tbl-search .tq-n { font-size: 12px; font-weight: 800; color: var(--accent-2); background: var(--accent-soft); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+.sect .tbl-search, .card-b .tbl-search { padding-left: 0; padding-right: 0; } .sect .tbl-search svg, .card-b .tbl-search svg { left: 14px; }
+.cat-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; color: var(--cc); background: color-mix(in srgb, var(--cc) 14%, var(--surface)); }
+/* applicability chips */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.fchip { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-weight: 700; font-size: 12.5px; cursor: pointer; color: var(--ink-2); }
+.fchip:hover { border-color: var(--accent); }
+.fchip.on { background: linear-gradient(135deg, var(--accent), var(--pink)); color: #fff; border-color: transparent; }
+.fchip.neg.on { background: var(--red); }
+/* misc */
+.banner { border-radius: 14px; }
+.drawer { border-top-left-radius: 22px; border-bottom-left-radius: 22px; overflow: hidden; }
+.drawer-h { background: linear-gradient(110deg, var(--nav-g1), var(--nav-g2) 60%, var(--nav-g3)); color: #fff; border-bottom: 0; }
+.drawer-h h2 { color: #fff; font-family: var(--f-display); font-weight: 900; }
+.drawer-h .icon-btn { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.3); color: #fff; }
+.drawer-h .btn { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.35); color: #fff; }
+.modal { border-radius: 22px; }
 .jump { display: flex; flex-wrap: wrap; gap: 6px; }
-.jump button { flex: none; line-height: 1.3; white-space: nowrap; border: 1px solid var(--line); background: var(--surface); border-radius: 20px; padding: 5px 12px; font-weight: 700; font-size: 12.5px; color: var(--ink-2); cursor: pointer; }
-.jump button:hover { border-color: var(--accent); color: var(--accent); }
+.jump button { flex: none; line-height: 1.3; white-space: nowrap; border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-weight: 800; font-size: 12.5px; color: var(--ink-2); cursor: pointer; }
+.jump button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .gs { display: grid; gap: 8px; }
-.gs-item { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 10px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--surface); }
+.gs-item { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--line-2); border-radius: 14px; background: var(--surface); }
 .gs-item.done { opacity: .65; }
-.gs-item .gs-n { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--accent); }
+.gs-item .gs-n { width: 32px; height: 32px; border-radius: 11px; display: grid; place-items: center; font-weight: 900; color: #fff; background: linear-gradient(135deg, var(--accent), var(--pink)); }
 .gs-item.done .gs-n { background: var(--green); }
-.drawer-h { background: linear-gradient(90deg, var(--nav-bg), var(--nav-bg-2)); color: #fff; border-bottom: 3px solid var(--gold); }
-.drawer-h h2 { color: #fff; font-family: var(--f-display); }
-.drawer-h .icon-btn { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.25); color: #fff; }
-.drawer-h .btn { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); color: #fff; }
-.tabbar .on svg { color: var(--accent); }
 .delbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .req-note { font-size: 12px; color: var(--muted); }
 .req-note b { color: var(--red); }
+.toast { border-radius: 14px; background: linear-gradient(135deg, #312e81, #6d28d9); color: #fff; }
+.toast.bad { background: linear-gradient(135deg, #b91c1c, #db2777); }
+.empty svg { color: var(--accent); opacity: .5; }
+.tabbar { background: color-mix(in srgb, var(--surface) 92%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.tabbar .on { color: var(--accent); }
+.tabbar .on svg { color: #fff; background: linear-gradient(135deg, var(--accent), var(--pink)); border-radius: 10px; padding: 3px; width: 30px; height: 26px; }
+.su-card { border-radius: 18px; } .su-card > svg { border-radius: 14px; background: linear-gradient(135deg, var(--accent-soft), color-mix(in srgb, var(--pink) 14%, var(--surface))); color: var(--accent); }
+.m-card { border-radius: 16px; }
+.greet { font-size: 1.95rem; }
 
 @media (max-width: 820px) {
   #themeBtn { display: none; }
   .fy-sel { max-width: 112px; font-size: 14px; padding: 0 4px; }
   .search { min-width: 0; }
   .ph-ic { display: none; }
-  .page-head { padding: 12px 14px; }
+  .page-head { padding: 14px 16px; border-radius: 18px; }
+  .page-head::before { display: none; }
+  .drawer { border-radius: 0; }
+  .kpi .k-val, .kpi.red .k-val, .kpi.green .k-val, .kpi.amber .k-val { font-size: 1.25rem; }
+  .greet { font-size: 1.4rem; }
+  .tbl-search .inp { max-width: none; font-size: 16px; height: 42px; }
 }
 
 .show-sm-block { display: none; }
@@ -1200,7 +1293,70 @@ async function __seedDemo() {
     if (a.gstFreq && (client.gstFreq || 'monthly') !== a.gstFreq) return false;
     if (a.entityGroups && a.entityGroups.length && !a.entityGroups.includes(C.entityGroup(client.entityType))) return false;
     if (a.ptState && client.stateCode !== a.ptState) return false;
+    if (C.isGstRule(rule) && !C.gstRegistered(client)) return false;
     return true;
+  };
+  C.GST_FLAGS = ['gst', 'gst9c', 'iff'];
+  C.isGstRule = (rule) => rule.category === 'GST' || ((rule.applies || {}).flags || []).some((f) => C.GST_FLAGS.includes(f));
+  C.gstRegistered = (c) => !!c && c.gstType !== 'none';
+  /** A period is covered only if it falls on/after the client's GST registration date (GST rules). */
+  C.periodAfterGstReg = function (rule, client, p) {
+    if (!C.isGstRule(rule) || !client || !C.isISO(client.gstRegDate)) return true;
+    if (/^\d{4}-\d{2}$/.test(p.periodKey)) return p.periodKey >= client.gstRegDate.slice(0, 7);
+    const fy = /^(\d{4}-\d{2})-/.exec(p.periodKey); // schedule periods: "2025-26-Annual", "2026-27-Q2"
+    if (fy && C.fyRange(fy[1])[1] < client.gstRegDate) return false; // whole FY ended before registration
+    return p.due >= client.gstRegDate;
+  };
+  /**
+   * Plan how compliance tasks must change after clients or rules change.
+   * rules: all rules (incl. deleted/inactive); clients: clients in scope; tasks: Map/array of ALL tasks (incl. deleted);
+   * opts: {fys:[...], from, to, ruleIds?:Set}. Returns {create, restore, update, remove} (new task objects, never mutates input).
+   */
+  C.planComplianceSync = function (rules, clients, tasks, opts) {
+    opts = opts || {};
+    const list = Array.isArray(tasks) ? tasks : Array.from(tasks.values());
+    const byId = new Map(list.map((t) => [t.id, t]));
+    const ruleById = new Map(rules.map((r) => [r.id, r]));
+    const clientById = new Map(clients.map((c) => [c.id, c]));
+    const live = (r) => r && !r.deleted && r.active !== false && r.freq !== 'event';
+    const inScopeRule = (id) => !opts.ruleIds || opts.ruleIds.has(id);
+    const out = { create: [], restore: [], update: [], remove: [] };
+    const touched = new Set();
+    for (const fy of opts.fys || []) {
+      for (const rule of rules) {
+        if (!live(rule) || !inScopeRule(rule.id)) continue;
+        const periods = C.rulePeriods(rule, fy).filter((p) => C.inRange(p.due, opts.from, opts.to));
+        if (!periods.length) continue;
+        for (const c of clients) {
+          if (!C.ruleApplies(rule, c)) continue;
+          for (const p of periods) {
+            if (!C.periodAfterGstReg(rule, c, p)) continue;
+            const id = C.taskKey(rule.id, c.id, p.periodKey); const ex = byId.get(id);
+            if (ex && !ex.deleted) continue;
+            touched.add(id);
+            const internal = C.addDays(p.due, -(rule.internalDays === undefined ? 3 : rule.internalDays));
+            const base = { id, clientId: c.id, ruleId: rule.id, category: rule.category, form: rule.form, title: rule.name, fy, period: p.label, periodKey: p.periodKey, dueDate: p.due, targetDate: internal, status: 'pending', assignee: c.assignee || c.rm || '', reviewer: c.reviewer || '', docsRequired: rule.docs || '', dueVerified: rule.verifyStatus === 'verified', extension: p.extension || '', originalDue: p.originalDue || '' };
+            if (!ex) out.create.push(base);
+            else if (ex.autoRemoved) out.restore.push(Object.assign({}, ex, base, { deleted: false, autoRemoved: false, deleteReason: '', deletedAt: '' }));
+          }
+        }
+      }
+    }
+    for (const t of list) {
+      if (t.deleted || !t.ruleId || touched.has(t.id) || !clientById.has(t.clientId)) continue;
+      const rule = ruleById.get(t.ruleId); if (rule && !inScopeRule(rule.id)) continue;
+      const c = clientById.get(t.clientId);
+      const untouched = t.status === 'pending' && !t.startedAt && !t.infoReceived && !t.ackNo && !(t.comments || []).length;
+      const p = live(rule) ? C.rulePeriods(rule, t.fy).find((x) => x.periodKey === t.periodKey) : null;
+      const applies = live(rule) && C.ruleApplies(rule, c) && p && C.periodAfterGstReg(rule, c, p);
+      if (!applies) { if (untouched) out.remove.push(Object.assign({}, t, { deleted: true, autoRemoved: true, deleteReason: !live(rule) ? 'Due-date rule removed or switched off' : 'Compliance no longer applies to this client' })); continue; }
+      if (C.isDone(t)) continue;
+      const verified = rule.verifyStatus === 'verified';
+      if (p.due !== t.dueDate || !!t.dueVerified !== verified || (p.extension || '') !== (t.extension || '')) {
+        out.update.push(Object.assign({}, t, { dueDate: p.due, originalDue: p.originalDue || '', extension: p.extension || '', targetDate: C.addDays(p.due, -(rule.internalDays === undefined ? 3 : rule.internalDays)), dueVerified: verified, form: rule.form, category: rule.category }));
+      }
+    }
+    return out;
   };
   /** Periods & due dates for a rule within a FY. */
   C.rulePeriods = function (rule, fy) {
@@ -1242,6 +1398,7 @@ async function __seedDemo() {
       for (const c of clients) {
         if (!C.ruleApplies(rule, c)) continue;
         for (const p of periods) {
+          if (!C.periodAfterGstReg(rule, c, p)) continue;
           const id = C.taskKey(rule.id, c.id, p.periodKey);
           if (existingIds.has(id)) continue;
           const internal = C.addDays(p.due, -(rule.internalDays === undefined ? 3 : rule.internalDays));
@@ -1646,7 +1803,7 @@ function openDrawer(o) {
     if (!force && dr.dirty && o.confirmClose !== false) { confirmBox('Discard unsaved changes?', 'Your changes in this form will be lost.', 'Discard', () => dr.close(true)); return; }
     sc.remove(); drawers.splice(drawers.indexOf(dr), 1); if (o.onClose) o.onClose();
   };
-  dr.render = () => { const st = dr.body.scrollTop; const r = o.render(dr); requestAnimationFrame(() => { dr.body.scrollTop = st; }); if (typeof r === 'string') dr.body.innerHTML = r; if (o.footer) dr.foot.innerHTML = o.footer(dr); dr.foot.hidden = !o.footer; if (o.headActs) dr.head.innerHTML = o.headActs(dr); if (o.after) o.after(dr); };
+  dr.render = () => { const ae = document.activeElement; const fk = ae && dr.el.contains(ae) ? (ae.dataset.tq ? '[data-tq="' + ae.dataset.tq + '"]' : ae.dataset.k ? '[data-k="' + ae.dataset.k + '"]' : ae.id ? '#' + ae.id : '') : ''; let ss = null; try { ss = ae.selectionStart; } catch (e) { /* none */ } requestAnimationFrame(() => { if (fk) { const el = dr.el.querySelector(fk); if (el && el !== document.activeElement) { el.focus(); try { if (ss !== null) el.setSelectionRange(ss, ss); } catch (e) { /* none */ } } } }); const st = dr.body.scrollTop; const r = o.render(dr); requestAnimationFrame(() => { dr.body.scrollTop = st; }); if (typeof r === 'string') dr.body.innerHTML = r; if (o.footer) dr.foot.innerHTML = o.footer(dr); dr.foot.hidden = !o.footer; if (o.headActs) dr.head.innerHTML = o.headActs(dr); if (o.after) o.after(dr); };
   sc.addEventListener('click', (e) => {
     if (e.target === sc) { dr.close(); return; }
     const a = e.target.closest('[data-d]'); if (!a || !sc.contains(a)) return;
@@ -1691,13 +1848,23 @@ async function copyText(text, el) {
 
 /* Generic table with sorting, selection and pagination. state kept in S.ui[id] */
 function tableState(id, def) { const st = S.ui[id] || (S.ui[id] = { sort: null, dir: 'asc', page: 0, size: 25, sel: new Set() }); if (def && !st._def) { st._def = true; if (!st.sort) Object.assign(st, def); } return st; }
+const stripTags = (h) => String(h === undefined || h === null ? '' : h).replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/&[a-z#0-9]+;/gi, ' ');
+function rowText(cols, r) { return cols.map((c) => { try { return (c.html ? stripTags(c.html(r)) + ' ' : '') + (c.val ? String(c.val(r)) : c.html ? '' : String(r[c.k] === undefined ? '' : r[c.k])); } catch (e) { return ''; } }).join(' ').toLowerCase(); }
 function renderTable(id, cols, rows, o) {
   o = o || {}; const st = tableState(id, o.def);
+  const all = rows.length; let searchBar = '';
+  const noS = o.noSearch || /^(clients|inv|rcpt|tasks|docs|portals|stmt|recgen|dash-prof|inv-items-.*|inv-inst-.*)$/.test(id);
+  if (o.search || /^(rules|svc|users|sa-users|perms|rec|emps|bin|wl)$/.test(id) || (!noS && all > 6)) {
+    const q = (st.q || '').trim().toLowerCase();
+    if (q) { const words = q.split(/\s+/); rows = rows.filter((r) => { const t = rowText(cols, r) + ' ' + (o.searchText ? String(o.searchText(r)).toLowerCase() : ''); return words.every((w) => t.includes(w)); }); }
+    searchBar = '<div class="tbl-search">' + ico('search') + '<input class="inp" type="search" data-tq="' + esc(id) + '" value="' + esc(st.q || '') + '" placeholder="' + esc(o.searchPh || 'Search this list…') + '" aria-label="Search this list" autocomplete="off">' + (q ? '<span class="tq-n">' + rows.length + ' of ' + all + '</span><button class="btn xs ghost" data-act="tq-clear" data-t="' + esc(id) + '">Clear</button>' : '<span class="tq-n">' + all + '</span>') + '</div>';
+    if (q && !rows.length) o = Object.assign({}, o, { empty: emptyState('search', 'No match for “' + esc(st.q) + '”', 'Try a different word, or clear the search.') });
+  }
   if (st.sort) { const c = cols.find((x) => x.k === st.sort); if (c) rows = rows.slice().sort(by(c.sortVal || ((r) => { const v = c.val ? c.val(r) : r[c.k]; return typeof v === 'string' ? v.toLowerCase() : v === undefined || v === null ? '' : v; }), st.dir)); }
   const total = rows.length; const pages = Math.max(1, Math.ceil(total / st.size)); if (st.page >= pages) st.page = pages - 1;
   const view = o.noPage ? rows : rows.slice(st.page * st.size, st.page * st.size + st.size);
   const selAll = o.select && view.length && view.every((r) => st.sel.has(r.id));
-  let h = '<div class="tbl-wrap"><table class="tbl' + (o.compact ? ' compact' : '') + '"><thead><tr>';
+  let h = searchBar + '<div class="tbl-wrap"><table class="tbl' + (o.compact ? ' compact' : '') + '"><thead><tr>';
   if (o.select) h += '<th class="sel"><input type="checkbox" aria-label="Select all on page" data-act="tbl-selall" data-t="' + id + '"' + (selAll ? ' checked' : '') + '></th>';
   for (const c of cols) h += '<th class="' + (c.num ? 'n ' : '') + (c.nosort ? '' : 'sortable') + '"' + (c.nosort ? '' : ' data-act="tbl-sort" data-t="' + id + '" data-k="' + c.k + '"') + '>' + esc(c.label) + (st.sort === c.k ? (st.dir === 'asc' ? ' ▲' : ' ▼') : '') + '</th>';
   h += '</tr></thead><tbody>';
@@ -1862,6 +2029,12 @@ ACT.go = (a) => { let p = {}; try { p = a.dataset.p ? JSON.parse(a.dataset.p) : 
 const goAttr = (v, p) => 'data-act="go" data-v="' + v + '"' + (p ? " data-p='" + esc(JSON.stringify(p)) + "'" : '');
 
 /* ---------- dashboard ---------- */
+function greeting() {
+  const h = +new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: 'numeric', hourCycle: 'h23' }).format(new Date());
+  const part = h < 5 ? 'Working late' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  const nm = ((S.me && S.me.name) || '').replace(/^CA\s+/i, '').replace(/^([A-Z]\.\s*)+/, '').split(/\s+/)[0];
+  return esc(part + (nm && nm !== 'You' ? ', ' + nm : ''));
+}
 function dashFilter() { return S.ui.dash || (S.ui.dash = { month: '', client: '', service: '', emp: '' }); }
 function invPrimaryCategory(inv) {
   const items = inv.items || []; if (!items.length) return inv.type === 'opening' ? 'Opening balance' : 'Other';
@@ -1927,7 +2100,7 @@ VIEWS.dashboard = {
       '<select class="inp" data-dash="service" aria-label="Service">' + opts(d.services.map((s) => [s.id, s.name]), f.service, 'All services') + '</select>' +
       '<select class="inp" data-dash="emp" aria-label="Employee">' + empOpts(f.emp, 'All staff') + '</select>' +
       ((f.month || f.client || f.service || f.emp) ? '<button class="btn sm ghost" data-act="dash-clear">Clear</button>' : '') + '<span class="muted" style="margin-left:auto;font-size:12px">As of ' + fd(T) + ' · figures calculated from saved records</span></div>';
-    let h = '<div class="page-head"><div class="t"><span class="eyebrow">' + esc(firm().name) + ' · FY ' + fy + '</span><h1>Practice overview</h1></div><div class="acts"><button class="btn" data-act="qa-open">' + ico('plus') + ' Quick add</button><button class="btn pri" ' + goAttr('ai') + '>' + ico('spark') + (S.platform === 'standalone' ? ' CA Assistant' : ' Ask CA AI') + '</button></div></div>';
+    let h = '<div class="page-head"><div class="t"><span class="eyebrow">' + esc(firm().name) + ' · FY ' + fy + '</span><h1 class="greet">' + greeting() + '</h1></div><div class="acts"><button class="btn" data-act="qa-open">' + ico('plus') + ' Quick add</button><button class="btn pri" ' + goAttr('ai') + '>' + ico('spark') + (S.platform === 'standalone' ? ' CA Assistant' : ' Ask CA AI') + '</button></div></div>';
     if (!d.clients.length) h += '<div class="card">' + emptyState('users', 'Your practice is empty', 'Add your firm profile, then your first client — or import your client list from Excel.', '<button class="btn" ' + goAttr('admin') + '>Firm profile</button><button class="btn pri" data-act="client-new">Add client</button><button class="btn" ' + goAttr('imports') + '>Import from Excel</button>') + '</div>';
     if (can('admin') && !(S.prefs.gsHidden)) {
       const fmn = firm(); const steps = [
@@ -2113,8 +2286,8 @@ ACT['clients-bulk'] = () => {
     foot: () => '<button class="btn" data-m="close">Cancel</button><button class="btn pri" data-m="ok">Apply to ' + ids.length + '</button>',
     acts: { ok: async (a, m) => {
       const v = $('#bk_v', m.el).type === 'checkbox' ? $('#bk_v', m.el).checked : $('#bk_v', m.el).value; const fld2 = m.state.field;
-      const recs = ids.map((id) => Store.get('clients', id)).filter(Boolean).map((c) => { const x = JSON.parse(JSON.stringify(c)); if (fld2.startsWith('flag:')) { x.flags = x.flags || {}; x.flags[fld2.slice(5)] = !!v; } else x[fld2] = v; return x; });
-      try { await Store.saveMany('clients', recs, 'Bulk update ' + fld2 + ' = ' + v); toast('Updated ' + recs.length + ' clients'); st.sel.clear(); m.close(); } catch (e) { toast(e.message || 'Some updates failed', 'bad'); }
+      const recs = ids.map((id) => Store.get('clients', id)).filter(Boolean).filter((c) => !((fld2 === 'gstFreq' || C.GST_FLAGS.includes(fld2.replace('flag:', ''))) && c.gstType === 'none')).map((c) => { const x = JSON.parse(JSON.stringify(c)); if (fld2.startsWith('flag:')) { x.flags = x.flags || {}; x.flags[fld2.slice(5)] = !!v; } else x[fld2] = v; return x; });
+      try { await Store.saveMany('clients', recs, 'Bulk update ' + fld2 + ' = ' + v); toast('Updated ' + recs.length + ' clients'); st.sel.clear(); m.close(); await syncCompliance({ clientIds: recs.map((x) => x.id), why: 'bulk client update' }); } catch (e) { toast(e.message || 'Some updates failed', 'bad'); }
     } } });
 };
 function bulkValueInput(f, v) {
@@ -2147,7 +2320,8 @@ function clientForm(existing, onSaved) {
         fld({ k: 'gstin', label: 'GSTIN', v: c.gstin, mono: 1, max: 15, ph: '36ABCDE1234F1Z5' }) + fld({ k: 'pan', label: 'PAN', v: c.pan, mono: 1, max: 10, ph: 'ABCDE1234F' }) + fld({ k: 'tan', label: 'TAN', v: c.tan, mono: 1, max: 10, ph: 'HYDA12345B' }) +
         fld({ k: 'cin', label: 'CIN' + (isCo ? '' : ' (companies)'), v: c.cin, mono: 1, max: 21 }) + fld({ k: 'llpin', label: 'LLPIN' + (isLLP ? '' : ' (LLPs)'), v: c.llpin, mono: 1, max: 8, ph: 'AAB-1234' }) + fld({ k: 'udyam', label: 'Udyam registration no.', v: c.udyam, mono: 1, max: 19, ph: 'UDYAM-TS-02-0012345' }) +
         fld({ k: 'gstType', label: 'GST registration type', type: 'select', options: opts([['regular', 'Regular'], ['composition', 'Composition'], ['casual', 'Casual'], ['isd', 'Input service distributor'], ['tds', 'GST TDS deductor'], ['none', 'Not registered']], c.gstType) }) +
-        fld({ k: 'gstFreq', label: 'GST return frequency', type: 'select', options: opts([['monthly', 'Monthly'], ['qrmp', 'Quarterly (QRMP)']], c.gstFreq) }) + fld({ k: 'gstRegDate', label: 'GST registration date', type: 'date', v: c.gstRegDate }) +
+        (c.gstType === 'none' ? fld({ k: 'gstFreq', label: 'GST return frequency', type: 'select', options: opt('', 'Not applicable — not registered', ''), dis: 1, hint: '🔒 Locked because GST is not registered' }) + fld({ k: 'gstRegDate', label: 'GST registration date', v: '', ph: 'Not applicable', dis: 1, hint: '🔒 Locked because GST is not registered' })
+          : fld({ k: 'gstFreq', label: 'GST return frequency', type: 'select', options: opts([['monthly', 'Monthly'], ['qrmp', 'Quarterly (QRMP)']], c.gstFreq || 'monthly') }) + fld({ k: 'gstRegDate', label: 'GST registration date', type: 'date', v: c.gstRegDate, hint: 'GST tasks start from this month' })) +
         fld({ k: 'ptNo', label: 'Professional tax no.', v: c.ptNo, mono: 1 }) + fld({ k: 'pfCode', label: 'EPF establishment code', v: c.pfCode, mono: 1 }) + fld({ k: 'esicCode', label: 'ESIC code', v: c.esicCode, mono: 1 }) +
         fld({ k: 'iec', label: 'IEC (import / export)', v: c.iec, mono: 1 }) + fld({ k: 'fssai', label: 'FSSAI licence no.', v: c.fssai, mono: 1 }) + fld({ k: 'shopsNo', label: 'Shops & Establishments no.', v: c.shopsNo, mono: 1 }) +
         fld({ k: 'tradeLicence', label: 'Trade licence no.', v: c.tradeLicence, mono: 1 }) + fld({ k: 'labourLicence', label: 'Labour licence no.', v: c.labourLicence, mono: 1 }) + fld({ k: 'otherReg', label: 'Other registrations', v: c.otherReg, ph: 'e.g. RERA, Drug licence' }) + '</div>');
@@ -2157,7 +2331,7 @@ function clientForm(existing, onSaved) {
         fld({ k: 'email', label: 'Primary email', v: c.email, type: 'email' }) + fld({ k: 'mobile', label: 'Primary mobile', v: c.mobile, type: 'tel' }) + fld({ k: 'phone', label: 'Landline', v: c.phone, type: 'tel' }) + fld({ k: 'altEmail', label: 'Other email IDs', v: c.altEmail, hint: 'Separate with commas', cls: 'span-all' }) + '</div>');
       h += sec(3, 'Who you deal with for documents and payments.', c.contacts.map((p, i) => '<div class="grid g4" style="align-items:end">' + fld({ k: 'contacts.' + i + '.name', label: 'Name', v: p.name }) + fld({ k: 'contacts.' + i + '.role', label: 'Role', v: p.role, ph: 'Accounts / Owner' }) + fld({ k: 'contacts.' + i + '.email', label: 'Email', v: p.email }) + '<div class="btn-row" style="flex-wrap:nowrap">' + fld({ k: 'contacts.' + i + '.mobile', label: 'Mobile', v: p.mobile }) + '<button class="btn sm danger" data-d="rm" data-l="contacts" data-i="' + i + '" aria-label="Remove contact">' + ico('trash') + '</button></div></div>').join('') + '<div><button class="btn sm" data-d="add" data-l="contacts">' + ico('plus') + ' Add contact person</button></div>');
       h += sec(4, 'Proprietor, partners, designated partners, directors, karta, trustees and authorised signatories.', c.people.map((p, i) => '<div class="grid g4" style="align-items:end">' + fld({ k: 'people.' + i + '.name', label: 'Name', v: p.name }) + fld({ k: 'people.' + i + '.designation', label: 'Designation', type: 'select', options: opts(['Proprietor', 'Partner', 'Designated partner', 'Director', 'Managing director', 'Karta', 'Trustee', 'Authorised signatory', 'Other'], p.designation) }) + fld({ k: 'people.' + i + '.din', label: 'DIN / DPIN / PAN', v: p.din, mono: 1 }) + '<div class="btn-row" style="flex-wrap:nowrap">' + fld({ k: 'people.' + i + '.mobile', label: 'Mobile', v: p.mobile }) + '<button class="btn sm danger" data-d="rm" data-l="people" data-i="' + i + '" aria-label="Remove person">' + ico('trash') + '</button></div>' + fld({ k: 'people.' + i + '.signatory', label: 'Authorised signatory', type: 'check', v: p.signatory }) + fld({ k: 'people.' + i + '.dscExpiry', label: 'DSC expiry', type: 'date', v: p.dscExpiry }) + '</div>').join('') + '<div><button class="btn sm" data-d="add" data-l="people">' + ico('plus') + ' Add person</button></div>');
-      h += sec(5, 'Tick what you handle for this client. Compliance tasks and due dates are created from these.', '<div class="grid g3">' + CLIENT_FLAGS.map(([k, l]) => fld({ k: 'flags.' + k, label: l, type: 'check', v: c.flags[k] })).join('') + '</div><div class="grid g3">' +
+      h += sec(5, 'Tick what you handle for this client. Compliance tasks and due dates are created from these.', (c.gstType === 'none' ? '<div class="banner info">' + ico('lock') + '<div>GST compliances are locked because GST registration type is <b>Not registered</b>. Change it in section 2 to enable them.</div></div>' : '') + '<div class="grid g3 flag-grid">' + CLIENT_FLAGS.map(([k, l]) => (c.gstType === 'none' && C.GST_FLAGS.includes(k)) ? '<label class="chk dis"><input type="checkbox" disabled> ' + esc(l) + ' <span class="faint">(not registered)</span></label>' : fld({ k: 'flags.' + k, label: l, type: 'check', v: c.flags[k] })).join('') + '</div><div class="grid g3">' +
         fld({ k: 'fyEnd', label: 'Accounting year-end', v: c.fyEnd, ph: '31-Mar' }) + fld({ k: 'taxRegime', label: 'Income-tax regime', type: 'select', options: opts([['', 'Not set'], ['new', 'New regime'], ['old', 'Old regime'], ['115BAA', 'Sec 115BAA (22%)'], ['115BAB', 'Sec 115BAB (15%)'], ['presumptive', 'Presumptive (44AD/44ADA/44AE)']], c.taxRegime) }) + fld({ k: 'agmDate', label: 'Last AGM date', type: 'date', v: c.agmDate, hint: 'Companies: AOC-4 / MGT-7 run from this date' }) + '</div>');
       h += sec(6, '', '<div class="grid g3">' + fld({ k: 'rm', label: 'Responsible CA / relationship manager', type: 'select', options: empOpts(c.rm) }) + fld({ k: 'assignee', label: 'Default preparer', type: 'select', options: empOpts(c.assignee) }) + fld({ k: 'reviewer', label: 'Default reviewer', type: 'select', options: empOpts(c.reviewer) }) +
         fld({ k: 'engagementStart', label: 'Engagement start', type: 'date', v: c.engagementStart }) + fld({ k: 'engagementStatus', label: 'Engagement status', type: 'select', options: opts([['active', 'Active'], ['proposed', 'Proposed'], ['paused', 'Paused'], ['ended', 'Ended']], c.engagementStatus || 'active') }) + fld({ k: 'engagementLetter', label: 'Engagement letter date / reference', v: c.engagementLetter }) +
@@ -2173,7 +2347,9 @@ function clientForm(existing, onSaved) {
     mount: (dr) => {
       const check = debounce(() => validateCF(dr), 250);
       bindInputs(dr.body, c, (k, v, el, type) => {
-        if (k === 'entityType' && !existing) { c.flags = defaultFlags(c.entityType); dr.render(); }
+        if (k === 'entityType' && !existing) { c.flags = defaultFlags(c.entityType); if (c.gstType === 'none') C.GST_FLAGS.forEach((f) => (c.flags[f] = false)); dr.render(); }
+        if (k === 'gstType' && type === 'change') { if (v === 'none') { c.gstFreq = ''; c.gstRegDate = ''; C.GST_FLAGS.forEach((f) => (c.flags[f] = false)); toast('GST not registered — return frequency, registration date and GST compliances are locked'); } else { c.gstFreq = c.gstFreq || 'monthly'; c.flags.gst = true; } dr.render(); }
+        if (k === 'gstFreq' && type === 'change') { if (v === 'qrmp') c.flags.iff = c.flags.iff || false; }
         if (k === 'gstin') { const gi = C.normId(v); if (C.V.gstin(gi)) { let changed = false; if (!c.pan) { c.pan = gi.slice(2, 12); changed = true; } if (C.STATES[gi.slice(0, 2)] && c.stateCode !== gi.slice(0, 2)) { c.stateCode = gi.slice(0, 2); changed = true; } c.flags.gst = true; if (c.gstType === 'none') c.gstType = 'regular'; if (changed) { dr.render(); const el2 = $('[data-k="gstin"]', dr.body); if (el2) { el2.focus(); el2.setSelectionRange(99, 99); } toast('PAN and state filled from GSTIN'); } } }
         check();
       });
@@ -2191,6 +2367,8 @@ function clientForm(existing, onSaved) {
       del: (a, dr) => deleteClients([c.id], () => dr.close(true)),
       save: async (a, dr) => {
         ['pan', 'tan', 'gstin', 'cin', 'llpin', 'udyam'].forEach((k) => { if (c[k]) c[k] = C.normId(c[k]); });
+        if (c.gstType === 'none') { c.gstFreq = ''; c.gstRegDate = ''; C.GST_FLAGS.forEach((f) => (c.flags[f] = false)); if (c.gstin) { toast('Remove the GSTIN, or choose a GST registration type other than “Not registered”', 'bad'); const el = $('[data-k="gstType"]', dr.body); if (el) el.scrollIntoView({ block: 'center' }); return; } }
+        else if (!c.gstFreq) c.gstFreq = 'monthly';
         c.contacts = c.contacts.filter((p) => p.name || p.email || p.mobile); c.people = c.people.filter((p) => p.name || p.din);
         const v = C.validateClient(c); const dups = C.findDuplicates(c, D().clients, c.id);
         if (Store.allIncDeleted('clients').some((x) => x.code === c.code && x.id !== c.id && !x.deleted)) v.errors.push({ field: 'code', msg: 'Another client already uses this code' });
@@ -2203,6 +2381,9 @@ function clientForm(existing, onSaved) {
             const ps = newPortals.filter((p) => p.portal && (p.userId || p.vaultRef || true)).map((p) => { const m = PORTALS.find((x) => x[0] === p.portal) || []; return { clientId: saved.id, portal: p.portal, url: m[1] || '', userId: p.userId || '', vaultRef: p.vaultRef || '', mfa: !!p.mfa, identifier: p.portal === 'GST Portal' ? c.gstin : p.portal === 'TRACES' ? c.tan : p.portal === 'MCA V3' ? (c.cin || c.llpin) : p.portal === 'Income Tax e-Filing' ? c.pan : '', status: 'active' }; });
             if (ps.length) await Store.saveMany('portals', ps, 'Added ' + ps.length + ' portal logins for ' + c.code);
             dr.dirty = false; dr.close(true); toast('Client saved' + (ps.length ? ' with ' + ps.length + ' portal logins' : ''));
+            const sum = await syncCompliance({ clientIds: [saved.id], why: 'client ' + saved.code, quiet: true });
+            if (sum && (sum.create + sum.restore + sum.update + sum.remove)) toast(syncMsg(sum));
+            else if (sum) { const why = whyNoTasks(saved); if (why && !D().tasks.some((t) => t.clientId === saved.id && !C.isDone(t))) toast('No compliance tasks yet: ' + why, 'bad'); }
             if (onSaved) onSaved(saved); else if (!existing) openClient(saved.id);
           } catch (e) { a.disabled = false; }
         };
@@ -2982,6 +3163,50 @@ async function installRuleLibrary() {
   if (!recs.length) return toast('All standard rules are already installed');
   await Store.saveMany('rules', recs, 'Installed ' + recs.length + ' standard due-date rules (unverified)');
   toast('Installed ' + recs.length + ' rules — verify each before relying on it');
+  await syncCompliance({ why: 'rules installed' });
+}
+
+/* ---------- automatic compliance sync ----------
+   Keeps each client's task list in step with its compliance profile and the due-date rules:
+   adds missing tasks (due from the 1st of last month to the end of the current FY), restores tasks
+   that apply again, updates due dates / verification / extensions on open tasks, and moves untouched
+   pending tasks that no longer apply to the recycle bin. Started or filed work is never removed. */
+function syncWindow() { const T = today(); const cur = C.fyOf(T); const prev = C.fyOf(C.addMonths(C.fyRange(cur)[0], -1)); return { fys: [prev, cur], from: C.ymd(+T.slice(0, 4), +T.slice(5, 7) - 1, 1), to: C.fyRange(cur)[1] }; }
+function planSync(scope) {
+  scope = scope || {};
+  const clients = scope.clientIds ? scope.clientIds.map((id) => Store.get('clients', id)).filter(Boolean) : D().clients;
+  const w = syncWindow();
+  return C.planComplianceSync(Store.allIncDeleted('rules'), clients, S.data.tasks, Object.assign(w, { ruleIds: scope.ruleIds ? new Set(scope.ruleIds) : null }));
+}
+const taskBucket = (t) => (C.fyStartYear(t.dueDate) || '') + '-s' + (C.hash(t.clientId) % ENT.tasks.shards);
+async function syncCompliance(scope) {
+  scope = scope || {};
+  if (S.mode === 'readonly' || !(can('tasks.edit') || can('clients.edit') || can('rules.edit'))) return null;
+  if (!Store.all('rules').length) return { create: 0, restore: 0, update: 0, remove: 0, noRules: true };
+  const p = planSync(scope);
+  const recs = p.create.map((t) => ({ ...t, _b: taskBucket(t), autoSync: true })).concat(p.restore, p.update, p.remove.map((t) => ({ ...t, deletedAt: nowISO(), deletedBy: S.uid })));
+  const sum = { create: p.create.length, restore: p.restore.length, update: p.update.length, remove: p.remove.length };
+  if (recs.length) {
+    try { await Store.saveMany('tasks', recs, 'Compliance sync (' + (scope.why || 'update') + '): +' + (sum.create + sum.restore) + ' tasks, ' + sum.update + ' dates updated, ' + sum.remove + ' removed'); }
+    catch (e) { toast('Some compliance tasks could not be updated: ' + (e.message || e), 'bad'); }
+  }
+  if (!scope.quiet && recs.length) toast(syncMsg(sum));
+  return sum;
+}
+function syncMsg(sum) {
+  const parts = []; if (sum.create + sum.restore) parts.push((sum.create + sum.restore) + ' task' + (sum.create + sum.restore > 1 ? 's' : '') + ' added');
+  if (sum.update) parts.push(sum.update + ' due date' + (sum.update > 1 ? 's' : '') + ' updated'); if (sum.remove) parts.push(sum.remove + ' no longer applicable (moved to recycle bin)');
+  return 'Compliance list updated: ' + parts.join(', ') + '.';
+}
+/** Why a client gets no automatic tasks — shown after saving. */
+function whyNoTasks(c) {
+  if (!Store.all('rules').length) return 'No due-date rules yet — install them in Administration → Due-date rules.';
+  if (c.status !== 'active') return 'Tasks are created only for clients with status Active.';
+  const ticked = CLIENT_FLAGS.filter(([k]) => (c.flags || {})[k]);
+  if (!ticked.length) return 'No compliances are ticked for this client.';
+  const rules = Store.all('rules').filter((r) => r.active !== false);
+  if (!rules.some((r) => C.ruleApplies(r, c))) return 'No active due-date rule matches the ticked compliances' + (c.gstType === 'none' ? ' (GST is set to Not registered)' : '') + '. Check Administration → Due-date rules → “Applies to”.';
+  return '';
 }
 
 /* ---------- compliance views ---------- */
@@ -3026,7 +3251,7 @@ VIEWS.compliance = {
     const f = compFilter(); const p = S.params;
     if (Object.keys(p).length) { Object.assign(f, { category: p.category || '', status: p.status || '', assignee: p.assignee || '', due: p.due || '', client: p.client || '', q: '' }); if (p.status) f.open = 'all'; S.params = {}; }
     const rows = filteredTasks(); const st = tableState('tasks'); const selN = st.sel.size;
-    let h = '<div class="page-head"><div class="t"><span class="eyebrow">Statutory compliance · FY ' + S.fy + '</span><h1>Compliance tracker</h1></div><div class="acts"><button class="btn" data-act="tasks-export">' + ico('download') + ' Register</button>' + (can('tasks.assign') ? '<button class="btn" data-act="tasks-generate">' + ico('refresh') + ' Generate tasks</button>' : '') + (can('tasks.edit') ? '<button class="btn pri" data-act="task-new">' + ico('plus') + ' New task</button>' : '') + '</div></div>';
+    let h = '<div class="page-head"><div class="t"><span class="eyebrow">Statutory compliance · FY ' + S.fy + '</span><h1>Compliance tracker</h1></div><div class="acts"><button class="btn" data-act="tasks-export">' + ico('download') + ' Register</button>' + (can('tasks.assign') ? '<button class="btn" data-act="sync-now" title="Adds missing tasks for ticked compliances, updates verified dates and extensions">' + ico('refresh') + ' Update lists</button><button class="btn" data-act="tasks-generate">' + ico('cal') + ' Generate earlier periods</button>' : '') + (can('tasks.edit') ? '<button class="btn pri" data-act="task-new">' + ico('plus') + ' New task</button>' : '') + '</div></div>';
     if (!Store.all('rules').length) h += '<div class="banner warn">' + ico('alert') + '<div><b>No due-date rules yet.</b> ' + (can('rules.edit') ? 'Install the standard Indian rule set (GST, TDS, Income-tax, ROC, PF/ESIC, PT), verify each against the official source, then generate tasks. <button class="btn xs" data-act="rules-install">Install standard rules</button>' : 'Ask a Partner or Administrator to set them up.') + '</div></div>';
     h += '<div class="card"><div class="card-h filters"><div class="seg">' + [['list', 'list', 'List'], ['kanban', 'kanban', 'Board'], ['calendar', 'cal', 'Calendar'], ['matrix', 'grid', 'Matrix']].map(([k, i, l]) => '<button data-act="cf-mode" data-m="' + k + '" class="' + (f.mode === k ? 'on' : '') + '">' + l + '</button>').join('') + '</div>' +
       '<input class="inp grow" placeholder="Search client, form, period, ack no…" data-cf="q" value="' + esc(f.q) + '"><select class="inp" data-cf="category">' + opts(COMP_CATS, f.category, 'All categories') + '</select><select class="inp" data-cf="status">' + opts(C.TASK_STATUSES.map((s) => [s.key, s.label]), f.status, 'Any status') + '</select>' +
@@ -3090,7 +3315,7 @@ ACT['tasks-generate'] = () => {
   if (!rules.length) return toast('Install or add due-date rules first', 'bad');
   const [fs, fe] = C.fyRange(S.fy);
   modal({ wide: true, state: { from: today() > fs ? C.ymd(+today().slice(0, 4), +today().slice(5, 7), 1) : fs, to: fe }, body: (m) => {
-    const existing = new Set(S.data.tasks.keys());
+    const existing = new Set(Array.from(S.data.tasks.values()).filter((t) => !(t.deleted && t.autoRemoved)).map((t) => t.id));
     const list = C.generateTasks(rules, D().clients, S.fy, existing, { from: m.state.from, to: m.state.to }); m.state.list = list;
     const byRule = {}; for (const t of list) byRule[t.ruleId] = (byRule[t.ruleId] || 0) + 1;
     const unv = rules.filter((r) => byRule[r.id] && r.verifyStatus !== 'verified');
@@ -3330,8 +3555,8 @@ const IMPORTS = {
     { key: 'gstFreq', label: 'GST frequency', hint: 'monthly / qrmp' }, { key: 'rm', label: 'Responsible staff', hint: 'Employee name or email' }, { key: 'flags', label: 'Compliances', hint: 'e.g. gst; tds; itr; roc', sample: 'gst; tds; itr; roc' }, { key: 'creditLimit', label: 'Credit limit', type: 'money' }, { key: 'notes', label: 'Notes' }],
     build(v, ctx) {
       const errors = [], warnings = [];
-      const c = { code: v.code || '', legalName: v.legalName, tradeName: v.tradeName, entityType: C.ENTITY_TYPES.find((t) => t.toLowerCase() === String(v.entityType || '').toLowerCase()) || v.entityType, status: (v.status || 'active').toLowerCase(), pan: C.normId(v.pan), tan: C.normId(v.tan), gstin: C.normId(v.gstin), cin: C.normId(v.cin), llpin: C.normId(v.llpin), udyam: C.normId(v.udyam), doi: v.doi || '', industry: v.industry, activity: v.activity, address: v.address, city: v.city, stateCode: v.stateCode ? C.pad(String(v.stateCode).replace(/\D/g, ''), 2) : (C.normId(v.gstin).slice(0, 2) || firm().stateCode), pincode: v.pincode, email: v.email, mobile: v.mobile ? C.normMobile(v.mobile) : '', contactPerson: v.contactPerson, gstFreq: /q/i.test(v.gstFreq || '') ? 'qrmp' : 'monthly', gstType: v.gstin ? 'regular' : 'none', flags: v.flags ? flagByText(v.flags) : defaultFlags(v.entityType), creditLimit: v.creditLimit ? C.paiseToStr(v.creditLimit) : '', notes: v.notes, contacts: v.contactPerson ? [{ name: v.contactPerson, email: v.email, mobile: v.mobile }] : [], people: [], onboarding: {} };
-      if (c.gstin) c.flags.gst = true;
+      const c = { code: v.code || '', legalName: v.legalName, tradeName: v.tradeName, entityType: C.ENTITY_TYPES.find((t) => t.toLowerCase() === String(v.entityType || '').toLowerCase()) || v.entityType, status: (v.status || 'active').toLowerCase(), pan: C.normId(v.pan), tan: C.normId(v.tan), gstin: C.normId(v.gstin), cin: C.normId(v.cin), llpin: C.normId(v.llpin), udyam: C.normId(v.udyam), doi: v.doi || '', industry: v.industry, activity: v.activity, address: v.address, city: v.city, stateCode: v.stateCode ? C.pad(String(v.stateCode).replace(/\D/g, ''), 2) : (C.normId(v.gstin).slice(0, 2) || firm().stateCode), pincode: v.pincode, email: v.email, mobile: v.mobile ? C.normMobile(v.mobile) : '', contactPerson: v.contactPerson, gstFreq: v.gstin ? (/q/i.test(v.gstFreq || '') ? 'qrmp' : 'monthly') : '', gstType: v.gstin ? 'regular' : 'none', flags: v.flags ? flagByText(v.flags) : defaultFlags(v.entityType), creditLimit: v.creditLimit ? C.paiseToStr(v.creditLimit) : '', notes: v.notes, contacts: v.contactPerson ? [{ name: v.contactPerson, email: v.email, mobile: v.mobile }] : [], people: [], onboarding: {} };
+      if (c.gstin || c.flags.gst) { c.flags.gst = true; c.gstType = 'regular'; c.gstFreq = c.gstFreq || (/q/i.test(v.gstFreq || '') ? 'qrmp' : 'monthly'); } else C.GST_FLAGS.forEach((f) => (c.flags[f] = false));
       if (!C.ENTITY_TYPES.includes(c.entityType)) errors.push('Entity type "' + (v.entityType || '') + '" is not recognised');
       if (!['active', 'prospective', 'inactive', 'discontinued'].includes(c.status)) { warnings.push('Status "' + v.status + '" read as active'); c.status = 'active'; }
       if (v.rm) { const e = empByText(v.rm); if (e === null) warnings.push('Staff "' + v.rm + '" not found — left unassigned'); else c.rm = e; }
@@ -3523,6 +3748,7 @@ ACT['imp-go'] = async (a) => {
   try { if (creates.length) { await Store.saveMany(entName, creates, 'Imported ' + creates.length + ' ' + ent.label + ' from ' + im.fileName); summary.created = creates.length; } } catch (e) { summary.failed++; summary.created = creates.length; }
   try { if (updates.length) { await Store.saveMany(entName, updates, 'Updated ' + updates.length + ' ' + ent.label + ' from ' + im.fileName); summary.updated = updates.length; } } catch (e) { summary.failed++; }
   im.summary = summary; im.step = 3; refresh();
+  if (entName === 'clients' && (creates.length || updates.length)) await syncCompliance({ clientIds: creates.concat(updates).map((x) => x.id), why: 'client import' });
 };
 ACT['imp-errors'] = () => { const im = S.ui.imp; const rows = im.res.map((r) => [r.rowNo, r.errors.length ? 'Error' : r.dup ? 'Duplicate' : r.warnings.length ? 'Warning' : 'OK', r.action, r.errors.concat(r.warnings).concat(r.dup ? [r.dup.label] : []).join(' | ')].concat(im.headers.map((_, i) => r.raw[i] === undefined ? '' : r.raw[i] instanceof Date ? r.raw[i].toISOString().slice(0, 10) : r.raw[i]))); X.save('Import_report_' + im.entity + '_' + today() + '.csv', C.toCSV(['Row', 'Result', 'Action', 'Messages'].concat(im.headers), rows)); };
 
@@ -3562,7 +3788,8 @@ VIEWS.reports = {
     const list = REPORTS.filter((r) => !r.perm || can(r.perm)); const rep = list.find((r) => r.id === f.id) || list[0];
     const groups = uniq(list.map((r) => r.group));
     let h = '<div class="page-head"><div class="t"><span class="eyebrow">Accounting, MIS & compliance reports</span><h1>Reports</h1></div></div><div class="split" style="grid-template-columns:260px minmax(0,1fr)">';
-    h += '<div class="card"><div class="card-b" style="padding-top:12px">' + groups.map((g) => '<div class="eyebrow" style="margin:10px 0 4px">' + esc(g) + '</div>' + list.filter((r) => r.group === g).map((r) => '<button class="btn ghost sm" style="width:100%;justify-content:flex-start;white-space:normal;height:auto;min-height:32px;text-align:left;' + (r.id === rep.id ? 'background:var(--accent-soft);color:var(--accent-2)' : '') + '" data-act="rep-pick" data-id="' + r.id + '">' + esc(r.title) + '</button>').join('')).join('') + '</div></div>';
+    const rq = (f.q || '').toLowerCase(); const shown = list.filter((r) => !rq || (r.title + ' ' + r.group).toLowerCase().includes(rq));
+    h += '<div class="card"><div class="card-b" style="padding-top:12px"><div class="tbl-search" style="padding:0 0 6px">' + ico('search') + '<input class="inp" type="search" data-rep="q" value="' + esc(f.q || '') + '" placeholder="Find a report…" aria-label="Find a report"></div>' + (shown.length ? '' : '<div class="muted" style="padding:8px">No report matches.</div>') + uniq(shown.map((r) => r.group)).map((g) => '<div class="eyebrow" style="margin:10px 0 4px">' + esc(g) + '</div>' + shown.filter((r) => r.group === g).map((r) => '<button class="btn ghost sm" style="width:100%;justify-content:flex-start;white-space:normal;height:auto;min-height:32px;text-align:left;' + (r.id === rep.id ? 'background:var(--accent-soft);color:var(--accent-2)' : '') + '" data-act="rep-pick" data-id="' + r.id + '">' + esc(r.title) + '</button>').join('')).join('') + '</div></div>';
     h += '<div class="card"><div class="card-h"><h2>' + esc(rep.title) + '</h2><div class="r">' + (rep.params === 'fy' ? '<select class="inp" style="width:auto" data-rep="fy">' + opts(fyOptions(), f.fy) + '</select>' : rep.params === 'range' ? '<input class="inp" style="width:auto" type="date" data-rep="from" value="' + f.from + '" aria-label="From"><input class="inp" style="width:auto" type="date" data-rep="to" value="' + f.to + '" aria-label="To">' : '<span class="muted" style="font-size:12px">As of ' + fd(today()) + '</span>') + '<button class="btn sm" data-act="rep-export">' + ico('download') + ' Export</button></div></div><div id="repBody">';
     if (rep.async) { h += '<div class="card-b muted">Loading…</div>'; setTimeout(() => runAsyncReport(rep, f), 0); }
     else { try { const r = rep.build(f); S.ui.repLast = r; h += reportTable(rep, r); } catch (e) { h += '<div class="card-b"><div class="banner bad">Could not build this report: ' + esc(e.message) + '</div></div>'; } }
@@ -3991,13 +4218,15 @@ const ADMIN_SA = {
       '<div class="sect"><h3>This device</h3><div class="btn-row"><button class="btn danger" data-act="device-reset">Remove app data from this device…</button></div><div class="muted" style="font-size:12.5px">' + (S.mode === 'drive' ? 'Your office data stays in Google Drive.' : 'This erases the data on this device. Download a backup first.') + '</div></div>';
     return h;
   },
-  users() {
+  usersCore() {
     if (S.mode !== 'drive') return '<div class="banner info">' + ico('users') + '<div><b>Single-user storage.</b> With “' + (S.mode === 'folder' ? 'folder on this computer' : 'this device') + '” storage only people using this device can work on the data. To work with staff on their own phones and laptops, move the data to Google Drive (Storage & backup → Move data…).</div></div>';
     const acc = S.cfg.access || {}; const people = S.cfg.people || {}; const own = ((S.cfg.firm || {}).ownerEmail || '').toLowerCase();
     const rows = uniq(Object.keys(acc).concat(Object.keys(people)).concat(own ? [own] : [])).map((email) => ({ id: email, email, role: email === own ? 'owner' : (acc[email] || {}).role || 'pending', employeeId: (acc[email] || {}).employeeId || '', last: (people[email] || {}).last, name: (people[email] || {}).name || '' }));
     return '<div class="banner info">' + ico('users') + '<div><b>How staff get access.</b> Invite a staff member by their Google email below. The app shares the office data file in your Google Drive with them and emails them the app link. They install the app, choose <b>Google Drive → Open office data shared with me</b>, and pick ' + DATA_NAME + '. Their role controls what they see inside the app. Anyone you share the file with can open it in Google Drive, so invite only your team.</div></div>' +
       (S.isOwner || can('admin') ? '<div class="sect"><h3>Invite staff</h3><div class="grid g3"><div class="field"><label>Google email</label><input class="inp" id="inv_e" type="email" placeholder="staff@gmail.com"></div><div class="field"><label>Role</label><select class="inp" id="inv_r">' + Object.entries(ROLES).filter(([k]) => k !== 'admin').map(([k, v]) => opt(k, v.label, 'staff')).join('') + opt('admin', 'Administrator', '') + '</select></div><div class="field"><label>&nbsp;</label><button class="btn pri" data-act="inv-send">Invite and share</button></div></div></div>' : '') +
       renderTable('sa-users', [{ k: 'email', label: 'Person', html: (r) => '<div class="strong">' + esc(r.name || r.email) + '</div><div class="sub">' + esc(r.email) + (r.last ? ' · last opened ' + fd(r.last) : ' · not opened yet') + '</div>' }, { k: 'role', label: 'Role', html: (r) => r.role === 'owner' ? badge('Owner · Administrator', 'accent') : '<select class="inp" style="height:32px;width:auto" data-act-change="role-set" data-id="' + esc(r.email) + '">' + opt('pending', 'No access', r.role) + Object.entries(ROLES).map(([k, v]) => opt(k, v.label, r.role)).join('') + '</select>' }, { k: 'emp', label: 'Linked employee', html: (r) => '<select class="inp" style="height:32px;width:auto" data-act-change="role-emp" data-id="' + esc(r.email) + '">' + empOpts(r.employeeId, 'Not linked') + '</select>' }, { k: 'x', label: '', nosort: 1, html: (r) => r.role === 'owner' ? '' : '<button class="btn xs danger" data-act="inv-remove" data-id="' + esc(r.email) + '">Remove access</button>' }], rows, { noPage: 1 });
+  },
+  users() { return ADMIN_SA.usersCore() + rolesMatrix();
   },
 };
 ACT['inv-send'] = async (a) => {
@@ -4292,20 +4521,21 @@ const ADMIN = {
   },
   services() {
     const rows = D().services.sort(by((s) => s.category + s.name));
-    return '<div class="btn-row"><button class="btn pri sm" data-act="svc-new">' + ico('plus') + ' Add service</button>' + (!rows.length ? '<button class="btn sm" data-act="svc-std">Add standard CA services</button>' : '') + '</div>' + renderTable('svc', [{ k: 'name', label: 'Service' }, { k: 'category', label: 'Category' }, { k: 'sac', label: 'SAC', html: (s) => '<span class="mono">' + esc(s.sac) + '</span>' }, { k: 'gstRate', label: 'GST', num: 1, val: (s) => s.gstRate + '%' }, { k: 'fee', label: 'Standard fee', num: 1, val: (s) => s.fee ? money(s.fee) : '' }], rows, { rowAct: 'svc-open', noPage: 1, empty: emptyState('invoice', 'No services', 'Add the services you bill for, with SAC and GST rate.') });
+    return '<div class="btn-row"><button class="btn pri sm" data-act="svc-new">' + ico('plus') + ' Add service</button>' + (!rows.length ? '<button class="btn sm" data-act="svc-std">Add standard CA services</button>' : '') + '</div>' + renderTable('svc', [{ k: 'name', label: 'Service' }, { k: 'category', label: 'Category' }, { k: 'sac', label: 'SAC', html: (s) => '<span class="mono">' + esc(s.sac) + '</span>' }, { k: 'gstRate', label: 'GST', num: 1, val: (s) => s.gstRate + '%' }, { k: 'fee', label: 'Standard fee', num: 1, val: (s) => s.fee ? money(s.fee) : '' }], rows, { rowAct: 'svc-open', noPage: 1, searchPh: 'Search services — name, category, SAC…', empty: emptyState('invoice', 'No services', 'Add the services you bill for, with SAC and GST rate.') });
   },
   rules() {
-    const rows = Store.all('rules').sort(by((r) => r.category + r.name));
-    return '<div class="banner warn">' + ico('alert') + '<div><b>Due dates are never treated as permanently valid.</b> Each rule records its official source and when it was last verified. Extensions are added per period. Tasks generated from an unverified rule are marked “unverified date”.</div></div><div class="btn-row"><button class="btn sm pri" data-act="rule-new">' + ico('plus') + ' Add rule</button><button class="btn sm" data-act="rules-install">Install standard Indian rules</button></div>' +
-      renderTable('rules', [{ k: 'name', label: 'Rule', html: (r) => '<div class="strong">' + esc(r.name) + '</div><div class="sub">' + esc(r.form) + '</div>' }, { k: 'category', label: 'Category' }, { k: 'when', label: 'Due', val: (r) => r.freq === 'monthly' ? 'Day ' + r.day + ' of ' + (r.monthOffset === 0 ? 'same' : 'next') + ' month' + (Object.keys(r.monthOverrides || {}).length ? ' (with exceptions)' : '') : (r.schedule || []).map((s) => s.md.split('-').reverse().join('/')).join(', ') }, { k: 'applies', label: 'Applies to', val: (r) => ((r.applies || {}).flags || []).join(' + ') + ((r.applies || {}).gstFreq ? ' · ' + r.applies.gstFreq : '') + (((r.applies || {}).notFlags || []).length ? ' · not ' + r.applies.notFlags.join('/') : '') }, { k: 'ext', label: 'Extensions', num: 1, val: (r) => Object.keys(r.periodOverrides || {}).length || '' }, { k: 'verify', label: 'Verification', html: (r) => r.verifyStatus === 'verified' ? badge('Verified ' + fd(r.lastVerified), 'green') : badge('Not verified', 'amber') }, { k: 'active', label: 'Active', html: (r) => r.active === false ? badge('Off', 'slate') : badge('On', 'green') }], rows, { rowAct: 'rule-open', noPage: 1, empty: emptyState('cal', 'No rules', 'Install the standard set, then verify each rule.') });
+    const rows = Store.all('rules').sort(by((r) => r.category + r.name)); const fl = (k) => (CLIENT_FLAGS.find((x) => x[0] === k) || [k, k])[1];
+    const unv = rows.filter((r) => r.active !== false && r.verifyStatus !== 'verified');
+    const covers = (r) => D().clients.filter((c) => C.ruleApplies(r, c)).length;
+    return '<div class="banner warn">' + ico('alert') + '<div><b>Due dates are never treated as permanently valid.</b> Each rule records its official source and when it was last verified. Saving or verifying a rule updates every matching client’s compliance list automatically.</div></div><div class="btn-row"><button class="btn sm pri" data-act="rule-new">' + ico('plus') + ' Add rule</button><button class="btn sm" data-act="rules-install">Install standard Indian rules</button>' + (unv.length ? '<button class="btn sm ok" data-act="rules-verify-all">' + ico('check') + ' Verify all ' + unv.length + ' unverified</button>' : '') + '<button class="btn sm" data-act="sync-now">' + ico('refresh') + ' Update compliance lists now</button></div>' +
+      renderTable('rules', [{ k: 'name', label: 'Rule', html: (r) => '<div class="strong">' + esc(r.name) + '</div><div class="sub">' + esc(r.form) + '</div>' }, { k: 'category', label: 'Category', html: (r) => '<span class="cat-pill" style="--cc:' + catColor(r.category) + '">' + esc(r.category) + '</span>' }, { k: 'when', label: 'Due', val: (r) => r.freq === 'monthly' ? 'Day ' + r.day + ' of ' + (r.monthOffset === 0 ? 'same' : 'next') + ' month' + (Object.keys(r.monthOverrides || {}).length ? ' (with exceptions)' : '') : (r.schedule || []).map((x) => x.md.split('-').reverse().join('/')).join(', ') }, { k: 'applies', label: 'Applies to', val: (r) => ((r.applies || {}).flags || []).map(fl).join(' + ') + ((r.applies || {}).gstFreq ? ' · ' + ((r.applies || {}).gstFreq === 'qrmp' ? 'QRMP' : 'monthly') : '') + (((r.applies || {}).notFlags || []).length ? ' · not ' + r.applies.notFlags.map(fl).join('/') : '') }, { k: 'cov', label: 'Clients', num: 1, sortVal: covers, val: covers }, { k: 'verify', label: 'Verification', html: (r) => r.verifyStatus === 'verified' ? badge('Verified ' + fd(r.lastVerified), 'green') : '<span class="btn-row" style="flex-wrap:nowrap">' + badge('Not verified', 'amber') + (can('rules.edit') ? '<button class="btn xs ok" data-act="rule-verify" data-id="' + r.id + '">Verify</button>' : '') + '</span>' }, { k: 'active', label: 'Active', html: (r) => r.active === false ? badge('Off', 'slate') : badge('On', 'green') }], rows, { rowAct: 'rule-open', noPage: 1, searchPh: 'Search rules — form, category, “GSTR-3B”, “TDS”, “not verified”…', searchText: (r) => r.code + ' ' + (r.verifyStatus === 'verified' ? 'verified' : 'not verified unverified') + ' ' + ((r.applies || {}).flags || []).join(' '), empty: emptyState('cal', 'No rules', 'Install the standard set, then verify each rule.') });
   },
   users() {
     const people = S.cfg.people || {}; const acc = S.cfg.access || {}; const ids = uniq(Object.keys(people).concat(Object.keys(acc)));
     const prof = S.ui.prof || {};
     if (S.caps.user && ids.length && !S.ui.profLoading) { S.ui.profLoading = true; S.caps.user.profiles(ids).then((p) => { S.ui.prof = p; refresh(); }).catch(() => {}); }
     return '<div class="banner info">' + ico('users') + '<div><b>How access works.</b> Share this app in claude.ai with each colleague as an <b>Editor</b> — only the Owner and Editors can read or change practice data. Ask them to open it once; they then appear below and you assign their role. Roles control what each person can see and do inside the app (for example, staff cannot see billing). Anyone you share with as Editor can technically reach the stored data, so share only with your team.</div></div>' +
-      renderTable('users', [{ k: 'name', label: 'Person', html: (r) => '<div class="strong">' + esc((prof[r.id] && prof[r.id].name) || (r.id === S.uid ? 'You' : 'Colleague')) + '</div><div class="sub">First opened ' + fd(r.first) + ' · last ' + fd(r.last) + '</div>' }, { k: 'role', label: 'Role', html: (r) => r.owner ? badge('Owner · Administrator', 'accent') : '<select class="inp" style="height:32px;width:auto" data-act-change="role-set" data-id="' + esc(r.id) + '">' + opt('pending', 'No access yet', r.role) + Object.entries(ROLES).map(([k, v]) => opt(k, v.label, r.role)).join('') + '</select>' }, { k: 'emp', label: 'Linked employee', html: (r) => '<select class="inp" style="height:32px;width:auto" data-act-change="role-emp" data-id="' + esc(r.id) + '">' + empOpts(r.employeeId, 'Not linked') + '</select>' }], ids.map((id) => ({ id, first: (people[id] || {}).first, last: (people[id] || {}).last, role: (acc[id] || {}).role || 'pending', employeeId: (acc[id] || {}).employeeId || '', owner: id === S.uid && S.isOwner })), { noPage: 1, empty: emptyState('users', 'Nobody else yet', 'Share the app and ask your colleagues to open it.') }) +
-      '<div class="sect"><h3>What each role can do</h3><div class="tbl-wrap"><table class="tbl compact"><thead><tr><th>Permission</th>' + Object.values(ROLES).map((r) => '<th>' + esc(r.label) + '</th>').join('') + '</tr></thead><tbody>' + [['clients.edit', 'Add / edit clients'], ['billing.view', 'See billing & receivables'], ['billing.edit', 'Create invoices & receipts'], ['billing.approve', 'Approve write-offs'], ['portals.view', 'See portal register'], ['portals.export', 'Export portal register'], ['tasks.edit', 'Work on tasks'], ['tasks.review', 'Review & approve filing'], ['export', 'Export reports'], ['export.sensitive', 'Export identifiers'], ['audit.view', 'See audit trail'], ['rules.edit', 'Edit due-date rules']].map(([k, l]) => '<tr><td>' + l + '</td>' + Object.values(ROLES).map((r) => '<td>' + (r.perms === '*' || r.perms.includes(k) ? '✓' : '') + '</td>').join('') + '</tr>').join('') + '</tbody></table></div></div>';
+      renderTable('users', [{ k: 'name', label: 'Person', html: (r) => '<div class="strong">' + esc((prof[r.id] && prof[r.id].name) || (r.id === S.uid ? 'You' : 'Colleague')) + '</div><div class="sub">First opened ' + fd(r.first) + ' · last ' + fd(r.last) + '</div>' }, { k: 'role', label: 'Role', html: (r) => r.owner ? badge('Owner · Administrator', 'accent') : '<select class="inp" style="height:32px;width:auto" data-act-change="role-set" data-id="' + esc(r.id) + '">' + opt('pending', 'No access yet', r.role) + Object.entries(ROLES).map(([k, v]) => opt(k, v.label, r.role)).join('') + '</select>' }, { k: 'emp', label: 'Linked employee', html: (r) => '<select class="inp" style="height:32px;width:auto" data-act-change="role-emp" data-id="' + esc(r.id) + '">' + empOpts(r.employeeId, 'Not linked') + '</select>' }], ids.map((id) => ({ id, first: (people[id] || {}).first, last: (people[id] || {}).last, role: (acc[id] || {}).role || 'pending', employeeId: (acc[id] || {}).employeeId || '', owner: id === S.uid && S.isOwner })), { noPage: 1, searchPh: 'Search people or roles…', searchText: (r) => (ROLES[r.role] || { label: r.role }).label, empty: emptyState('users', 'Nobody else yet', 'Share the app and ask your colleagues to open it.') }) + rolesMatrix();
   },
   storage() {
     const meta = S.cfg.meta || {}; const docs = Object.keys(S.sizes).length + 4; const biggest = Math.max(0, ...Object.values(S.sizes));
@@ -4342,7 +4572,7 @@ const ADMIN = {
       '<div class="muted" style="font-size:12px">Computed in ' + D().ms + ' ms · storage mode: ' + S.mode + ' · app version ' + APP_VERSION + '</div>';
   },
 };
-const APP_VERSION = '1.2.0';
+const APP_VERSION = '1.3.0';
 ACT['cfg-save'] = async () => {
   const form = $('[data-cfgform="firm"]'); if (!form) return; const patch = {};
   $$('[data-k]', form).forEach((el) => { const v = el.type === 'checkbox' ? el.checked : el.value.trim(); setPath(patch, el.dataset.k, el.classList.contains('mono') && typeof v === 'string' ? v.toUpperCase() : v); });
@@ -4382,40 +4612,60 @@ ACT['rule-open'] = (a) => ruleForm(Store.get('rules', a.dataset.id));
 function ruleForm(existing) {
   const r = existing ? JSON.parse(JSON.stringify(existing)) : { freq: 'monthly', day: 20, monthOffset: 1, category: 'GST', applies: { flags: [] }, schedule: [], periodOverrides: {}, monthOverrides: {}, active: true, verifyStatus: 'unverified', internalDays: 3 };
   r.applies = r.applies || { flags: [] }; r.schedule = r.schedule || []; r.periodOverrides = r.periodOverrides || {};
-  const st = { flagsStr: (r.applies.flags || []).join(', '), notStr: (r.applies.notFlags || []).join(', '), schedStr: r.schedule.map((s) => s.label + ' ' + s.md + (s.yOff ? ' +' + s.yOff : '')).join('\n'), ovStr: Object.entries(r.monthOverrides || {}).map(([m, o]) => m + ': day ' + o.day + ' +' + (o.monthOffset === undefined ? 1 : o.monthOffset)).join('\n'), extP: '', extD: '', extN: '' };
+  const st = { has: new Set(r.applies.flags || []), not: new Set(r.applies.notFlags || []), groups: new Set(r.applies.entityGroups || []), schedStr: r.schedule.map((s) => s.label + ' ' + s.md + (s.yOff ? ' +' + s.yOff : '')).join('\n'), ovStr: Object.entries(r.monthOverrides || {}).map(([m, o]) => m + ': day ' + o.day + ' +' + (o.monthOffset === undefined ? 1 : o.monthOffset)).join('\n'), extP: '', extD: '', extN: '' };
   openDrawer({ title: existing ? 'Due-date rule' : 'New due-date rule', narrow: true, state: st,
     render: () => '<div class="sect"><div class="grid g2">' + fld({ k: 'name', label: 'Rule name', v: r.name, req: 1, cls: 'span-all' }) + fld({ k: 'form', label: 'Form / return', v: r.form, req: 1 }) + fld({ k: 'category', label: 'Category', type: 'select', options: opts(COMP_CATS, r.category) }) +
       fld({ k: 'freq', label: 'Frequency', type: 'select', options: opts([['monthly', 'Monthly'], ['schedule', 'Fixed dates in the FY (quarterly / annual / custom)']], r.freq) }) + fld({ k: 'internalDays', label: 'Internal target: days before due', v: r.internalDays, num: 1 }) +
       (r.freq === 'monthly' ? fld({ k: 'day', label: 'Due day of month', v: r.day, num: 1 }) + fld({ k: 'monthOffset', label: 'Months after the period', v: r.monthOffset, num: 1, hint: '1 = following month' }) + '<div class="field span-all"><label>Month exceptions</label><textarea class="inp" data-s="ovStr" rows="2" placeholder="03: day 30 +1   (March period due 30 April)">' + esc(st.ovStr) + '</textarea></div>' : '<div class="field span-all"><label>Due dates (one per line: label MM-DD +years after FY start year)</label><textarea class="inp" data-s="schedStr" rows="4" placeholder="Q1 07-31\nQ2 10-31\nQ3 01-31 +1\nQ4 05-31 +1">' + esc(st.schedStr) + '</textarea><div class="hint">For FY 2026-27, “+1” means calendar year 2027.</div></div>') +
-      '<div class="field"><label>Applies when client has</label><input class="inp" data-s="flagsStr" value="' + esc(st.flagsStr) + '" placeholder="gst, tds"><div class="hint">' + CLIENT_FLAGS.map(([k]) => k).join(', ') + '</div></div><div class="field"><label>…and does not have</label><input class="inp" data-s="notStr" value="' + esc(st.notStr) + '" placeholder="taxAudit"></div>' +
+      '<div class="field span-all"><label>Applies to clients who have ticked <span class="faint">(all selected)</span></label><div class="chips">' + CLIENT_FLAGS.map(([k, l]) => '<button type="button" class="fchip' + (st.has.has(k) ? ' on' : '') + '" data-d="flagT" data-g="has" data-k="' + k + '" aria-pressed="' + st.has.has(k) + '">' + (st.has.has(k) ? '✓ ' : '') + esc(l) + '</button>').join('') + '</div></div>' +
+      '<div class="field span-all"><label>…but not to clients who have ticked</label><div class="chips">' + CLIENT_FLAGS.map(([k, l]) => '<button type="button" class="fchip neg' + (st.not.has(k) ? ' on' : '') + '" data-d="flagT" data-g="not" data-k="' + k + '" aria-pressed="' + st.not.has(k) + '">' + (st.not.has(k) ? '✕ ' : '') + esc(l) + '</button>').join('') + '</div></div>' +
+      '<div class="field span-all"><label>Only for entity types <span class="faint">(none selected = all)</span></label><div class="chips">' + ['Individual', 'HUF', 'Proprietorship', 'Partnership', 'LLP', 'Company', 'Trust/Society', 'Other'].map((g) => '<button type="button" class="fchip' + (st.groups.has(g) ? ' on' : '') + '" data-d="flagT" data-g="groups" data-k="' + g + '">' + (st.groups.has(g) ? '✓ ' : '') + esc(g) + '</button>').join('') + '</div></div>' +
+      '<div class="span-all" data-region="covers"></div>' +
       fld({ k: 'applies.gstFreq', label: 'GST frequency', type: 'select', options: opts([['', 'Any'], ['monthly', 'Monthly only'], ['qrmp', 'QRMP only']], r.applies.gstFreq || '') }) + fld({ k: 'applies.ptState', label: 'Only for state code', v: r.applies.ptState, ph: '36' }) +
       fld({ k: 'effectiveFrom', label: 'Effective from', type: 'date', v: r.effectiveFrom }) + fld({ k: 'effectiveTo', label: 'Effective to', type: 'date', v: r.effectiveTo }) +
       fld({ k: 'docs', label: 'Documents usually needed', v: r.docs, cls: 'span-all' }) + fld({ k: 'notes', label: 'Notes', type: 'textarea', v: r.notes, rows: 2, cls: 'span-all' }) + fld({ k: 'active', label: 'Active', type: 'check', v: r.active !== false }) + '</div></div>' +
       '<div class="sect"><h3>Source & verification</h3><div class="grid g2">' + fld({ k: 'sourceUrl', label: 'Official source URL', v: r.sourceUrl, cls: 'span-all' }) + fld({ k: 'sourceRef', label: 'Notification / circular reference', v: r.sourceRef, cls: 'span-all' }) + fld({ k: 'verifyStatus', label: 'Status', type: 'select', options: opts([['unverified', 'Not verified'], ['verified', 'Verified'], ['doubt', 'Needs checking']], r.verifyStatus) }) + fld({ k: 'lastVerified', label: 'Last verified on', type: 'date', v: r.lastVerified }) + '</div>' + (r.sourceUrl ? '<a href="' + esc(r.sourceUrl) + '" target="_blank" rel="noopener noreferrer">' + ico('ext') + ' Open source</a>' : '') + '</div>' +
       '<div class="sect"><h3>Extensions by period</h3>' + (Object.entries(r.periodOverrides).filter(([, v]) => v).map(([k, v]) => '<div class="btn-row" style="font-size:13px"><span class="mono">' + esc(k) + '</span> → <b>' + fd(v.date) + '</b> <span class="muted">' + esc(v.note || '') + '</span><button class="btn xs ghost" data-d="rmExt" data-k="' + esc(k) + '">' + ico('x') + '</button></div>').join('') || '<div class="muted">No extensions.</div>') +
       '<div class="grid g3">' + '<div class="field"><label>Period</label><select class="inp" data-s="extP">' + opts(C.rulePeriods({ ...r, periodOverrides: {} }, S.fy).map((p) => [p.periodKey, p.label + ' (due ' + C.fmtDate(p.due) + ')']), st.extP, 'Choose…') + '</select></div><div class="field"><label>Extended due date</label><input class="inp" type="date" data-s="extD" value="' + esc(st.extD) + '"></div><div class="field"><label>Notification reference</label><input class="inp" data-s="extN" value="' + esc(st.extN) + '"></div></div><div><button class="btn sm" data-d="addExt">Add extension</button> <span class="muted" style="font-size:12px">Also updates open tasks already generated for that period.</span></div></div>',
-    footer: () => (existing ? '<button class="btn danger" data-d="del">Delete</button>' : '') + '<span class="sp"></span><button class="btn" data-d="verify">Mark verified today</button><button class="btn" data-d="close">Cancel</button><button class="btn pri" data-d="save">Save rule</button>',
+    after: (dr) => ruleCovers(dr, r, st),
+    footer: () => (existing ? '<button class="btn danger" data-d="del">Delete</button>' : '') + '<span class="sp"></span><button class="btn" data-d="close">Cancel</button><button class="btn ok" data-d="verify">' + ico('check') + ' Verified today &amp; save</button><button class="btn pri" data-d="save">Save rule</button>',
     mount: (dr) => { bindInputs(dr.body, r, (k) => { if (k === 'freq') dr.render(); }); dr.body.addEventListener('input', (e) => { if (e.target.dataset.s) st[e.target.dataset.s] = e.target.value; }); dr.body.addEventListener('change', (e) => { if (e.target.dataset.s) st[e.target.dataset.s] = e.target.value; }); },
     acts: {
-      verify: (a, dr) => { r.verifyStatus = 'verified'; r.lastVerified = today(); r.verifiedBy = S.uid; dr.render(); dr.dirty = true; },
+      flagT: (a, dr) => { const set = st[a.dataset.g]; const k = a.dataset.k; if (set.has(k)) set.delete(k); else { set.add(k); if (a.dataset.g === 'has') st.not.delete(k); if (a.dataset.g === 'not') st.has.delete(k); } dr.dirty = true; dr.render(); },
+      verify: (a, dr) => { r.verifyStatus = 'verified'; r.lastVerified = today(); r.verifiedBy = S.uid; dr.acts.save(a, dr); },
       addExt: (a, dr) => { if (!st.extP || !C.isISO(st.extD)) return toast('Choose a period and the extended date', 'bad'); r.periodOverrides[st.extP] = { date: st.extD, note: st.extN || 'Extended', by: S.uid }; st.extP = st.extD = st.extN = ''; dr.render(); dr.dirty = true; },
       rmExt: (a, dr) => { r.periodOverrides[a.dataset.k] = null; dr.render(); dr.dirty = true; },
       save: async (a, dr) => {
         if (!r.name || !r.form) return toast('Name and form are required', 'bad');
-        r.applies.flags = st.flagsStr.split(/[,\s]+/).filter(Boolean); r.applies.notFlags = st.notStr.split(/[,\s]+/).filter(Boolean);
+        r.applies.flags = Array.from(st.has); r.applies.notFlags = Array.from(st.not); r.applies.entityGroups = Array.from(st.groups);
+        if (!r.applies.flags.length) return toast('Choose at least one compliance under “Applies to clients who have ticked”', 'bad');
         if (r.freq === 'monthly') { r.day = Number(r.day) || 20; r.monthOffset = Number(r.monthOffset); if (isNaN(r.monthOffset)) r.monthOffset = 1; r.monthOverrides = {}; for (const line of st.ovStr.split('\n')) { const m = /^(\d{2})\s*:\s*day\s*(\d+)\s*\+?(\d+)?/i.exec(line.trim()); if (m) r.monthOverrides[m[1]] = { day: +m[2], monthOffset: m[3] === undefined ? 1 : +m[3] }; } }
         else { r.schedule = []; for (const line of st.schedStr.split('\n')) { const m = /^(\S+)\s+(\d{2}-\d{2})\s*(\+(\d))?/.exec(line.trim()); if (m) r.schedule.push({ label: m[1], md: m[2], yOff: m[4] ? +m[4] : 0 }); } if (!r.schedule.length) return toast('Add at least one due date line, e.g. "Q1 07-31"', 'bad'); }
         r.internalDays = Number(r.internalDays) || 0; if (!r.code) r.code = (r.form || r.name).toUpperCase().replace(/[^A-Z0-9]+/g, '-').slice(0, 20);
         await Store.save('rules', r, 'Due-date rule ' + r.name + ' (' + r.verifyStatus + ')');
-        // propagate due-date changes and extensions to open generated tasks of the selected FY
-        const per = Object.fromEntries(C.rulePeriods(r, S.fy).map((p) => [p.periodKey, p]));
-        const upd = D().tasks.filter((t) => t.ruleId === r.id && !C.isDone(t) && per[t.periodKey] && (per[t.periodKey].due !== t.dueDate || (t.dueVerified !== (r.verifyStatus === 'verified')))).map((t) => { const p = per[t.periodKey]; return { ...JSON.parse(JSON.stringify(t)), dueDate: p.due, originalDue: p.originalDue || t.originalDue || '', extension: p.extension || '', targetDate: C.addDays(p.due, -(r.internalDays || 0)), dueVerified: r.verifyStatus === 'verified' }; });
-        if (upd.length) await Store.saveMany('tasks', upd, 'Rule change applied to ' + upd.length + ' open tasks');
-        dr.dirty = false; dr.close(true); toast('Rule saved' + (upd.length ? ' · ' + upd.length + ' open tasks updated' : ''));
+        dr.dirty = false; dr.close(true);
+        const sum = await syncCompliance({ ruleIds: [r.id], why: 'rule ' + r.name, quiet: true });
+        toast('Rule saved' + (sum && (sum.create + sum.restore + sum.update + sum.remove) ? ' · ' + syncMsg(sum).replace('Compliance list updated: ', '') : ' · ' + D().clients.filter((c) => C.ruleApplies(r, c)).length + ' clients covered'));
       },
-      del: (a, dr) => confirmBox('Delete this rule?', 'Tasks already generated stay as they are.', 'Delete', async () => { await Store.softDelete('rules', r.id); dr.close(true); }),
+      del: (a, dr) => confirmBox('Delete this rule?', 'Pending tasks from this rule that nobody has started move to the recycle bin. Started and filed tasks stay.', 'Delete', async () => { await Store.softDelete('rules', r.id); dr.close(true); await syncCompliance({ ruleIds: [r.id], why: 'rule deleted' }); }),
     } });
 }
+/** Live preview inside the rule form: which clients this rule covers right now. */
+function ruleCovers(dr, r, st) {
+  const el = $('[data-region="covers"]', dr.body); if (!el) return;
+  const test = { ...r, applies: { ...r.applies, flags: Array.from(st.has), notFlags: Array.from(st.not), entityGroups: Array.from(st.groups) } };
+  const hit = D().clients.filter((c) => C.ruleApplies(test, c));
+  el.innerHTML = '<div class="banner ' + (hit.length ? 'ok' : 'warn') + '">' + ico(hit.length ? 'users' : 'alert') + '<div><b>Covers ' + hit.length + ' active client' + (hit.length === 1 ? '' : 's') + ' now.</b> ' + (hit.length ? esc(hit.slice(0, 8).map((c) => c.tradeName || c.legalName).join(', ')) + (hit.length > 8 ? ' and ' + (hit.length - 8) + ' more' : '') : 'Tick the matching compliance in each client’s profile (Clients → Edit → Compliances), or change the selection above.') + ' Saving updates their compliance lists automatically.</div></div>';
+}
+const PERM_LIST = [['clients.edit', 'Add / edit clients'], ['billing.view', 'See billing & receivables'], ['billing.edit', 'Create invoices & receipts'], ['billing.approve', 'Approve write-offs'], ['portals.view', 'See portal register'], ['portals.edit', 'Edit portal register'], ['portals.export', 'Export portal register'], ['tasks.edit', 'Work on tasks'], ['tasks.review', 'Review & approve filing'], ['tasks.assign', 'Assign & generate tasks'], ['docs.edit', 'Upload documents'], ['staff.view', 'See staff & productivity'], ['staff.edit', 'Add / edit employees'], ['export', 'Export reports'], ['export.sensitive', 'Export identifiers'], ['audit.view', 'See audit trail'], ['rules.edit', 'Edit due-date rules'], ['ai', 'Use the assistant']];
+function rolesMatrix() {
+  const roles = Object.entries(ROLES);
+  return '<div class="sect"><h3>' + ico('shield') + ' What each role can do</h3>' + renderTable('perms', [{ k: 'l', label: 'Permission', html: (p) => '<b>' + esc(p.l) + '</b>' }].concat(roles.map(([k, r]) => ({ k: 'r_' + k, label: r.label, nosort: 1, html: (p) => (r.perms === '*' || r.perms.includes(p.id) ? '<span class="yes">✓</span>' : '<span class="no">—</span>'), val: (p) => (r.perms === '*' || r.perms.includes(p.id) ? r.label : '') }))), PERM_LIST.map(([id, l]) => ({ id, l })), { noPage: 1, compact: 1, search: true, searchPh: 'Search a permission or role, e.g. “billing”, “Reviewer”…' }) + '</div>';
+}
+ACT['rule-verify'] = async (a) => { const r = JSON.parse(JSON.stringify(Store.get('rules', a.dataset.id))); Object.assign(r, { verifyStatus: 'verified', lastVerified: today(), verifiedBy: S.uid }); await Store.save('rules', r, 'Verified due-date rule ' + r.name); const sum = await syncCompliance({ ruleIds: [r.id], why: 'rule verified', quiet: true }); toast(r.name + ' verified' + (sum && (sum.create + sum.restore + sum.update) ? ' · ' + syncMsg(sum).replace('Compliance list updated: ', '') : '')); };
+ACT['rules-verify-all'] = () => { const st = tableState('rules'); const q = (st.q || '').toLowerCase(); const list = Store.all('rules').filter((r) => r.active !== false && r.verifyStatus !== 'verified').filter((r) => !q || (r.name + ' ' + r.form + ' ' + r.category + ' ' + r.code).toLowerCase().includes(q)); if (!list.length) return toast('Nothing to verify in this list'); confirmBox('Mark ' + list.length + ' rule' + (list.length > 1 ? 's' : '') + ' as verified today?', 'Do this only after checking each due date against the official notification or portal. Matching clients’ compliance lists are updated straight away.', 'Mark verified', async () => { const recs = list.map((r) => ({ ...JSON.parse(JSON.stringify(r)), verifyStatus: 'verified', lastVerified: today(), verifiedBy: S.uid })); await Store.saveMany('rules', recs, 'Verified ' + recs.length + ' due-date rules'); await syncCompliance({ ruleIds: recs.map((r) => r.id), why: 'rules verified' }); toast(recs.length + ' rules verified'); }, false); };
+ACT['sync-now'] = async () => { const sum = await syncCompliance({ why: 'manual update', quiet: true }); if (!sum) return toast('Your role cannot update compliance lists', 'bad'); toast(sum.noRules ? 'Install due-date rules first' : (sum.create + sum.restore + sum.update + sum.remove) ? syncMsg(sum) : 'Compliance lists are already up to date'); };
+function catColor(c) { return { GST: 'var(--m-inv)', 'Income Tax': 'var(--m-recv)', 'TDS/TCS': 'var(--m-key)', 'ROC/MCA': 'var(--m-cli)', 'PF/ESIC': 'var(--m-rcpt)', 'Professional Tax': 'var(--m-docs)', Audit: 'var(--m-comp)', Accounting: 'var(--m-staff)' }[c] || 'var(--m-adm)'; }
 ACT['role-set'] = async (el) => { await Store.saveCfg('access', { [el.dataset.id]: { role: el.value } }, 'Role set to ' + el.value); toast('Role updated'); };
 ACT['role-emp'] = async (el) => { await Store.saveCfg('access', { [el.dataset.id]: { employeeId: el.value } }, 'User linked to employee'); toast('Linked'); };
 ACT['cf-add'] = async () => { const l = $('#cf_l').value.trim(); if (!l) return; const list = (firm().customFields || []).concat([{ entity: 'clients', key: 'cf_' + l.toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 30), label: l, type: $('#cf_t').value }]); await Store.saveCfg('firm', { customFields: list }, 'Custom field ' + l); };
@@ -4532,7 +4782,7 @@ function refresh(force) {
   if (myRole() === 'pending') { root.innerHTML = pendingHTML(); renderNav(); return; }
   const v = VIEWS[S.view] || VIEWS.dashboard; if (v.perm && !can(v.perm)) { S.view = 'dashboard'; return refresh(); }
   const ae = document.activeElement; let focusKey = null, selS = null, selE = null;
-  if (ae && root.contains(ae)) { const attrs = ['data-clf', 'data-pf', 'data-bf', 'data-rf', 'data-rv', 'data-cf', 'data-df', 'data-sf', 'data-dash', 'data-rep', 'id']; for (const a of attrs) if (ae.getAttribute(a)) { focusKey = '[' + a + '="' + ae.getAttribute(a) + '"]'; break; } try { selS = ae.selectionStart; selE = ae.selectionEnd; } catch (e) { /* not text */ } }
+  if (ae && root.contains(ae)) { const attrs = ['data-tq', 'data-clf', 'data-pf', 'data-bf', 'data-rf', 'data-rv', 'data-cf', 'data-df', 'data-sf', 'data-dash', 'data-rep', 'id']; for (const a of attrs) if (ae.getAttribute(a)) { focusKey = '[' + a + '="' + ae.getAttribute(a) + '"]'; break; } try { selS = ae.selectionStart; selE = ae.selectionEnd; } catch (e) { /* not text */ } }
   const aiDraft = ($('#aiIn') || {}).value;
   const scroll = window.scrollY; const key = S.view;
   try { root.innerHTML = v.render(); } catch (e) { console.error(e); root.innerHTML = '<div class="banner bad">' + ico('alert') + '<div><b>This page could not be displayed.</b> ' + esc(e.message) + '</div></div>'; }
@@ -4574,6 +4824,8 @@ document.addEventListener('click', (e) => {
   e.preventDefault(); fn(a, e);
 });
 ACT['tbl-size'] = (el) => { const st = tableState(el.dataset.t); st.size = +el.value; st.page = 0; refreshAll(); };
+const tqRefresh = debounce((id) => { const sel = '[data-tq="' + id + '"]'; let inDrawer = false; for (const dr of drawers) if (dr.el.querySelector(sel)) { dr.render(); inDrawer = true; } if (!inDrawer || $('#content ' + sel)) refresh(); }, 180);
+ACT['tq-clear'] = (a) => { const st = tableState(a.dataset.t); st.q = ''; st.page = 0; tqRefresh(a.dataset.t); };
 function refreshAll() { refresh(); for (const dr of drawers) dr.render(); }
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { const m = $$('.modal-c').pop(); if (m) { m.remove(); return; } if (drawers.length) drawers[drawers.length - 1].close(); return; }
@@ -4583,6 +4835,7 @@ document.addEventListener('keydown', (e) => {
 });
 document.addEventListener('input', (e) => {
   const el = e.target;
+  if (el.dataset && el.dataset.tq !== undefined) { const st = tableState(el.dataset.tq); st.q = el.value; st.page = 0; tqRefresh(el.dataset.tq); return; }
   if (el.id === 'gsearch') { const res = globalSearch(el.value); const g = $('#gres'); g.hidden = !el.value.trim(); g.innerHTML = res.length ? res.map((r) => '<button data-act="' + r.act + '" data-id="' + esc(r.id) + '">' + ico(r.icon) + '<span><b>' + esc(r.t) + '</b><br><span class="muted" style="font-size:12px">' + esc(r.s) + '</span></span></button>').join('') : '<div class="muted" style="padding:12px">No matches</div>'; return; }
   for (const attr in FILTER_MAP) if (el.hasAttribute(attr)) { const box = S.ui[FILTER_MAP[attr]] || (S.ui[FILTER_MAP[attr]] = {}); box[el.getAttribute(attr)] = el.type === 'checkbox' ? (el.checked ? '1' : '') : el.value; for (const k in S.ui) if (S.ui[k] && S.ui[k].page !== undefined) S.ui[k].page = 0; if (el.tagName === 'INPUT' && el.type !== 'checkbox' && el.type !== 'date' && el.type !== 'month') refreshSoon(); else refresh(); return; }
   if (el.dataset.impmap !== undefined) { S.ui.imp.map[el.dataset.impmap] = el.value === '' ? undefined : +el.value; return; }
@@ -4638,6 +4891,7 @@ function afterReady() {
   if (S.platform === 'standalone' && pinIsSet()) lockScreen();
   if (S.mode === 'memory') { const b = document.createElement('div'); b.className = 'banner bad'; b.style.margin = '12px max(16px, env(safe-area-inset-left, 0px)) 0'; b.innerHTML = ico('alert') + '<div><b>Nothing is being saved.</b> ' + (S.platform === 'standalone' ? 'This browser blocked local storage (private window or storage disabled). Open the app in a normal Safari, Chrome or Edge window.' : 'Secure storage isn’t available in this view, so anything you enter disappears when you close it. Open the app from claude.ai to work with your saved practice data.') + '</div>'; $('.main').insertBefore(b, $('#content')); }
   if (S.slowLoad) toast('Storage is responding slowly; some records may still be loading.', 'bad');
+  setTimeout(() => { if (S.ready && myRole() !== 'pending') syncCompliance({ why: 'opened app' }).catch(() => {}); }, 2500);
   if (S.mode === 'cloud' && S.uid) { const p = (S.cfg.people || {})[S.uid]; if (!p || p.last !== today()) Store.saveCfg('people', { [S.uid]: { first: (p && p.first) || today(), last: today() } }).catch(() => {}); }
   if (S.mode === 'cloud' && S.isOwner && !(S.cfg.access || {})[S.uid]) Store.saveCfg('access', { [S.uid]: { role: 'admin' } }).catch(() => {});
 }
