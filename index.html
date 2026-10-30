@@ -541,6 +541,54 @@ h1 { font-size: 1.45rem; font-weight: 650; } h2 { font-size: 1rem; font-weight: 
 }
 .m-card .strong { font-weight: 700; }
 
+/* ---------- client compliance status report (always printed on white paper) ---------- */
+.cs-wrap { overflow-x: auto; }
+.cs-sheet { --pk: #111827; --pm: #667085; --pl: #e3e8ef; --pb: #1f4fd1; background: #fff; color: var(--pk); border: 1px solid var(--pl); border-radius: 10px; box-shadow: var(--shadow); padding: 28px 30px; max-width: 1180px; margin: 0 auto; display: grid; gap: 16px; font-size: 13px; min-width: 760px; color-scheme: light; }
+.cs-sheet h2, .cs-sheet h3 { color: var(--pk); }
+.cs-sub { color: var(--pm); font-size: 11.5px; margin-top: 1px; }
+.cs-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; border-bottom: 2px solid #0f1b2d; padding-bottom: 14px; }
+.cs-firm { display: flex; gap: 12px; align-items: center; } .cs-firm img, .cs-mark { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
+.cs-mark { display: grid; place-items: center; background: #0f1b2d; color: #fff; font-weight: 700; }
+.cs-firm b { font-size: 15px; }
+.cs-title { text-align: right; display: grid; gap: 2px; } .cs-title span { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--pb); font-weight: 700; } .cs-title b { font-size: 15px; }
+.cs-client { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+.cs-client h2 { font-size: 1.35rem; margin-top: 2px; } .cs-lbl { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--pm); font-weight: 600; }
+.cs-ids { display: flex; gap: 14px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 12px; } .cs-ids i { font-style: normal; font-family: var(--f-body); color: var(--pm); font-size: 11px; margin-right: 3px; }
+.cs-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.cs-kpis > div { border: 1px solid var(--pl); border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; background: #f9fafb; box-shadow: inset 3px 0 0 #98a2b3; }
+.cs-kpis b { font-size: 1.45rem; font-weight: 700; letter-spacing: -.02em; } .cs-kpis span { font-size: 11.5px; color: var(--pm); }
+.cs-kpis .red { box-shadow: inset 3px 0 0 #c62828; } .cs-kpis .red b { color: #c62828; } .cs-kpis .amber { box-shadow: inset 3px 0 0 #b45309; } .cs-kpis .green { box-shadow: inset 3px 0 0 #12795b; } .cs-kpis .violet { box-shadow: inset 3px 0 0 #5b4bb7; }
+.cs-alert { background: #fdecec; border: 1px solid #f3c1c1; color: #8a1c1c; padding: 10px 12px; border-radius: 8px; font-weight: 500; }
+.cs-ok { background: #e5f4ee; border: 1px solid #b9e0cf; color: #0d5c45; padding: 10px 12px; border-radius: 8px; font-weight: 500; } .cs-ok.big { padding: 24px; text-align: center; font-size: 15px; }
+.cs-h { font-size: 13.5px; display: flex; gap: 8px; align-items: center; margin-top: 4px; } .cs-h span { background: #eef1f5; color: #374151; border-radius: 10px; padding: 0 8px; font-size: 11.5px; }
+.cs-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.cs-tbl th { text-align: left; background: #0f1b2d; color: #fff; font-weight: 600; font-size: 11px; letter-spacing: .03em; padding: 7px 8px; }
+.cs-tbl td { padding: 7px 8px; border-bottom: 1px solid var(--pl); vertical-align: top; }
+.cs-tbl tr.od td:first-child { box-shadow: inset 3px 0 0 #c62828; }
+.cs-tbl .nw { white-space: nowrap; } .cs-tbl .cs-cons { color: #374151; max-width: 320px; }
+.cs-tbl tfoot td { font-weight: 600; background: #fff7f7; }
+.cs-pill { display: inline-block; padding: 1px 7px; border-radius: 6px; font-size: 11.5px; font-weight: 600; } .cs-pill.red { background: #fdecec; color: #c62828; } .cs-pill.amber { background: #fdf3e4; color: #b45309; }
+.cs-int { background: #fff8f0 !important; color: #8a1c1c; } .cs-tbl th.cs-int { background: #7a1f1f !important; color: #fff; } .cs-tbl th.cs-int small { font-weight: 500; opacity: .8; text-transform: uppercase; font-size: 9.5px; display: block; }
+.cs-kpis .cs-int { border-style: dashed; }
+.cs-tax { display: flex; gap: 4px; align-items: center; font-size: 11px; color: #8a1c1c; margin-top: 4px; } .cs-tax .inp { height: 26px; width: 110px; font-size: 12px; padding: 0 6px; background: #fff; color: #111827; border-color: #e3c4c4; }
+.cs-cons-list { margin: 0; padding-left: 18px; display: grid; gap: 5px; color: #374151; font-size: 12.3px; }
+.cs-foot { border-top: 1px solid var(--pl); padding-top: 10px; color: var(--pm); font-size: 11px; }
+.cs-present { position: fixed; inset: 0; z-index: 235; background: #e9edf2; overflow: auto; padding: 56px 16px 24px; }
+.cs-present .cs-sheet { box-shadow: 0 10px 40px rgba(15,23,42,.15); }
+.cs-present-bar { position: fixed; top: 0; left: 0; right: 0; display: flex; gap: 8px; align-items: center; padding: 8px 16px; padding-top: max(8px, env(safe-area-inset-top, 0px)); background: #0f1b2d; color: #c6d0de; font-size: 12.5px; z-index: 2; }
+.cs-present-bar span { flex: 1; }
+/* KYC: sample vs real identifiers */
+.idst { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; border-radius: 6px; padding: 2px 8px; margin-top: 3px; line-height: 1.35; }
+.idst.sample { background: var(--amber-soft); color: var(--amber); border: 1px dashed color-mix(in srgb, var(--amber) 55%, transparent); }
+.idst.new { background: var(--blue-soft); color: var(--blue); }
+.idst.ok { background: var(--green-soft); color: var(--green); }
+.idst.bad { background: var(--red-soft); color: var(--red); }
+.inp.sample-v { border-style: dashed; border-color: color-mix(in srgb, var(--amber) 60%, var(--line)); background: repeating-linear-gradient(135deg, var(--surface), var(--surface) 10px, var(--amber-soft) 10px, var(--amber-soft) 11px); }
+.tag.sample-tag { background: var(--amber-soft); color: var(--amber); border-color: color-mix(in srgb, var(--amber) 40%, transparent); font-weight: 700; font-family: var(--f-body); letter-spacing: .04em; font-size: 10.5px; }
+.tag.real-tag { background: var(--green-soft); color: var(--green); border-color: transparent; font-weight: 700; font-family: var(--f-body); font-size: 10.5px; }
+@media (max-width: 820px) { .cs-sheet { padding: 18px; min-width: 720px; } }
+@media print { .side, .top, .tabbar, .page-head, .card.pad, #syncBar { display: none !important; } .cs-sheet { box-shadow: none; border: 0; } .cs-sheet:not(.internal) .cs-int, .cs-int { display: none !important; } }
+
 </style>
 </head>
 <body>
@@ -904,6 +952,31 @@ async function __seedDemo() {
     invoiceNo: (s) => /^[A-Za-z0-9/-]{1,16}$/.test(s), // CGST Rule 46: max 16 chars, '-' and '/' only
   };
   C.normId = (s) => String(s || '').toUpperCase().replace(/\s/g, '');
+  /* KYC identifiers: format check and whether the number is a sample (demo) or a real one entered by the firm */
+  C.ID_FIELDS = { gstin: 'GSTIN', pan: 'PAN', tan: 'TAN', cin: 'CIN', llpin: 'LLPIN', udyam: 'Udyam', ptNo: 'PT no.', pfCode: 'EPF code', esicCode: 'ESIC code', iec: 'IEC', fssai: 'FSSAI', shopsNo: 'Shops & Est. no.', tradeLicence: 'Trade licence', labourLicence: 'Labour licence' };
+  C.idCheck = function (k, raw) {
+    const v = C.normId(raw); if (!v) return { ok: null, text: '' };
+    switch (k) {
+      case 'pan': return C.V.pan(v) ? { ok: true, text: 'Valid PAN · ' + (C.PAN_TYPE[v[3]] || '') } : { ok: false, text: 'PAN must be 5 letters, 4 digits, 1 letter' };
+      case 'gstin': return C.V.gstin(v) ? { ok: true, text: 'Valid GSTIN · checksum OK · ' + C.STATES[v.slice(0, 2)] } : { ok: false, text: 'GSTIN format or check digit is wrong' };
+      case 'tan': return C.V.tan(v) ? { ok: true, text: 'Valid TAN format' } : { ok: false, text: 'TAN must be 4 letters, 5 digits, 1 letter' };
+      case 'cin': return C.V.cin(v) ? { ok: true, text: 'Valid CIN · ' + (v[0] === 'L' ? 'listed' : 'unlisted') + ' · incorporated ' + v.slice(8, 12) } : { ok: false, text: 'CIN must be 21 characters' };
+      case 'llpin': return C.V.llpin(v) ? { ok: true, text: 'Valid LLPIN format' } : { ok: false, text: 'LLPIN looks like AAB-1234' };
+      case 'udyam': return C.V.udyam(v) ? { ok: true, text: 'Valid Udyam format' } : { ok: false, text: 'Udyam looks like UDYAM-TS-02-0012345' };
+      case 'iec': return /^[A-Z0-9]{10}$/.test(v) ? { ok: true, text: 'IEC format OK (10 characters)' } : { ok: false, text: 'IEC is 10 characters (usually the PAN)' };
+      case 'fssai': return /^[0-9]{14}$/.test(v) ? { ok: true, text: 'FSSAI format OK (14 digits)' } : { ok: false, text: 'FSSAI licence is 14 digits' };
+      case 'esicCode': return /^[0-9]{17}$/.test(v) ? { ok: true, text: 'ESIC code format OK (17 digits)' } : { ok: false, text: 'ESIC employer code is 17 digits' };
+      case 'pfCode': return /^[A-Z]{5}[0-9]{7}([0-9]{3})?$/.test(v) ? { ok: true, text: 'EPF code format OK' } : { ok: false, text: 'EPF code looks like TSHYD1234567000' };
+      default: return { ok: null, text: '' };
+    }
+  };
+  /** 'empty' | 'new' (typed now, not saved yet) | 'entered' (real, saved by the firm) | 'sample' (demo number) | 'recorded' (existing record) */
+  C.idSource = function (c, k, orig) {
+    const v = C.normId(c[k]); if (!v) return 'empty';
+    if (orig !== undefined && v !== C.normId(orig)) return 'new';
+    const src = (c.idSrc || {})[k]; if (src && src.v === v) return src.by === 'sample' ? 'sample' : 'entered';
+    return c.demo ? 'sample' : 'recorded';
+  };
   C.normMobile = (s) => { const d = String(s || '').replace(/\D/g, ''); return d.length > 10 ? d.slice(-10) : d; };
   /** Validate a client record. Returns {errors:[], warnings:[]} with field names. */
   C.validateClient = function (c) {
@@ -1281,6 +1354,81 @@ async function __seedDemo() {
     if (to === 'review' && !['in_progress', 'rework'].includes(from)) return { ok: false, msg: 'Start the work before sending it for review' };
     if (to === 'rework' && from !== 'review') return { ok: false, msg: 'Only a task under review can be sent back' };
     return { ok: true };
+  };
+  /* ---------------- consequences of late filing & penalty estimates ----------------
+     Client-facing consequence text plus an INTERNAL estimate of late fee / interest for the delay.
+     Rates are summarised from the law as understood in 2026 and must be verified before advising. */
+  C.monthsOrPart = function (from, to) { if (!from || !to || to <= from) return 0; let m = (+to.slice(0, 4) - +from.slice(0, 4)) * 12 + (+to.slice(5, 7) - +from.slice(5, 7)); if (+to.slice(8, 10) > +from.slice(8, 10)) m++; return Math.max(1, m); };
+  C.LATE = {
+    gstr1: { label: 'GSTR-1', freq: 'periodic', consequence: 'Your customers cannot claim input tax credit on your sales; late fee of ₹50 per day (₹20 for nil returns) up to the cap; GSTR-3B of the next period gets blocked; the return cannot be filed once 3 years pass from its due date.' },
+    gstr3b: { label: 'GSTR-3B', freq: 'periodic', consequence: 'Late fee of ₹50 per day (₹20 for nil returns) up to the cap, plus 18% p.a. interest on tax paid late; e-way bills are blocked after two periods of non-filing; GST registration can be cancelled after six months of non-filing; the return cannot be filed once 3 years pass from its due date.' },
+    pmt06: { label: 'GST monthly payment', freq: 'periodic', consequence: 'Interest at 18% p.a. on tax paid after the due date.' },
+    iff: { label: 'IFF', freq: 'periodic', consequence: 'No late fee, but your B2B customers will not see their input tax credit until the quarterly GSTR-1 is filed.' },
+    gstr9: { label: 'GSTR-9', freq: 'annual', consequence: 'Late fee per day (₹50 / ₹100 / ₹200 by turnover) capped at 0.04% of turnover (0.5% above ₹20 crore); notices and best-judgement assessment; cannot be filed once 3 years pass.' },
+    gstr9c: { label: 'GSTR-9C', freq: 'annual', consequence: 'Annual return is incomplete without the reconciliation statement; general penalty up to ₹25,000 may apply.' },
+    tdsPay: { label: 'TDS / TCS deposit', freq: 'periodic', consequence: 'Interest at 1.5% per month (or part) on tax deposited late; the related expense can be partly disallowed in the income-tax return; prosecution in serious cases.' },
+    tdsReturn: { label: 'TDS / TCS statement', freq: 'periodic', consequence: 'Late fee of ₹200 per day (up to the TDS amount); penalty of ₹10,000 to ₹1,00,000; your vendors / employees cannot see the tax credit in Form 26AS / AIS.' },
+    tdsCert: { label: 'TDS certificates', freq: 'periodic', consequence: 'Penalty of ₹100 per day of delay (up to the TDS amount); deductees cannot reconcile their tax credit.' },
+    advTax: { label: 'Advance tax', freq: 'periodic', consequence: 'Interest at 1% per month on the shortfall until the tax is paid.' },
+    itr: { label: 'Income-tax return', freq: 'annual', consequence: 'Late fee up to ₹5,000; interest at 1% per month on unpaid tax; business losses cannot be carried forward; refunds are delayed; scrutiny or notice risk.' },
+    taxAudit: { label: 'Tax audit report', freq: 'annual', consequence: 'Penalty of 0.5% of turnover (maximum ₹1,50,000); the income-tax return is treated as defective.' },
+    trustAudit: { label: 'Trust audit report', freq: 'annual', consequence: 'Exemption for the year can be denied.' },
+    rocAnnual: { label: 'ROC annual filing', freq: 'annual', consequence: 'Additional fee of ₹100 per day for each form with no upper limit; penalties on the company and its officers; directors can be disqualified after 3 years of non-filing; the company can be struck off.' },
+    dir3kyc: { label: 'Director KYC', freq: 'annual', consequence: 'The DIN is deactivated; ₹5,000 fee to reactivate it.' },
+    dpt3: { label: 'DPT-3', freq: 'annual', consequence: 'Additional fee of 2× to 12× the normal filing fee; penalty on the company.' },
+    msme1: { label: 'MSME-1', freq: 'periodic', consequence: 'Penalty up to ₹25,000 on the company, and on officers in default.' },
+    llp: { label: 'LLP annual filing', freq: 'annual', consequence: 'Additional fee rising with the delay (up to 30× the normal fee, then per day); penalties on the LLP and designated partners.' },
+    pf: { label: 'PF', freq: 'periodic', consequence: 'Interest at 12% p.a. plus damages of 1% per month on the arrears; employees’ PF, pension and insurance credit is affected; recovery proceedings.' },
+    esic: { label: 'ESIC', freq: 'periodic', consequence: 'Interest at 12% p.a. plus damages (5% to 25% p.a. by delay); employees’ medical benefits can be affected.' },
+    pt: { label: 'Professional tax', freq: 'periodic', consequence: 'Interest and penalty under the state Professional Tax Act.' },
+    other: { label: 'Filing', freq: '', consequence: 'Late fee, interest or penalty may apply, and the department may issue notices.' },
+  };
+  C.lateKind = function (code, form, category) {
+    const x = ((code || '') + ' ' + (form || '')).toUpperCase();
+    if (/GSTR-?9C|GSTR9C/.test(x)) return 'gstr9c'; if (/GSTR-?9\b|GSTR9\b/.test(x)) return 'gstr9';
+    if (/GSTR-?3B|GSTR3B/.test(x)) return 'gstr3b'; if (/GSTR-?1\b|GSTR1/.test(x)) return 'gstr1';
+    if (/PMT-?06/.test(x)) return 'pmt06'; if (/\bIFF\b/.test(x)) return 'iff';
+    if (/TDS-PAY|TCS-PAY|ITNS ?281|TDS DEPOSIT|TCS DEPOSIT|TDS PAYMENT|TCS PAYMENT/.test(x)) return 'tdsPay';
+    if (/F130|F131|FORM 13[01]\b|FORM 16/.test(x)) return 'tdsCert';
+    if (/TDS-1[34]\d|TCS-143|FORM 1(38|40|43|44)\b|24Q|26Q|27Q|27EQ|TDS RETURN|TDS STATEMENT/.test(x)) return 'tdsReturn';
+    if (/ADV-TAX|ADVANCE TAX/.test(x)) return 'advTax';
+    if (/\bTAR\b|3CA|3CB|3CD|TAX AUDIT|FORM 26\b/.test(x)) return 'taxAudit';
+    if (/F112|10B/.test(x)) return 'trustAudit';
+    if (/ITR/.test(x)) return 'itr';
+    if (/AOC-?4|MGT-?7/.test(x)) return 'rocAnnual'; if (/DIR-?3/.test(x)) return 'dir3kyc'; if (/DPT-?3/.test(x)) return 'dpt3'; if (/MSME-?1/.test(x)) return 'msme1';
+    if (/LLP ?(FORM )?(8|11)\b|LLP8|LLP11/.test(x)) return 'llp';
+    if (/PF-ECR|PF ECR|EPF|\bPF\b/.test(x) || category === 'PF') return 'pf'; if (/ESIC/.test(x) || category === 'ESIC') return 'esic';
+    if (/PT-|PROFESSIONAL TAX|PT RETURN/.test(x) || category === 'Professional Tax') return 'pt';
+    return 'other';
+  };
+  /** Internal estimate (paise). turnover in rupees (client.turnover); tax = liability in paise (optional). */
+  C.lateEstimate = function (kind, dueDate, asOf, opts) {
+    opts = opts || {}; const days = dueDate && asOf > dueDate ? C.daysBetween(dueDate, asOf) : 0;
+    const turn = Number(String(opts.turnover || '').replace(/[^0-9.]/g, '')) || 0; const tax = Math.max(0, Math.round(opts.tax || 0));
+    const out = { kind, days, lateFee: 0, interest: 0, total: 0, notes: [], needsTax: false };
+    if (!days) { out.notes.push('Not yet late'); return out; }
+    const R = (rupees) => Math.round(rupees * 100); const mths = C.monthsOrPart(dueDate, asOf);
+    const intr = (rate, label) => { out.needsTax = true; if (tax) { out.interest += Math.round(tax * rate); out.notes.push(label); } else out.notes.push(label + ' — enter the tax amount to estimate'); };
+    switch (kind) {
+      case 'gstr1': case 'gstr3b': { const cap = !turn || turn <= 1.5e7 ? 2000 : turn <= 5e7 ? 5000 : 10000; out.lateFee = R(Math.min(days * 50, cap)); out.notes.push('Late fee ₹50/day, cap ₹' + cap.toLocaleString('en-IN') + (turn ? '' : ' (turnover not recorded — assumed up to ₹1.5 Cr)')); if (kind === 'gstr3b') intr(0.18 * days / 365, 'Interest 18% p.a. × ' + days + ' days on tax paid in cash'); break; }
+      case 'pmt06': intr(0.18 * days / 365, 'Interest 18% p.a. × ' + days + ' days'); break;
+      case 'gstr9': { const pd = !turn || turn <= 5e7 ? 50 : turn <= 2e8 ? 100 : 200; const cap = turn ? (turn <= 2e8 ? turn * 0.0004 : turn * 0.005) : Infinity; out.lateFee = R(Math.min(days * pd, cap)); out.notes.push('Late fee ₹' + pd + '/day' + (turn ? ', cap ₹' + Math.round(cap).toLocaleString('en-IN') : ' (cap 0.04% of turnover — turnover not recorded)')); break; }
+      case 'tdsPay': intr(0.015 * mths, 'Interest 1.5% × ' + mths + ' month(s); counted from the due date (actually from the date of deduction)'); break;
+      case 'tdsReturn': { const f = days * 200; out.lateFee = R(f); if (tax) out.lateFee = Math.min(out.lateFee, tax); out.notes.push('Late fee ₹200/day' + (tax ? ' (capped at TDS amount)' : ' — capped at the TDS amount')); if (days > 365) out.notes.push('Penalty ₹10,000–₹1,00,000 possible (over one year late)'); break; }
+      case 'tdsCert': { out.lateFee = R(days * 100); if (tax) out.lateFee = Math.min(out.lateFee, tax); out.notes.push('Penalty ₹100/day (up to TDS amount)'); break; }
+      case 'advTax': intr(0.01 * mths, 'Interest 1% × ' + mths + ' month(s) on shortfall'); break;
+      case 'itr': out.lateFee = R(5000); out.notes.push('Late fee ₹5,000 (₹1,000 if total income up to ₹5 lakh)'); intr(0.01 * mths, 'Interest 1% × ' + mths + ' month(s) on unpaid tax'); break;
+      case 'taxAudit': if (turn) { out.lateFee = R(Math.min(turn * 0.005, 150000)); out.notes.push('Penalty 0.5% of turnover, max ₹1,50,000'); } else out.notes.push('Penalty 0.5% of turnover, max ₹1,50,000 — turnover not recorded'); break;
+      case 'rocAnnual': out.lateFee = R(days * 100); out.notes.push('Additional fee ₹100/day, no upper limit (plus normal fee); separate penalty on company and officers possible'); break;
+      case 'dir3kyc': out.lateFee = R(5000); out.notes.push('Flat ₹5,000 to file late / reactivate DIN'); break;
+      case 'dpt3': { const mult = days <= 30 ? 2 : days <= 60 ? 4 : days <= 90 ? 6 : days <= 180 ? 10 : 12; out.lateFee = R(mult * 300); out.notes.push(mult + '× normal fee (assumed ₹300; actual ₹200–600 by share capital)'); break; }
+      case 'llp': { const mult = days <= 15 ? 1 : days <= 30 ? 4 : days <= 60 ? 8 : days <= 90 ? 12 : days <= 180 ? 20 : days <= 360 ? 30 : 30; let fee = mult * 200; if (days > 360) fee += (days - 360) * 20; out.lateFee = R(fee); out.notes.push('Additional fee ' + mult + '× normal fee' + (days > 360 ? ' + ₹20/day beyond 360 days' : '') + ' (assumed normal fee ₹200; small LLPs pay less)'); break; }
+      case 'pf': intr(0.12 * days / 365 + 0.01 * mths, 'Interest 12% p.a. + damages 1% per month (' + mths + ') on contribution'); break;
+      case 'esic': { const dm = mths <= 2 ? 0.05 : mths <= 4 ? 0.10 : mths <= 6 ? 0.15 : 0.25; intr((0.12 + dm) * days / 365, 'Interest 12% p.a. + damages ' + Math.round(dm * 100) + '% p.a. on contribution'); break; }
+      case 'pt': intr(0.02 * mths, 'Interest 2% × ' + mths + ' month(s) (verify state rate)'); break;
+      default: out.notes.push('No standard late-fee formula — check the specific provision');
+    }
+    out.total = out.lateFee + out.interest; return out;
   };
   C.ruleApplies = function (rule, client) {
     if (!client || client.deleted || client.status !== 'active') return false;
@@ -2306,18 +2454,19 @@ function clientForm(existing, onSaved) {
   const c = existing ? JSON.parse(JSON.stringify(existing)) : { code: nextClientCode(), status: 'active', entityType: 'Private Limited', stateCode: firm().stateCode || '36', gstFreq: 'monthly', gstType: 'regular', fyEnd: '31-Mar', engagementStart: today(), flags: defaultFlags('Private Limited'), contacts: [{}], people: [{}], onboarding: {}, custom: {} };
   c.contacts = c.contacts || []; c.people = c.people || []; c.flags = c.flags || {}; c.custom = c.custom || {};
   const newPortals = [];
+  const origIds = Object.fromEntries(Object.keys(C.ID_FIELDS).map((k) => [k, existing ? existing[k] || '' : '']));
   const customDefs = (firm().customFields || []).filter((x) => x.entity === 'clients');
   const SECS = [['s1', 'Basic details', 'var(--m-cli)'], ['s2', 'KYC & registrations', 'var(--m-key)'], ['s3', 'Address & contact', 'var(--m-inv)'], ['s4', 'Contact persons', 'var(--m-rcpt)'], ['s5', 'Directors / partners', 'var(--m-recv)'], ['s6', 'Compliances', 'var(--m-comp)'], ['s7', 'Team, engagement & fees', 'var(--m-staff)'], ['s8', 'Portal logins', 'var(--m-docs)'], ['s9', 'Notes & custom fields', 'var(--m-rep)']];
   const sec = (i, help, inner) => '<div class="sect" id="cf_' + SECS[i][0] + '" style="--sc:' + SECS[i][2] + '"><h3><span class="num-badge">' + (i + 1) + '</span> ' + SECS[i][1] + '</h3>' + (help ? '<div class="sect-help">' + help + '</div>' : '') + inner + '</div>';
   const g = C.entityGroup(c.entityType);
-  openDrawer({ title: existing ? 'Edit client · ' + (existing.tradeName || existing.legalName) : 'Add new client', state: { c },
+  openDrawer({ title: existing ? 'Edit client · ' + (existing.tradeName || existing.legalName) : 'Add new client', state: { c, origIds },
     render: (dr) => {
       const isCo = C.entityGroup(c.entityType) === 'Company', isLLP = c.entityType === 'LLP';
       let h = '<div class="jump">' + SECS.map(([id, l]) => '<button data-d="jump" data-s="' + id + '">' + l + '</button>').join('') + '</div><div class="req-note">Fields marked <b>*</b> are required. Everything else can be filled now or later. ID numbers are checked as you type.</div><div id="dupSlot"></div>';
       h += sec(0, '', '<div class="grid g3">' + fld({ k: 'code', label: 'Client code', v: c.code, mono: 1, req: 1, hint: 'Suggested automatically' }) + fld({ k: 'legalName', label: 'Legal name (as per PAN)', v: c.legalName, req: 1, cls: 'span2' }) + fld({ k: 'tradeName', label: 'Trade / brand name', v: c.tradeName }) +
         fld({ k: 'entityType', label: 'Entity type / constitution', type: 'select', options: opts(C.ENTITY_TYPES, c.entityType), req: 1, hint: 'Sets the usual compliances below' }) + fld({ k: 'status', label: 'Client status', type: 'select', options: opts([['active', 'Active'], ['prospective', 'Prospective'], ['inactive', 'Inactive'], ['discontinued', 'Discontinued']], c.status) }) +
         fld({ k: 'doi', label: 'Date of incorporation / birth / commencement', type: 'date', v: c.doi }) + fld({ k: 'industry', label: 'Industry', v: c.industry, ph: 'e.g. Manufacturing, IT services' }) + fld({ k: 'activity', label: 'Nature of business', v: c.activity }) + '</div>');
-      h += sec(1, 'Type the GSTIN first — PAN and state are filled from it. Leave blank what does not apply.', '<div class="grid g3">' +
+      h += sec(1, 'Type the GSTIN first — PAN and state are filled from it. Leave blank what does not apply.' + (c.demo ? ' <b>This is a demo client:</b> numbers marked <span class="idst sample" style="margin:0">SAMPLE</span> are made up — overwrite them with the real ones.' : ''), '<div class="grid g3">' +
         fld({ k: 'gstin', label: 'GSTIN', v: c.gstin, mono: 1, max: 15, ph: '36ABCDE1234F1Z5' }) + fld({ k: 'pan', label: 'PAN', v: c.pan, mono: 1, max: 10, ph: 'ABCDE1234F' }) + fld({ k: 'tan', label: 'TAN', v: c.tan, mono: 1, max: 10, ph: 'HYDA12345B' }) +
         fld({ k: 'cin', label: 'CIN' + (isCo ? '' : ' (companies)'), v: c.cin, mono: 1, max: 21 }) + fld({ k: 'llpin', label: 'LLPIN' + (isLLP ? '' : ' (LLPs)'), v: c.llpin, mono: 1, max: 8, ph: 'AAB-1234' }) + fld({ k: 'udyam', label: 'Udyam registration no.', v: c.udyam, mono: 1, max: 19, ph: 'UDYAM-TS-02-0012345' }) +
         fld({ k: 'gstType', label: 'GST registration type', type: 'select', options: opts([['regular', 'Regular'], ['composition', 'Composition'], ['casual', 'Casual'], ['isd', 'Input service distributor'], ['tds', 'GST TDS deductor'], ['none', 'Not registered']], c.gstType) }) +
@@ -2333,7 +2482,7 @@ function clientForm(existing, onSaved) {
       h += sec(3, 'Who you deal with for documents and payments.', c.contacts.map((p, i) => '<div class="grid g4" style="align-items:end">' + fld({ k: 'contacts.' + i + '.name', label: 'Name', v: p.name }) + fld({ k: 'contacts.' + i + '.role', label: 'Role', v: p.role, ph: 'Accounts / Owner' }) + fld({ k: 'contacts.' + i + '.email', label: 'Email', v: p.email }) + '<div class="btn-row" style="flex-wrap:nowrap">' + fld({ k: 'contacts.' + i + '.mobile', label: 'Mobile', v: p.mobile }) + '<button class="btn sm danger" data-d="rm" data-l="contacts" data-i="' + i + '" aria-label="Remove contact">' + ico('trash') + '</button></div></div>').join('') + '<div><button class="btn sm" data-d="add" data-l="contacts">' + ico('plus') + ' Add contact person</button></div>');
       h += sec(4, 'Proprietor, partners, designated partners, directors, karta, trustees and authorised signatories.', c.people.map((p, i) => '<div class="grid g4" style="align-items:end">' + fld({ k: 'people.' + i + '.name', label: 'Name', v: p.name }) + fld({ k: 'people.' + i + '.designation', label: 'Designation', type: 'select', options: opts(['Proprietor', 'Partner', 'Designated partner', 'Director', 'Managing director', 'Karta', 'Trustee', 'Authorised signatory', 'Other'], p.designation) }) + fld({ k: 'people.' + i + '.din', label: 'DIN / DPIN / PAN', v: p.din, mono: 1 }) + '<div class="btn-row" style="flex-wrap:nowrap">' + fld({ k: 'people.' + i + '.mobile', label: 'Mobile', v: p.mobile }) + '<button class="btn sm danger" data-d="rm" data-l="people" data-i="' + i + '" aria-label="Remove person">' + ico('trash') + '</button></div>' + fld({ k: 'people.' + i + '.signatory', label: 'Authorised signatory', type: 'check', v: p.signatory }) + fld({ k: 'people.' + i + '.dscExpiry', label: 'DSC expiry', type: 'date', v: p.dscExpiry }) + '</div>').join('') + '<div><button class="btn sm" data-d="add" data-l="people">' + ico('plus') + ' Add person</button></div>');
       h += sec(5, 'Tick what you handle for this client. Compliance tasks and due dates are created from these.', (c.gstType === 'none' ? '<div class="banner info">' + ico('lock') + '<div>GST compliances are locked because GST registration type is <b>Not registered</b>. Change it in section 2 to enable them.</div></div>' : '') + '<div class="grid g3 flag-grid">' + CLIENT_FLAGS.map(([k, l]) => (c.gstType === 'none' && C.GST_FLAGS.includes(k)) ? '<label class="chk dis"><input type="checkbox" disabled> ' + esc(l) + ' <span class="faint">(not registered)</span></label>' : fld({ k: 'flags.' + k, label: l, type: 'check', v: c.flags[k] })).join('') + '</div><div class="grid g3">' +
-        fld({ k: 'fyEnd', label: 'Accounting year-end', v: c.fyEnd, ph: '31-Mar' }) + fld({ k: 'taxRegime', label: 'Income-tax regime', type: 'select', options: opts([['', 'Not set'], ['new', 'New regime'], ['old', 'Old regime'], ['115BAA', 'Sec 115BAA (22%)'], ['115BAB', 'Sec 115BAB (15%)'], ['presumptive', 'Presumptive (44AD/44ADA/44AE)']], c.taxRegime) }) + fld({ k: 'agmDate', label: 'Last AGM date', type: 'date', v: c.agmDate, hint: 'Companies: AOC-4 / MGT-7 run from this date' }) + '</div>');
+        fld({ k: 'fyEnd', label: 'Accounting year-end', v: c.fyEnd, ph: '31-Mar' }) + fld({ k: 'taxRegime', label: 'Income-tax regime', type: 'select', options: opts([['', 'Not set'], ['new', 'New regime'], ['old', 'Old regime'], ['115BAA', 'Sec 115BAA (22%)'], ['115BAB', 'Sec 115BAB (15%)'], ['presumptive', 'Presumptive (44AD/44ADA/44AE)']], c.taxRegime) }) + fld({ k: 'agmDate', label: 'Last AGM date', type: 'date', v: c.agmDate, hint: 'Companies: AOC-4 / MGT-7 run from this date' }) + fld({ k: 'turnover', label: 'Aggregate turnover, last FY (₹)', v: c.turnover, num: 1, hint: 'Used for GST late-fee caps and tax-audit penalty estimates' }) + '</div>');
       h += sec(6, '', '<div class="grid g3">' + fld({ k: 'rm', label: 'Responsible CA / relationship manager', type: 'select', options: empOpts(c.rm) }) + fld({ k: 'assignee', label: 'Default preparer', type: 'select', options: empOpts(c.assignee) }) + fld({ k: 'reviewer', label: 'Default reviewer', type: 'select', options: empOpts(c.reviewer) }) +
         fld({ k: 'engagementStart', label: 'Engagement start', type: 'date', v: c.engagementStart }) + fld({ k: 'engagementStatus', label: 'Engagement status', type: 'select', options: opts([['active', 'Active'], ['proposed', 'Proposed'], ['paused', 'Paused'], ['ended', 'Ended']], c.engagementStatus || 'active') }) + fld({ k: 'engagementLetter', label: 'Engagement letter date / reference', v: c.engagementLetter }) +
         fld({ k: 'feeArrangement', label: 'Fee arrangement', type: 'textarea', v: c.feeArrangement, cls: 'span2', rows: 2, ph: 'e.g. ₹5,000 + GST per month for GST & TDS; ITR ₹15,000 annually' }) + fld({ k: 'creditLimit', label: 'Credit limit (₹)', v: c.creditLimit, num: 1 }) + fld({ k: 'paymentTerms', label: 'Payment terms (days)', v: c.paymentTerms, num: 1, ph: String(firm().termsDays) }) + fld({ k: 'risk', label: 'Risk flag', type: 'select', options: opts([['', 'None'], ['low', 'Low'], ['medium', 'Medium'], ['high', 'High']], c.risk) }) + fld({ k: 'referredBy', label: 'Referred by', v: c.referredBy }) + '</div>');
@@ -2359,6 +2508,7 @@ function clientForm(existing, onSaved) {
       validateCF(dr);
     },
     acts: {
+      idReal: (a, dr) => { const k = a.dataset.k; const v = C.normId(c[k]); if (!v) return; c.idSrc = c.idSrc || {}; c.idSrc[k] = { by: 'entered', v, at: today(), u: S.uid || '' }; dr.dirty = true; validateCF(dr); toast(C.ID_FIELDS[k] + ' marked as the real number — click Save'); },
       jump: (a, dr) => { const el = $('#cf_' + a.dataset.s, dr.body); if (el) dr.body.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' }); },
       add: (a, dr) => { c[a.dataset.l].push({}); dr.render(); dr.dirty = true; },
       rm: (a, dr) => { c[a.dataset.l].splice(+a.dataset.i, 1); dr.render(); dr.dirty = true; },
@@ -2368,6 +2518,7 @@ function clientForm(existing, onSaved) {
       del: (a, dr) => deleteClients([c.id], () => dr.close(true)),
       save: async (a, dr) => {
         ['pan', 'tan', 'gstin', 'cin', 'llpin', 'udyam'].forEach((k) => { if (c[k]) c[k] = C.normId(c[k]); });
+        c.idSrc = c.idSrc || {}; for (const k of Object.keys(C.ID_FIELDS)) { const v = C.normId(c[k]); if (!v) delete c.idSrc[k]; else if (v !== C.normId(origIds[k]) && !(c.idSrc[k] && c.idSrc[k].v === v)) c.idSrc[k] = { by: 'entered', v, at: today(), u: S.uid || '' }; }
         if (c.gstType === 'none') { c.gstFreq = ''; c.gstRegDate = ''; C.GST_FLAGS.forEach((f) => (c.flags[f] = false)); if (c.gstin) { toast('Remove the GSTIN, or choose a GST registration type other than “Not registered”', 'bad'); const el = $('[data-k="gstType"]', dr.body); if (el) el.scrollIntoView({ block: 'center' }); return; } }
         else if (!c.gstFreq) c.gstFreq = 'monthly';
         c.contacts = c.contacts.filter((p) => p.name || p.email || p.mobile); c.people = c.people.filter((p) => p.name || p.din);
@@ -2429,9 +2580,30 @@ function validateCF(dr) {
   v.errors = v.errors.filter((e) => !/required/.test(e.msg));
   v.warnings = v.warnings.filter((w) => !/not recorded/.test(w.msg));
   setMsgs(dr.body, v);
+  idBadges(dr.body, c, dr.state.origIds || {});
   const dups = C.findDuplicates(c, D().clients, c.id);
   const slot = $('#dupSlot', dr.body);
   if (slot) slot.innerHTML = dups.length ? '<div class="banner ' + (dups.some((x) => x.sev === 'error') ? 'bad' : 'warn') + '">' + ico('alert') + '<div><b>Possible duplicate.</b> ' + dups.map((x) => esc(x.label) + ' matches <a href="#" data-act="client-open" data-id="' + esc(x.id) + '">' + esc(x.name) + '</a>').join('; ') + '</div></div>' : '';
+}
+
+/** Under each registration number: is it a SAMPLE (demo) number, a new number just typed, or a real number already saved? */
+function idBadges(root, c, orig) {
+  for (const k of Object.keys(C.ID_FIELDS)) {
+    const slot = $('[data-msg="' + k + '"]', root); const inp = $('[data-k="' + k + '"]', root); if (!slot || !inp) continue;
+    const src = C.idSource(c, k, orig[k] === undefined ? '' : orig[k]); const chk = C.idCheck(k, c[k]); let b = '';
+    inp.classList.toggle('sample-v', src === 'sample');
+    if (src === 'sample') b = '<span class="idst sample">⚠ SAMPLE demo number — type the real one</span> <button type="button" class="btn xs ghost" data-d="idReal" data-k="' + k + '">It is real</button>';
+    else if (src === 'new') b = chk.ok === false ? (['pan', 'tan', 'gstin', 'cin', 'llpin', 'udyam'].includes(k) ? '' : '<span class="idst bad">' + esc(chk.text) + '</span>') : '<span class="idst new">✎ New number' + (chk.text ? ' · ' + esc(chk.text) : '') + ' · saved when you click Save</span>';
+    else if (src === 'entered') { const at = ((c.idSrc || {})[k] || {}).at; b = '<span class="idst ok">✓ Real number' + (chk.text ? ' · ' + esc(chk.text) : '') + (at ? ' · entered ' + fd(at) : '') + '</span>'; }
+    else if (src === 'recorded' && chk.ok !== null) b = chk.ok ? '<span class="idst ok">✓ ' + esc(chk.text) + '</span>' : (['pan', 'tan', 'gstin', 'cin', 'llpin', 'udyam'].includes(k) ? '' : '<span class="idst bad">' + esc(chk.text) + '</span>');
+    if (b) slot.insertAdjacentHTML('beforeend', '<div>' + b + '</div>');
+  }
+}
+function idTag(c, keys) {
+  const srcs = keys.map((k) => C.idSource(c, k)).filter((x) => x !== 'empty'); if (!srcs.length) return '';
+  if (srcs.includes('sample')) return ' <span class="tag sample-tag" title="Made-up demo number — replace with the real one">SAMPLE</span>';
+  if (srcs.every((x) => x === 'entered')) return ' <span class="tag real-tag" title="Real number entered by the firm">✓ REAL</span>';
+  return '';
 }
 
 /* client detail */
@@ -2447,7 +2619,7 @@ function openClient(id, tab) {
       const tabsL = [['overview', 'Overview'], ...(can('billing.view') ? [['billing', 'Billing']] : []), ['tasks', 'Compliance'], ...(can('portals.view') ? [['portals', 'Portals']] : []), ['docs', 'Documents'], ['crm', 'CRM'], ['onboard', 'Onboarding']];
       const t = dr.state.tab;
       let h = '<div class="btn-row">' + badge(c.status, { active: 'green', inactive: 'slate', prospective: 'blue', discontinued: 'red' }[c.status]) + badge(c.entityType, 'accent', 1) + (c.risk ? badge(c.risk + ' risk', c.risk === 'high' ? 'red' : c.risk === 'medium' ? 'amber' : 'slate') : '') + (c.demo ? badge('Demo record', 'saffron') : '') + '<span class="sp" style="flex:1"></span>' +
-        (can('billing.edit') ? '<button class="btn sm" data-d="inv">' + ico('invoice') + ' Invoice</button><button class="btn sm" data-d="rcpt">' + ico('wallet') + ' Receipt</button>' : '') + (can('tasks.edit') ? '<button class="btn sm" data-d="task">' + ico('check') + ' Task</button>' : '') + (can('billing.view') ? '<button class="btn sm" data-d="stmt">' + ico('file') + ' Statement</button>' : '') + '</div>';
+        (can('billing.edit') ? '<button class="btn sm" data-d="inv">' + ico('invoice') + ' Invoice</button><button class="btn sm" data-d="rcpt">' + ico('wallet') + ' Receipt</button>' : '') + (can('tasks.edit') ? '<button class="btn sm" data-d="task">' + ico('check') + ' Task</button>' : '') + (can('billing.view') ? '<button class="btn sm" data-d="stmt">' + ico('file') + ' Statement</button>' : '') + '<button class="btn sm" data-act="cs-open" data-id="' + esc(id) + '">' + ico('check') + ' Status report</button>' + '</div>';
       h += '<div class="tabs">' + tabsL.map(([k, lab]) => '<button data-d="tab" data-t="' + k + '" class="' + (t === k ? 'on' : '') + '">' + lab + '</button>').join('') + '</div>';
       const myTasks = d.tasks.filter((x) => x.clientId === id);
       if (t === 'overview') {
@@ -2455,7 +2627,7 @@ function openClient(id, tab) {
         h += (can('billing.view') ? '<div class="kpis">' + [['Outstanding', money(l.outstanding), l.overdue ? 'red' : ''], ['Overdue', money(l.overdue), l.overdue ? 'red' : ''], ['Advance / unallocated', money(l.unallocated + l.unadjCredit), ''], ['Billed (all time)', money(l.billed), ''], ['Received incl. TDS', money(l.received + l.tds), 'green']].map(([a2, b, tone]) => '<div class="kpi ' + tone + '" style="cursor:default"><span class="k-lbl">' + a2 + '</span><span class="k-val" style="font-size:1.15rem">' + b + '</span></div>').join('') + '</div>' : '');
         const missing = [['pan', 'PAN'], ...(c.flags && c.flags.gst ? [['gstin', 'GSTIN']] : []), ...(c.flags && c.flags.tds ? [['tan', 'TAN']] : []), ...(C.entityGroup(c.entityType) === 'Company' ? [['cin', 'CIN']] : []), ...(c.entityType === 'LLP' ? [['llpin', 'LLPIN']] : []), ['email', 'email'], ['mobile', 'mobile']].filter(([k]) => !c[k]).map(([, l]) => l);
         if (missing.length && can('clients.edit')) h += '<div class="banner warn">' + ico('alert') + '<div style="flex:1"><b>Details missing:</b> ' + missing.join(', ') + '.</div><button class="btn sm pri" data-d="edit">Complete details</button></div>';
-        h += '<div class="grid g2"><div class="sect"><h3>Profile & KYC</h3><dl class="kv">' + [['Legal name', c.legalName], ['Trade name', c.tradeName], ['PAN', c.pan], ['TAN', c.tan], ['GSTIN', c.gstin], ['CIN / LLPIN', c.cin || c.llpin], ['Udyam', c.udyam], ['PT / EPF / ESIC', [c.ptNo, c.pfCode, c.esicCode].filter(Boolean).join(' · ')], ['IEC / FSSAI', [c.iec, c.fssai].filter(Boolean).join(' · ')], ['Shops / trade / labour', [c.shopsNo, c.tradeLicence, c.labourLicence].filter(Boolean).join(' · ')], ['Other', c.otherReg], ['Incorporated', c.doi ? fd(c.doi) : ''], ['Business', [c.industry, c.activity].filter(Boolean).join(' · ')], ['State', c.stateCode ? C.STATES[c.stateCode] : ''], ['Address', c.address], ['Email', c.email], ['Mobile', c.mobile], ['Responsible', eName(c.rm)], ['Preparer / reviewer', eName(c.assignee) + ' / ' + eName(c.reviewer)], ['GST', c.gstType === 'none' ? 'Not registered' : (c.gstType || '') + ' · ' + (c.gstFreq === 'qrmp' ? 'QRMP' : 'monthly')], ['Tax regime', c.taxRegime], ['Engagement', (c.engagementStart ? 'since ' + fd(c.engagementStart) : '') + (c.feeArrangement ? ' · ' + c.feeArrangement : '')]].filter(([, v]) => v).map(([k, v]) => '<dt>' + k + '</dt><dd' + (/PAN|TAN|GSTIN|CIN|Udyam|EPF|IEC|Shops/.test(k) ? ' class="mono"' : '') + '>' + esc(v) + '</dd>').join('') + '</dl>' + (c.instructions ? '<div class="banner info">' + ico('alert') + '<div><b>Special instructions.</b> ' + esc(c.instructions) + '</div></div>' : '') + '</div>' +
+        h += '<div class="grid g2"><div class="sect"><h3>Profile & KYC</h3><dl class="kv">' + [['Legal name', c.legalName], ['Trade name', c.tradeName], ['PAN', c.pan], ['TAN', c.tan], ['GSTIN', c.gstin], ['CIN / LLPIN', c.cin || c.llpin], ['Udyam', c.udyam], ['PT / EPF / ESIC', [c.ptNo, c.pfCode, c.esicCode].filter(Boolean).join(' · ')], ['IEC / FSSAI', [c.iec, c.fssai].filter(Boolean).join(' · ')], ['Shops / trade / labour', [c.shopsNo, c.tradeLicence, c.labourLicence].filter(Boolean).join(' · ')], ['Other', c.otherReg], ['Incorporated', c.doi ? fd(c.doi) : ''], ['Business', [c.industry, c.activity].filter(Boolean).join(' · ')], ['State', c.stateCode ? C.STATES[c.stateCode] : ''], ['Address', c.address], ['Email', c.email], ['Mobile', c.mobile], ['Responsible', eName(c.rm)], ['Preparer / reviewer', eName(c.assignee) + ' / ' + eName(c.reviewer)], ['GST', c.gstType === 'none' ? 'Not registered' : (c.gstType || '') + ' · ' + (c.gstFreq === 'qrmp' ? 'QRMP' : 'monthly')], ['Tax regime', c.taxRegime], ['Engagement', (c.engagementStart ? 'since ' + fd(c.engagementStart) : '') + (c.feeArrangement ? ' · ' + c.feeArrangement : '')]].filter(([, v]) => v).map(([k, v]) => { const IDK = { PAN: ['pan'], TAN: ['tan'], GSTIN: ['gstin'], 'CIN / LLPIN': ['cin', 'llpin'], Udyam: ['udyam'], 'PT / EPF / ESIC': ['ptNo', 'pfCode', 'esicCode'], 'IEC / FSSAI': ['iec', 'fssai'], 'Shops / trade / labour': ['shopsNo', 'tradeLicence', 'labourLicence'] }; return '<dt>' + k + '</dt><dd' + (/PAN|TAN|GSTIN|CIN|Udyam|EPF|IEC|Shops/.test(k) ? ' class="mono"' : '') + '>' + esc(v) + (IDK[k] ? idTag(c, IDK[k]) : '') + '</dd>'; }).join('') + '</dl>' + (c.instructions ? '<div class="banner info">' + ico('alert') + '<div><b>Special instructions.</b> ' + esc(c.instructions) + '</div></div>' : '') + '</div>' +
           '<div class="sect"><h3>Open compliance (' + open.length + ')</h3>' + (open.length ? open.sort(by((x) => x.dueDate || '')).slice(0, 10).map((x) => { const fl = d.taskFlags.get(x.id); return '<div class="alert" data-d="task-open" data-id="' + x.id + '"><span class="stripe ' + fl.tone + '"></span><div><div class="a-t">' + esc(x.form || x.title) + ' · ' + esc(x.period || '') + '</div><div class="a-s">Due ' + fd(x.dueDate) + ' · ' + eName(x.assignee) + '</div></div>' + taskStatusBadge(x.status) + '</div>'; }).join('') : '<div class="muted">No open tasks.</div>') +
           '<h3>Compliances</h3><div class="btn-row">' + (CLIENT_FLAGS.filter(([k]) => (c.flags || {})[k]).map(([, l2]) => '<span class="tag">' + esc(l2) + '</span>').join(' ') || '<span class="muted">None ticked</span>') + '</div>' +
           ((c.contacts || []).length ? '<h3>Contacts</h3>' + c.contacts.map((p) => '<div style="font-size:13px"><b>' + esc(p.name || '') + '</b> ' + esc(p.role || '') + ' · <span class="muted">' + esc([p.email, p.mobile].filter(Boolean).join(' · ')) + '</span></div>').join('') : '') +
@@ -3844,7 +4016,7 @@ VIEWS.reports = {
     const groups = uniq(list.map((r) => r.group));
     let h = '<div class="page-head"><div class="t"><span class="eyebrow">Accounting, MIS & compliance reports</span><h1>Reports</h1></div></div><div class="split" style="grid-template-columns:260px minmax(0,1fr)">';
     const rq = (f.q || '').toLowerCase(); const shown = list.filter((r) => !rq || (r.title + ' ' + r.group).toLowerCase().includes(rq));
-    h += '<div class="card"><div class="card-b" style="padding-top:12px"><div class="tbl-search" style="padding:0 0 6px">' + ico('search') + '<input class="inp" type="search" data-rep="q" value="' + esc(f.q || '') + '" placeholder="Find a report…" aria-label="Find a report"></div>' + (shown.length ? '' : '<div class="muted" style="padding:8px">No report matches.</div>') + uniq(shown.map((r) => r.group)).map((g) => '<div class="eyebrow" style="margin:10px 0 4px">' + esc(g) + '</div>' + shown.filter((r) => r.group === g).map((r) => '<button class="btn ghost sm" style="width:100%;justify-content:flex-start;white-space:normal;height:auto;min-height:32px;text-align:left;' + (r.id === rep.id ? 'background:var(--accent-soft);color:var(--accent-2)' : '') + '" data-act="rep-pick" data-id="' + r.id + '">' + esc(r.title) + '</button>').join('')).join('') + '</div></div>';
+    h += '<div class="card"><div class="card-b" style="padding-top:12px"><button class="btn sm" style="width:100%;justify-content:flex-start;white-space:normal;height:auto;min-height:40px;text-align:left;margin-bottom:8px;border-color:var(--accent);color:var(--accent)" ' + goAttr('cstatus') + '>' + ico('file') + ' Client compliance status — shareable report</button><div class="tbl-search" style="padding:0 0 6px">' + ico('search') + '<input class="inp" type="search" data-rep="q" value="' + esc(f.q || '') + '" placeholder="Find a report…" aria-label="Find a report"></div>' + (shown.length ? '' : '<div class="muted" style="padding:8px">No report matches.</div>') + uniq(shown.map((r) => r.group)).map((g) => '<div class="eyebrow" style="margin:10px 0 4px">' + esc(g) + '</div>' + shown.filter((r) => r.group === g).map((r) => '<button class="btn ghost sm" style="width:100%;justify-content:flex-start;white-space:normal;height:auto;min-height:32px;text-align:left;' + (r.id === rep.id ? 'background:var(--accent-soft);color:var(--accent-2)' : '') + '" data-act="rep-pick" data-id="' + r.id + '">' + esc(r.title) + '</button>').join('')).join('') + '</div></div>';
     h += '<div class="card"><div class="card-h"><h2>' + esc(rep.title) + '</h2><div class="r">' + (rep.params === 'fy' ? '<select class="inp" style="width:auto" data-rep="fy">' + opts(fyOptions(), f.fy) + '</select>' : rep.params === 'range' ? '<input class="inp" style="width:auto" type="date" data-rep="from" value="' + f.from + '" aria-label="From"><input class="inp" style="width:auto" type="date" data-rep="to" value="' + f.to + '" aria-label="To">' : '<span class="muted" style="font-size:12px">As of ' + fd(today()) + '</span>') + '<button class="btn sm" data-act="rep-export">' + ico('download') + ' Export</button></div></div><div id="repBody">';
     if (rep.async) { h += '<div class="card-b muted">Loading…</div>'; setTimeout(() => runAsyncReport(rep, f), 0); }
     else { try { const r = rep.build(f); S.ui.repLast = r; h += reportTable(rep, r); } catch (e) { h += '<div class="card-b"><div class="banner bad">Could not build this report: ' + esc(e.message) + '</div></div>'; } }
@@ -4766,6 +4938,133 @@ ACT['sec-disable'] = (a) => { const uid = a.dataset.id; confirmBox('Disable ' + 
 ACT['sec-delete'] = (a) => { const uid = a.dataset.id; confirmBox('Remove ' + uid + '?', 'Their sign-in and role are removed. ' + (S.mode === 'drive' ? 'Also remove their Drive sharing (Remove access in the invite list) so the file is no longer shared with them.' : ''), 'Remove user', async () => { Vault.keys[uid] = { deleted: true, updatedAt: nowISO(), by: S.uid }; await Store.saveCfg('access', { [uid]: { role: 'pending' } }, 'User ' + uid + ' removed'); audit('user', 'user', uid, 'User removed'); Persist.markDirty(); refresh(); }); };
 ACT['rk-new'] = () => confirmBox('Create a new recovery key?', 'The old recovery key stops working. The new key is shown once.', 'Create new key', async () => { const rec = makeRecoveryKey(); Vault.recovery = Object.assign(await wrapDek(Vault.dek, normRecovery(rec)), { updatedAt: nowISO() }); Persist.markDirty(); audit('security', 'vault', S.uid, 'Recovery key replaced'); modal({ sticky: true, body: () => '<h2>New recovery key</h2><div class="muted">Write it down or keep it in a password manager. It is not shown again.</div><div class="recovery">' + esc(rec) + '</div>', foot: () => '<button class="btn" data-m="copy">' + ico('copy') + ' Copy</button><button class="btn pri" data-m="close">I have saved it</button>', acts: { copy: () => copyText(rec) } }); }, false);
 
+/* ===== Client compliance status report (Insights) — shareable with the client; penalty estimates stay internal ===== */
+const CS_INTERNAL_CODES = ['ITC-REC', 'PAYROLL', 'BOOKS', 'AIS-REC'];
+const csCanInternal = () => ['admin', 'partner'].includes(myRole());
+function csState() { return S.ui.cs || (S.ui.cs = { client: '', q: '', asOf: today(), upcoming: true, internal: true }); }
+function csData(clientId, asOf, upcoming) {
+  const c = Store.get('clients', clientId); if (!c) return null;
+  const limit = upcoming ? C.addDays(asOf, 30) : asOf; const [fs, fe] = C.fyRange(C.fyOf(asOf));
+  const all = D().tasks.filter((t) => t.clientId === clientId && !t.deleted);
+  const rows = all.filter((t) => !C.isDone(t) && t.dueDate && t.dueDate <= limit).map((t) => {
+    const rule = t.ruleId ? Store.get('rules', t.ruleId) : null; const code = (rule && rule.code) || '';
+    if (CS_INTERNAL_CODES.includes(code) || t.category === 'Accounting') return null;
+    const kind = C.lateKind(code, t.form || t.title, t.category); const meta = C.LATE[kind] || C.LATE.other;
+    const freq = rule ? (rule.freq === 'monthly' || (rule.schedule || []).length > 1 ? 'periodic' : 'annual') : (meta.freq || 'other');
+    const est = C.lateEstimate(kind, t.dueDate, asOf, { turnover: c.turnover, tax: t.taxAmt || 0 });
+    const days = t.dueDate < asOf ? C.daysBetween(t.dueDate, asOf) : 0; const left = t.dueDate >= asOf ? C.daysBetween(asOf, t.dueDate) : null;
+    return { id: t.id, t, kind, meta, freq: t.event ? 'other' : freq, est, days, left, overdue: days > 0 };
+  }).filter(Boolean).sort(by((r) => r.t.dueDate + (r.t.form || '')));
+  const done = all.filter((t) => C.isComplete(t) && C.inRange(t.filedAt || t.completedAt || t.dueDate || '', fs, fe)).length;
+  return { c, asOf, rows, done, overdue: rows.filter((r) => r.overdue), soon: rows.filter((r) => !r.overdue), waiting: rows.filter((r) => r.t.status === 'awaiting_info'), total: C.sum(rows, (r) => r.est.total) };
+}
+const csStatus = (r) => ({ awaiting_info: 'Waiting for your documents', in_progress: 'In progress with us', review: 'In progress with us', rework: 'In progress with us', on_hold: 'On hold', pending: 'Not started' }[r.t.status] || 'Pending');
+const csShort = (txt) => String(txt).split(';')[0].replace(/\.$/, '');
+function csSheet(d, internal) {
+  const fm = firm(); const c = d.c; const T = d.asOf;
+  const ids = [['PAN', c.pan], ['GSTIN', c.gstin], ['TAN', c.tan], ['CIN', c.cin || c.llpin]].filter(([, v]) => v);
+  const tbl = (title, list) => !list.length ? '' : '<h3 class="cs-h">' + esc(title) + ' <span>' + list.length + '</span></h3><table class="cs-tbl"><thead><tr><th>Compliance</th><th>Period</th><th>Due date</th><th>Delay</th><th>Status / action needed</th><th>If not filed</th>' + (internal ? '<th class="cs-int">Est. late fee & interest <small>internal</small></th>' : '') + '</tr></thead><tbody>' +
+    list.map((r) => '<tr class="' + (r.overdue ? 'od' : '') + '"><td><b>' + esc(r.t.form || r.t.title) + '</b><div class="cs-sub">' + esc(r.t.category || '') + '</div></td><td>' + esc(r.t.period || '') + '</td><td class="nw">' + fd(r.t.dueDate) + '</td><td class="nw">' + (r.overdue ? '<span class="cs-pill red">' + r.days + ' day' + (r.days > 1 ? 's' : '') + ' late</span>' : '<span class="cs-pill amber">' + (r.left === 0 ? 'Due today' : 'Due in ' + r.left + ' day' + (r.left > 1 ? 's' : '')) + '</span>') + '</td><td>' + esc(csStatus(r)) + (r.t.status === 'awaiting_info' && r.t.docsRequired ? '<div class="cs-sub">Please send: ' + esc(r.t.docsRequired) + '</div>' : '') + '</td><td class="cs-cons">' + esc(csShort(r.meta.consequence)) + '</td>' +
+      (internal ? '<td class="cs-int"><b>' + (r.est.total ? money(r.est.total) : r.overdue ? '—' : '') + '</b>' + (r.overdue ? '<div class="cs-sub">' + esc(r.est.notes.join(' · ')) + '</div>' + (r.est.needsTax ? '<label class="cs-tax">Tax / contribution ₹ <input class="inp" inputmode="decimal" data-act-change="cs-tax" data-id="' + esc(r.t.id) + '" value="' + esc(r.t.taxAmt ? C.paiseToStr(r.t.taxAmt) : '') + '" placeholder="amount"></label>' : '') : '') + '</td>' : '') + '</tr>').join('') +
+    '</tbody>' + (internal ? '<tfoot><tr><td colspan="6">Estimated total for this section (internal)</td><td class="cs-int"><b>' + money(C.sum(list, (r) => r.est.total)) + '</b></td></tr></tfoot>' : '') + '</table>';
+  const kinds = uniq(d.rows.map((r) => r.kind));
+  return '<div class="cs-sheet' + (internal ? ' internal' : '') + '" id="csSheet">' +
+    '<div class="cs-top"><div class="cs-firm">' + (fm.logo ? '<img src="' + esc(fm.logo) + '" alt="">' : '<span class="cs-mark">' + esc((fm.name || 'CA').split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()) + '</span>') + '<div><b>' + esc(fm.name || '') + '</b><div class="cs-sub">' + esc([fm.address, fm.phone, fm.email].filter(Boolean).join(' · ')) + '</div></div></div><div class="cs-title"><span>Compliance status report</span><b>As of ' + fd(T) + '</b></div></div>' +
+    '<div class="cs-client"><div><span class="cs-lbl">Prepared for</span><h2>' + esc(c.legalName || c.tradeName || '') + '</h2><div class="cs-sub">' + esc([c.entityType, c.tradeName && c.tradeName !== c.legalName ? c.tradeName : ''].filter(Boolean).join(' · ')) + '</div></div><div class="cs-ids">' + ids.map(([k, v]) => '<span><i>' + k + '</i> ' + esc(v) + '</span>').join('') + '</div></div>' +
+    '<div class="cs-kpis"><div class="' + (d.overdue.length ? 'red' : 'green') + '"><b>' + d.overdue.length + '</b><span>Overdue filings</span></div><div class="amber"><b>' + d.soon.length + '</b><span>Due in the next 30 days</span></div><div class="' + (d.waiting.length ? 'violet' : '') + '"><b>' + d.waiting.length + '</b><span>Waiting for your documents</span></div><div class="green"><b>' + d.done + '</b><span>Completed this financial year</span></div>' + (internal ? '<div class="cs-int red"><b>' + money(d.total) + '</b><span>Est. late fee & interest so far (internal)</span></div>' : '') + '</div>' +
+    (d.rows.length ? (d.overdue.length ? '<div class="cs-alert">' + d.overdue.length + ' filing' + (d.overdue.length > 1 ? 's are' : ' is') + ' past the due date. Late fees and interest grow every day until filed — please share the pending information at the earliest.</div>' : '<div class="cs-ok">Nothing is overdue. The items below fall due in the next 30 days.</div>') +
+      tbl('Monthly / quarterly compliances', d.rows.filter((r) => r.freq === 'periodic')) + tbl('Annual compliances', d.rows.filter((r) => r.freq === 'annual')) + tbl('Other filings', d.rows.filter((r) => r.freq !== 'periodic' && r.freq !== 'annual')) +
+      '<h3 class="cs-h">What happens if these are not filed</h3><ul class="cs-cons-list">' + kinds.map((k) => '<li><b>' + esc(C.LATE[k].label) + ':</b> ' + esc(C.LATE[k].consequence) + '</li>').join('') + '</ul>'
+      : '<div class="cs-ok big">All compliances are up to date as of ' + fd(T) + '. Thank you!</div>') +
+    '<div class="cs-foot">Prepared by ' + esc(fm.name || '') + (fm.partner ? ' · ' + esc(fm.partner) : '') + ' on ' + fd(today()) + '. Due dates and consequences are summarised for your information and may change with government notifications or extensions; amounts depend on the facts of each case. Please contact us for clarification.' + (internal ? ' <b class="cs-int">Penalty estimates are internal working only.</b>' : '') + '</div></div>';
+}
+VIEWS.cstatus = {
+  title: 'Client status report',
+  render() {
+    const f = csState(); const p = S.params; if (p.client) { f.client = p.client; S.params = {}; }
+    const clients = D().clients.slice().sort(by((c) => (c.tradeName || c.legalName || '').toLowerCase()));
+    const cur = f.client && Store.get('clients', f.client);
+    let h = '<div class="page-head"><div class="t"><span class="eyebrow">Insights · shareable</span><h1>Client compliance status</h1></div><div class="acts">' + (cur ? '<button class="btn" data-act="cs-present">' + ico('eye') + ' Client view</button><button class="btn" data-act="cs-email">' + ico('mail') + ' Email draft</button><button class="btn pri" data-act="cs-pdf">' + ico('download') + ' PDF for client</button>' : '') + '</div></div>';
+    h += '<div class="card pad"><div class="filters"><div class="field grow" style="min-width:260px;position:relative"><label>Client</label><input class="inp" id="csQ" list="csList" autocomplete="off" placeholder="Type a client name, code, PAN or GSTIN…" value="' + esc(cur ? (cur.tradeName || cur.legalName) + ' · ' + (cur.code || '') : f.q) + '"><datalist id="csList">' + clients.map((c) => '<option value="' + esc((c.tradeName || c.legalName) + ' · ' + (c.code || '')) + '">' + esc([c.pan, c.gstin].filter(Boolean).join(' · ')) + '</option>').join('') + '</datalist></div>' +
+      '<div class="field"><label>As of</label><input class="inp" type="date" id="csAsOf" value="' + esc(f.asOf) + '" max="' + today() + '"></div><label class="chk"><input type="checkbox" id="csUp"' + (f.upcoming ? ' checked' : '') + '> Include due in next 30 days</label>' + (csCanInternal() ? '<label class="chk"><input type="checkbox" id="csInt"' + (f.internal ? ' checked' : '') + '> Show penalty & interest <span class="badge t-amber plain">internal</span></label>' + (cur ? '<button class="btn sm ghost" data-act="cs-pdf-int">Internal PDF (with penalty)</button>' : '') : '') + '</div>' +
+      (csCanInternal() ? '<div class="muted" style="font-size:12.5px;margin-top:8px">The penalty column is for you only. It is never included in <b>Client view</b>, <b>PDF for client</b> or the email draft. Turn it off before taking a screenshot of this page.</div>' : '') + '</div>';
+    if (!cur) return h + '<div class="card">' + emptyState('file', 'Choose a client', 'Search for the client above. Their pending monthly, quarterly and annual filings appear as a one-page report you can share as a screenshot or PDF.') + '</div>';
+    const d = csData(cur.id, f.asOf, f.upcoming);
+    return h + '<div class="cs-wrap">' + csSheet(d, f.internal && csCanInternal()) + '</div>';
+  },
+};
+function csPick(v) {
+  const f = csState(); const s = String(v || '').trim().toLowerCase(); if (!s) { f.client = ''; f.q = ''; return refresh(); }
+  const code = s.split(' · ').pop(); const all = D().clients;
+  const c = all.find((x) => (x.code || '').toLowerCase() === code) || all.find((x) => [x.tradeName, x.legalName].some((n) => (n || '').toLowerCase() === s.split(' · ')[0])) || all.find((x) => [x.pan, x.gstin].some((n) => (n || '').toLowerCase() === s)) || null;
+  if (c) { f.client = c.id; f.q = ''; refresh(); }
+  else f.q = v;
+}
+document.addEventListener('change', (e) => {
+  if (S.view !== 'cstatus') return; const f = csState(); const id = e.target.id;
+  if (id === 'csQ') csPick(e.target.value);
+  else if (id === 'csAsOf') { if (C.isISO(e.target.value)) { f.asOf = e.target.value > today() ? today() : e.target.value; refresh(); } }
+  else if (id === 'csUp') { f.upcoming = e.target.checked; refresh(); }
+  else if (id === 'csInt') { f.internal = e.target.checked; refresh(); }
+});
+document.addEventListener('input', (e) => { if (S.view === 'cstatus' && e.target.id === 'csQ' && D().clients.some((c) => (c.tradeName || c.legalName) + ' · ' + (c.code || '') === e.target.value)) csPick(e.target.value); });
+ACT['cs-tax'] = async (el) => { if (!can('tasks.edit')) return toast('Your role cannot change tasks', 'bad'); const t = Store.get('tasks', el.dataset.id); if (!t) return; const v = el.value.trim(); const p = v ? C.toPaise(v) : 0; if (v && !(p >= 0)) return toast('Enter an amount in rupees', 'bad'); await Store.save('tasks', { ...JSON.parse(JSON.stringify(t)), taxAmt: p || 0 }, 'Tax amount for penalty estimate · ' + (t.form || t.title)); refresh(); };
+ACT['cs-open'] = (a) => { drawers.slice().forEach((x) => x.close(true)); go('cstatus', { client: a.dataset.id }); };
+ACT['cs-present'] = () => {
+  const f = csState(); const d = csData(f.client, f.asOf, f.upcoming); if (!d) return;
+  const ov = document.createElement('div'); ov.className = 'cs-present'; ov.innerHTML = '<div class="cs-present-bar"><span>Client view — penalty column hidden. Take a screenshot, or download the PDF.</span><button class="btn sm" data-x="pdf">' + ico('download') + ' PDF</button><button class="btn sm pri" data-x="close">Close</button></div>' + csSheet(d, false);
+  ov.addEventListener('click', (e) => { const b = e.target.closest('[data-x]'); if (!b) return; if (b.dataset.x === 'close') ov.remove(); else csPDF(false); });
+  document.body.appendChild(ov); audit('view', 'report', f.client, 'Client status report shown in client view');
+};
+ACT['cs-pdf'] = () => csPDF(false);
+ACT['cs-pdf-int'] = () => { if (!csCanInternal()) return toast('Only partners and administrators can see penalty estimates', 'bad'); csPDF(true); };
+ACT['cs-email'] = () => {
+  const f = csState(); const d = csData(f.client, f.asOf, f.upcoming); if (!d) return; const c = d.c; const fm = firm();
+  const line = (r) => '• ' + (r.t.form || r.t.title) + (r.t.period ? ' (' + r.t.period + ')' : '') + ' — due ' + fd(r.t.dueDate) + (r.overdue ? ', ' + r.days + ' days late' : '') + (r.t.status === 'awaiting_info' ? ' — waiting for your documents' : '');
+  const body = 'Dear ' + (((c.contacts || [])[0] || {}).name || 'Sir/Madam') + ',\n\nHere is the status of your statutory compliances as of ' + fd(d.asOf) + '.\n\n' + (d.overdue.length ? 'Overdue (' + d.overdue.length + '):\n' + d.overdue.map(line).join('\n') + '\n\n' : 'Nothing is overdue.\n\n') + (d.soon.length ? 'Due in the next 30 days (' + d.soon.length + '):\n' + d.soon.map(line).join('\n') + '\n\n' : '') +
+    (d.rows.length ? 'What happens if these are not filed:\n' + uniq(d.rows.map((r) => r.kind)).map((k) => '• ' + C.LATE[k].label + ': ' + C.LATE[k].consequence).join('\n') + '\n\n' : '') + 'Please share the pending information so that we can complete these filings on time.\n\nRegards,\n' + (fm.partner || '') + '\n' + (fm.name || '');
+  draftBox('Compliance status as of ' + fd(d.asOf) + ' — ' + (c.tradeName || c.legalName), c.email, body);
+};
+async function csPDF(internal) {
+  const f = csState(); const d = csData(f.client, f.asOf, f.upcoming); if (!d) return;
+  try {
+    const JsPDF = await pdfLib(); const fm = firm(); const c = d.c; const doc = new JsPDF({ unit: 'pt', format: 'a4', orientation: 'landscape' });
+    const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 36; let y = 40;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.setTextColor(15, 27, 45); doc.text(pdfSafe(fm.name || ''), M, y);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(100); doc.text(pdfSafe([fm.address, fm.phone, fm.email].filter(Boolean).join(' | ')).slice(0, 160), M, y + 13);
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(12); doc.setTextColor(31, 79, 209); doc.text('COMPLIANCE STATUS REPORT', W - M, y, { align: 'right' }); doc.setFontSize(9); doc.setTextColor(60); doc.text('As of ' + C.fmtDate(d.asOf), W - M, y + 13, { align: 'right' });
+    if (internal) { doc.setTextColor(198, 40, 40); doc.setFontSize(9); doc.text('INTERNAL COPY — includes penalty estimates — not for the client', W - M, y + 26, { align: 'right' }); }
+    y += 40; doc.setDrawColor(220); doc.line(M, y, W - M, y); y += 18;
+    doc.setTextColor(20); doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.text(pdfSafe(c.legalName || ''), M, y);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.text(pdfSafe([c.entityType, c.pan ? 'PAN ' + c.pan : '', c.gstin ? 'GSTIN ' + c.gstin : '', c.tan ? 'TAN ' + c.tan : '', c.cin ? 'CIN ' + c.cin : ''].filter(Boolean).join('   |   ')), M, y + 14);
+    y += 30; const kp = [['Overdue filings', d.overdue.length], ['Due in next 30 days', d.soon.length], ['Waiting for your documents', d.waiting.length], ['Completed this FY', d.done]].concat(internal ? [['Est. late fee & interest', 'Rs. ' + C.fmtINR(d.total, { noSym: true })]] : []);
+    const bw = (W - 2 * M - (kp.length - 1) * 8) / kp.length;
+    kp.forEach(([l, v], i) => { const x = M + i * (bw + 8); doc.setDrawColor(225); doc.setFillColor(247, 249, 251); doc.roundedRect(x, y, bw, 40, 4, 4, 'FD'); doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.setTextColor(i === 0 && d.overdue.length ? 198 : 17, i === 0 && d.overdue.length ? 40 : 24, i === 0 && d.overdue.length ? 40 : 39); doc.text(String(v), x + 10, y + 18); doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(100); doc.text(l, x + 10, y + 32); });
+    y += 56; doc.setTextColor(20);
+    const head = [['Compliance', 'Period', 'Due date', 'Delay', 'Status / action needed', 'If not filed'].concat(internal ? ['Est. late fee & interest (internal)'] : [])];
+    const sect = (title, list) => {
+      if (!list.length) return; if (y > H - 90) { doc.addPage(); y = 40; }
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); doc.text(title + ' (' + list.length + ')', M, y); y += 6;
+      doc.autoTable({ startY: y, head, body: list.map((r) => [pdfSafe((r.t.form || r.t.title) + '\n' + (r.t.category || '')), pdfSafe(r.t.period || ''), C.fmtDate(r.t.dueDate), r.overdue ? r.days + ' days late' : (r.left === 0 ? 'Due today' : 'Due in ' + r.left + ' days'), pdfSafe(csStatus(r) + (r.t.status === 'awaiting_info' && r.t.docsRequired ? '\nPlease send: ' + r.t.docsRequired : '')), pdfSafe(csShort(r.meta.consequence))].concat(internal ? [pdfSafe((r.est.total ? 'Rs. ' + C.fmtINR(r.est.total, { noSym: true }) : '-') + (r.overdue ? '\n' + r.est.notes.join('; ') : ''))] : [])),
+        theme: 'grid', styles: { fontSize: 7.8, cellPadding: 4, valign: 'top' }, headStyles: { fillColor: [15, 27, 45], textColor: 255 }, columnStyles: Object.assign({ 0: { cellWidth: 120 }, 1: { cellWidth: 70 }, 2: { cellWidth: 58 }, 3: { cellWidth: 58 }, 4: { cellWidth: 110 } }, internal ? { 6: { cellWidth: 150, textColor: [150, 30, 30] } } : {}),
+        didParseCell: (h) => { if (h.section === 'body' && h.column.index === 3 && /late/.test(h.cell.raw)) h.cell.styles.textColor = [198, 40, 40]; }, margin: { left: M, right: M } });
+      y = doc.lastAutoTable.finalY + 16;
+    };
+    if (!d.rows.length) { doc.setFontSize(11); doc.text('All compliances are up to date as of ' + C.fmtDate(d.asOf) + '.', M, y); y += 20; }
+    sect('Monthly / quarterly compliances', d.rows.filter((r) => r.freq === 'periodic')); sect('Annual compliances', d.rows.filter((r) => r.freq === 'annual')); sect('Other filings', d.rows.filter((r) => r.freq !== 'periodic' && r.freq !== 'annual'));
+    if (d.rows.length) {
+      if (y > H - 120) { doc.addPage(); y = 40; }
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); doc.text('What happens if these are not filed', M, y); y += 12; doc.setFont('helvetica', 'normal'); doc.setFontSize(8.3);
+      for (const k of uniq(d.rows.map((r) => r.kind))) { const lines = doc.splitTextToSize(pdfSafe(C.LATE[k].label + ': ' + C.LATE[k].consequence), W - 2 * M); if (y + lines.length * 10 > H - 40) { doc.addPage(); y = 40; } doc.text(lines, M, y); y += lines.length * 10 + 3; }
+    }
+    const pages = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pages; i++) { doc.setPage(i); doc.setFontSize(7.3); doc.setTextColor(130); doc.text(doc.splitTextToSize(pdfSafe('Prepared by ' + (fm.name || '') + ' on ' + C.fmtDate(today()) + '. Due dates and consequences are summarised for information and may change with notifications or extensions; amounts depend on the facts of each case.' + (internal ? ' INTERNAL - penalty estimates are working figures, not advice to the client.' : '')), W - 2 * M - 60), M, H - 22); doc.text('Page ' + i + ' of ' + pages, W - M, H - 22, { align: 'right' }); }
+    const nm = 'Compliance_status_' + (c.code || 'client') + '_' + d.asOf + (internal ? '_INTERNAL' : '') + '.pdf';
+    await X.save(nm, new Blob([doc.output('arraybuffer')], { type: 'application/pdf' }));
+    audit('export', 'report', c.id, 'Client status report PDF' + (internal ? ' (internal, with penalty estimates)' : ' (client copy)'));
+  } catch (e) { toast(e.message || 'Could not create the PDF', 'bad'); }
+}
+
 /* ===== Ask CA AI, administration, shell & boot ===== */
 
 /* ---------- Ask CA AI ---------- */
@@ -4975,6 +5274,7 @@ const ADMIN = {
 };
 /* ---------- app updates ---------- */
 const RELEASE_NOTES = [
+  ['1.5.0', 'Client compliance status report (Insights): one page per client with pending monthly, quarterly and annual filings and the consequences of not filing — share as screenshot, PDF or email; penalty & interest estimates shown only to partners/administrators and never in the client copy. KYC numbers now marked SAMPLE (demo), New or Real with format checks; client turnover field.'],
   ['1.4.0', 'Classic enterprise design; task completion workflow (Mark as completed / Filed with acknowledgement, status path, Completed column); user ID + password sign-in with encrypted data, lockout, auto-lock, recovery key and Users & security; encrypted backups; Check for updates.'],
   ['1.3.0', 'GST lock for unregistered clients; search bars on rules, services and users; compliance lists update automatically.'],
   ['1.2.0', 'Installable app for iPhone, Android and Windows with Google Drive, folder or device storage.'],
@@ -5008,7 +5308,7 @@ ADMIN.updates = function () {
     '<div class="sect"><h3>What’s new</h3>' + RELEASE_NOTES.map(([v, n]) => '<div style="font-size:13px"><b>' + v + '</b> — ' + esc(n) + '</div>').join('') + '</div>';
 };
 ACT['upd-apply'] = () => applyUpdate();
-const APP_VERSION = '1.4.0';
+const APP_VERSION = '1.5.0';
 ACT['cfg-save'] = async () => {
   const form = $('[data-cfgform="firm"]'); if (!form) return; const patch = {};
   $$('[data-k]', form).forEach((el) => { const v = el.type === 'checkbox' ? el.checked : el.value.trim(); setPath(patch, el.dataset.k, el.classList.contains('mono') && typeof v === 'string' ? v.toUpperCase() : v); });
@@ -5157,6 +5457,7 @@ const PAGE_INFO = {
   documents: ['folder', 'var(--m-docs)', 'Client documents — acknowledgements, notices, certificates — with expiry reminders.'],
   reports: ['chart', 'var(--m-rep)', 'Ready-made registers and MIS reports. Pick one on the left and export to Excel, PDF or Word.'],
   ai: ['spark', 'var(--m-ai)', 'Ask questions about your practice in plain English.'],
+  cstatus: ['file', 'var(--m-rep)', 'Pick a client to see every pending monthly, quarterly and annual filing with its consequences — share it as a screenshot or PDF. Penalty estimates stay visible only to you.'],
   imports: ['io', 'var(--m-io)', 'Bring data in from Excel and take reports out.'],
   admin: ['cog', 'var(--m-adm)', 'Firm profile, invoice settings, due-date rules, users, storage and backups.'],
 };
@@ -5164,7 +5465,7 @@ const NAV = [
   ['Practice', [['dashboard', 'home', 'Dashboard'], ['clients', 'users', 'Clients'], ['portals', 'key', 'Portal register', 'portals.view']]],
   ['Billing', [['billing', 'invoice', 'Invoices', 'billing.view'], ['receipts', 'wallet', 'Receipts', 'billing.view'], ['receivables', 'ageing', 'Receivables', 'billing.view']]],
   ['Work', [['compliance', 'check', 'Compliance'], ['staff', 'team', 'Staff & timesheets'], ['documents', 'folder', 'Documents']]],
-  ['Insight', [['reports', 'chart', 'Reports'], ['ai', 'spark', 'Ask CA AI', 'ai'], ['imports', 'io', 'Import & export']]],
+  ['Insight', [['reports', 'chart', 'Reports'], ['cstatus', 'file', 'Client status report'], ['ai', 'spark', 'Ask CA AI', 'ai'], ['imports', 'io', 'Import & export']]],
   ['Settings', [['admin', 'cog', 'Administration']]],
 ];
 function shellHTML() {
@@ -5175,7 +5476,7 @@ function shellHTML() {
 }
 function renderNav() {
   const alerts = buildAlerts(); const od = D().tasks.filter((t) => !C.isDone(t) && t.dueDate < D().T).length;
-  if (S.platform === 'standalone') { NAV[3][1][1][2] = 'CA Assistant'; PAGE_INFO.ai[2] = 'Ask about receivables, deadlines, workload or a client, or ask what a tax term means. Free, built-in, works offline.'; }
+  if (S.platform === 'standalone') { { const aiN = NAV[3][1].find((i) => i[0] === 'ai'); if (aiN) aiN[2] = 'CA Assistant'; } PAGE_INFO.ai[2] = 'Ask about receivables, deadlines, workload or a client, or ask what a tax term means. Free, built-in, works offline.'; }
   $('#nav').innerHTML = NAV.map(([sec, items]) => { const vis = items.filter((i) => !i[3] || can(i[3])); if (!vis.length) return ''; return '<div class="nav-sec">' + sec + '</div>' + vis.map(([v, i, l]) => '<a href="#' + v + '" data-act="go" data-v="' + v + '" class="' + (S.view === v ? 'on' : '') + '" style="--mc:' + ((PAGE_INFO[v] || [])[1] || 'var(--accent)') + '"><span class="nav-ic">' + ico(i) + '</span><span>' + l + '</span>' + (v === 'compliance' && od ? '<span class="cnt">' + od + '</span>' : '') + '</a>').join(''); }).join('');
   const bell = $('#bell'); bell.querySelector('.badge-n') && bell.querySelector('.badge-n').remove(); if (alerts.length) bell.insertAdjacentHTML('beforeend', '<span class="badge-n">' + (alerts.length > 99 ? '99+' : alerts.length) + '</span>');
   const fm = firm(); $('#brandName').textContent = fm.name && fm.name !== 'Your CA Firm' ? fm.name : 'CA Office 360'; $('#brandMark').innerHTML = fm.logo ? '<img src="' + esc(fm.logo) + '" alt="">' : esc((fm.name || 'CA').split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase());

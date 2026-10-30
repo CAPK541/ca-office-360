@@ -1,5 +1,5 @@
 {
- "version": "1.4.0",
- "released": "2026-10-30",
- "notes": "Classic enterprise design, Completed status for compliance tasks, user ID + password sign-in with encrypted data, encrypted backups and in-app updates."
+ "version": "1.5.0",
+ "released": "2026-10-31",
+ "notes": "Client compliance status report with consequences of not filing (penalty estimates internal only), and clear SAMPLE / Real markers for KYC numbers."
 }
