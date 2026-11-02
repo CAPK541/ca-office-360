@@ -4104,8 +4104,8 @@ const Persist = {
       this.error = null;
     } catch (e) {
       this.error = e; console.warn('persist', e);
-      if (e && e.code === 'locked') { S.syncState = 'locked'; if (!$('#auth') && S.ready) showAuth('signin').then(() => Persist.flush(true)); }
-      else if (e && e.code === 'wrongkey') S.syncState = 'error';
+      if (e && e.code === 'locked') { S.syncState = 'locked'; if (!$('#auth') && S.ready) showAuth('signin').then(afterLiveSignIn); }
+      else if (e && e.code === 'wrongkey') { S.syncState = 'wrongkey'; if (!$('#auth') && S.ready) showAuth('switch').then(afterLiveSignIn); }
       else if (S.mode === 'local') { S.syncState = 'error'; toast('Could not save on this device: ' + (e.message || e), 'bad'); }
     }
     S.pending = this.dirty ? 1 : 0; updateSyncDot(); renderSyncBar();
@@ -4214,9 +4214,9 @@ const GDrive = {
       }
       Persist.dirty = false; S.syncState = 'ok'; Persist.lastSync = nowISO(); Persist.error = null;
     } catch (e) {
-      S.syncState = e.code === 'offline' ? 'offline' : e.code === 'auth' ? 'disconnected' : e.code === 'locked' ? 'locked' : 'error';
+      S.syncState = e.code === 'offline' ? 'offline' : e.code === 'auth' ? 'disconnected' : e.code === 'locked' ? 'locked' : e.code === 'wrongkey' ? 'wrongkey' : 'error';
       if (e.code === 'notfound' || e.code === 'forbidden') Persist.error = new Error('You no longer have access to the office data file in Google Drive. Ask the owner to share it again.');
-      else if (e.code !== 'offline' && e.code !== 'auth' && e.code !== 'locked') Persist.error = e;
+      else if (!['offline', 'auth', 'locked', 'wrongkey'].includes(e.code)) Persist.error = e;
       throw e;
     }
   },
@@ -4302,7 +4302,8 @@ function renderSyncBar() {
   let bar = $('#syncBar'); const main = $('.main'); if (!main) return;
   if (!bar) { bar = document.createElement('div'); bar.id = 'syncBar'; bar.style.padding = '10px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px))'; main.insertBefore(bar, $('#content')); }
   let h = '';
-  if (S.syncState === 'locked') h = '<div class="banner warn">' + ico('lock') + '<div style="flex:1"><b>Signed out.</b> Sign in to continue saving changes.</div><button class="btn sm pri" data-act="auth-again">Sign in</button></div>';
+  if (S.syncState === 'wrongkey') h = '<div class="banner warn">' + ico('lock') + '<div style="flex:1"><b>Reconnect this device.</b> The shared office data was secured on another device. Sign in once with the user ID and password created there; your changes here are kept.</div><button class="btn sm pri" data-act="vault-switch">Reconnect</button></div>';
+  else if (S.syncState === 'locked') h = '<div class="banner warn">' + ico('lock') + '<div style="flex:1"><b>Signed out.</b> Sign in to continue saving changes.</div><button class="btn sm pri" data-act="auth-again">Sign in</button></div>';
   else if (S.mode === 'drive') {
     if (S.syncState === 'disconnected') h = '<div class="banner warn">' + ico('alert') + '<div style="flex:1"><b>Google Drive is not connected.</b> Your changes are kept on this device and will sync when you reconnect.</div><button class="btn sm pri" data-act="drive-reconnect">Connect</button></div>';
     else if (S.syncState === 'offline') h = '<div class="banner info">' + ico('clock') + '<div><b>Working offline.</b> Changes are saved on this device and will sync when the internet is back.</div></div>';
@@ -4311,7 +4312,7 @@ function renderSyncBar() {
   else if (S.mode === 'local' && !lsGet('localTipSeen', false)) h = '<div class="banner info">' + ico('shield') + '<div style="flex:1"><b>Data is stored only on this device.</b> ' + (isIOS() && !isStandaloneDisplay() ? 'Add the app to your Home Screen (Share → Add to Home Screen) so iPhone keeps the data. ' : '') + 'Download a backup regularly (Administration → Storage & backup).</div><button class="btn sm ghost" data-act="local-tip-ok">OK</button></div>';
   bar.innerHTML = h; bar.hidden = !h;
 }
-ACT['auth-again'] = () => showAuth('signin').then(() => Persist.flush(true));
+ACT['auth-again'] = () => showAuth('signin').then(afterLiveSignIn);
 ACT['local-tip-ok'] = () => { lsSet('localTipSeen', true); renderSyncBar(); };
 ACT['sync-now'] = () => Persist.flush(true).then(() => toast(S.syncState === 'ok' ? 'Synced' : 'Not synced yet'));
 ACT['drive-reconnect'] = async () => { try { await GDrive.signIn((GDrive.set || {}).email); S.syncState = 'pending'; await Persist.flush(true); toast(S.syncState === 'ok' ? 'Google Drive connected and synced' : 'Connected'); } catch (e) { toast(e.message, 'bad'); } };
@@ -4335,7 +4336,7 @@ async function startWithSettings(set, initialSnap) {
   if (Vault.isEnv(raw)) {
     Vault.adopt(raw);
     if (set.provider === 'drive') S.uid = (set.email || '').toLowerCase();
-    for (;;) { await authGate(); try { cached = await Vault.open(raw); break; } catch (e) { Vault.dek = null; Vault.user = null; toast(e.message, 'bad'); } }
+    for (;;) { await authGate(); try { cached = await Vault.open(raw); break; } catch (e) { if (e.code === 'wrongkey' && set.provider !== 'local') { Vault.foreign = null; cached = null; toast('The copy on this device used an older key — loading the office data from ' + (set.provider === 'drive' ? 'Google Drive' : 'the data folder') + '.'); break; } Vault.dek = null; Vault.user = null; toast(e.message, 'bad'); } }
   }
   if (cached && validSnapshot(cached)) loadSnapshot(cached);
   if (set.provider === 'drive') { S.uid = (set.email || '').toLowerCase(); S.me = { name: set.name || set.email, email: set.email, avatarUrl: set.picture || initialsAvatar(set.name || set.email) }; S.isOwner = !!S.uid && ((S.cfg.firm || {}).ownerEmail || '').toLowerCase() === S.uid; S.syncState = GDrive.valid() ? 'pending' : 'disconnected'; }
@@ -4444,7 +4445,8 @@ async function openDriveData(st, fileId, docsFolderId) {
   const meta = await GDrive.meta(fileId); const r = await GDrive.download(fileId); const snap = await r.json();
   if (!validSnapshot(snap) && !Vault.isEnv(snap)) throw new Error('That file is not CA Office 360 data.');
   Persist.known = meta.version;
-  await finishSetup({ provider: 'drive', email: st.gemail, name: st.gname, picture: st.gpic, fileId, folderId: (snap.cfg.firm || {}).driveFolderId || '', docsFolderId: docsFolderId || (snap.cfg.firm || {}).driveDocsFolderId || '', createdAt: nowISO() }, snap, false);
+  const cf = ((snap.cfg || {}).firm) || {};
+  await finishSetup({ provider: 'drive', email: st.gemail, name: st.gname, picture: st.gpic, fileId, folderId: cf.driveFolderId || '', docsFolderId: docsFolderId || cf.driveDocsFolderId || '', createdAt: nowISO() }, snap, false);
 }
 
 /* ---------- administration (standalone versions of storage & users) ---------- */
@@ -4666,10 +4668,11 @@ const Vault = {
   },
   async open(obj) {
     if (!this.isEnv(obj)) return obj;
-    this.adopt(obj);
-    if (!this.dek) { const e = new Error('Sign in to open the encrypted office data'); e.code = 'locked'; throw e; }
-    try { return JSON.parse(new TextDecoder().decode(await aesDec(this.dek, obj.iv, obj.ct))); }
-    catch (x) { const e = new Error('The office data was secured with a different key (password sign-in was turned on separately on another device). Sign in with an account from that device.'); e.code = 'wrongkey'; throw e; }
+    if (!this.dek) { this.adopt(obj); const e = new Error('Sign in to open the encrypted office data'); e.code = 'locked'; throw e; }
+    let plain;
+    try { plain = JSON.parse(new TextDecoder().decode(await aesDec(this.dek, obj.iv, obj.ct))); }
+    catch (x) { this.foreign = obj; const e = new Error('The office data was secured on another device with a different key. Sign in once with the user ID and password created on that device — your changes on this device are kept and merged.'); e.code = 'wrongkey'; throw e; }
+    this.adopt(obj); this.foreign = null; return plain;
   },
 };
 
@@ -4693,6 +4696,22 @@ async function vaultSignIn(uid, pw) {
   setFail(uid, null); Vault.dek = dek; Vault.user = uid; queueAuthLog('login', uid, 'Signed in');
   return { ok: true, entry: e };
 }
+/** Replace this device's key with the key of the shared office data (Drive / folder) after signing in with an account from that data. */
+async function vaultSwitch(uid, pw) {
+  const env = Vault.foreign; if (!env) return { err: 'Nothing to reconnect — try Sync again.' };
+  uid = normUid(uid); const f = failInfo(uid);
+  if (f.until > Date.now()) return { err: 'Too many wrong attempts. Try again in ' + Math.ceil((f.until - Date.now()) / 60000) + ' minute(s).' };
+  const e = (env.keys || {})[uid]; let dek = null;
+  if (e && !e.deleted && e.wrapped && !e.disabled) { try { dek = await unwrapDek(e, pw); await aesDec(dek, env.iv, env.ct); } catch (x) { dek = null; } }
+  if (!dek) { const n = f.n + 1; setFail(uid, n >= AUTH_MAX ? { n: 0, until: Date.now() + AUTH_LOCK_MIN * 60000 } : { n, until: 0 }); queueAuthLog('login_failed', uid, 'Wrong password for the shared office data'); return { err: 'User ID or password is incorrect. Use the user ID and password created on the other device (for example your computer).' }; }
+  setFail(uid, null);
+  Vault.dek = dek; Vault.keys = JSON.parse(JSON.stringify(env.keys || {})); Vault.recovery = env.recovery || null; Vault.created = env.created || Vault.created; Vault.user = uid; Vault.foreign = null;
+  queueAuthLog('login', uid, 'Signed in with the shared office key; this device now uses it');
+  return { ok: true, entry: Vault.keys[uid] };
+}
+/** After signing in while the app is already open: adopt identity, save audit, merge and upload. */
+function afterLiveSignIn() { if (typeof applyVaultIdentity === 'function') applyVaultIdentity(); flushAuthLog(); const e = Vault.entry(Vault.user) || {}; const go2 = () => Persist.flush(true).then(() => refresh(true)); if (e.mustChange) showAuth('change').then(go2); else go2(); }
+ACT['vault-switch'] = () => showAuth('switch').then(afterLiveSignIn);
 async function vaultRecover(uid, recKey, newPw) {
   uid = normUid(uid);
   if (!Vault.recovery) return { err: 'No recovery key is set up for this office.' };
@@ -4715,12 +4734,21 @@ async function vaultSetPassword(uid, pw, opts) {
 }
 /** Credential changes made on the sign-in screen are saved once the data has loaded (never an empty snapshot). */
 function saveVaultSoon() { if (S.platform !== 'standalone') return; if (S.ready) Persist.markDirty(); else Vault.pendingSave = true; }
+/** The shared office data (Drive file or folder file) if it is already encrypted, else null. */
+async function sharedEnvelope() {
+  try {
+    if (S.mode === 'drive' && GDrive.set && GDrive.set.fileId && GDrive.valid()) { const r = await GDrive.download(GDrive.set.fileId); const raw = await r.json(); return Vault.isEnv(raw) ? raw : null; }
+    if (S.mode === 'folder' && FolderStore.handle && (await FolderStore.perm(false))) { const cur = await FolderStore.read(); return cur && Vault.isEnv(cur.snap) ? cur.snap : null; }
+  } catch (e) { if (S.mode === 'drive' && e.code !== 'offline') throw new Error('Could not check the office data in Google Drive (' + (e.message || e) + '). Connect and try again.'); }
+  return null;
+}
 async function enableVault(uid, name, pw) {
   uid = normUid(uid);
-  if (S.mode === 'drive') { try { await Persist.flush(true); } catch (e) { /* checked below */ } if (S.syncState === 'locked') throw new Error('Password sign-in is already on for this office (turned on from another device). Sign in with the account your administrator created.'); }
+  const remote = await sharedEnvelope();
+  if (remote) { Vault.adopt(remote); const e = new Error('Password sign-in is already on for this office (turned on from another device). Sign in with the user ID and password created there.'); e.code = 'already'; throw e; }
   const dek = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
   const rec = makeRecoveryKey();
-  Vault.dek = dek; Vault.created = nowISO(); Vault.user = uid;
+  Vault.dek = dek; Vault.created = nowISO(); Vault.user = uid; Vault.justEnabled = true;
   Vault.keys = { [uid]: Object.assign({ name: name || uid, owner: true }, await wrapDek(dek, pw), { mustChange: false, disabled: false, createdAt: nowISO(), updatedAt: nowISO(), by: uid }) };
   Vault.recovery = Object.assign(await wrapDek(dek, normRecovery(rec)), { updatedAt: nowISO() });
   const prevUid = S.uid; S.uid = uid; S.isOwner = true;
@@ -4797,6 +4825,10 @@ function renderAuth() {
       (AUTH.err ? '<div class="banner bad" role="alert">' + ico('alert') + '<div>' + esc(AUTH.err) + '</div></div>' : '') +
       '<button class="btn pri" type="submit">' + ico('lock') + ' Sign in</button><button type="button" class="btn ghost sm" data-au="forgot">Forgot password?</button>' +
       '<div class="muted" style="font-size:12px">Sessions lock after ' + (+fm.idleMinutes || 15) + ' minutes of inactivity. ' + AUTH_MAX + ' wrong attempts lock sign-in on this device for ' + AUTH_LOCK_MIN + ' minutes.</div></form>';
+  } else if (AUTH.mode === 'switch') {
+    box = '<form class="auth-box" data-au-form="switch" autocomplete="on"><div><span class="eyebrow">' + esc(firmName) + '</span><h1>Reconnect this device</h1></div><div class="banner info">' + ico('lock') + '<div>Password sign-in was turned on separately on another device, so the shared office data uses a different key. Sign in once with the <b>user ID and password you created on that device</b> (for example your computer). Changes made on this device are kept and merged.</div></div>' +
+      '<div class="field"><label for="sw_uid">User ID</label><input class="inp" id="sw_uid" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required value="' + esc(Vault.user || lsGet('lastUid', '') || '') + '"></div>' + pwField('sw_pw', 'Password from the other device', 'current-password') +
+      (AUTH.err ? '<div class="banner bad" role="alert">' + ico('alert') + '<div>' + esc(AUTH.err) + '</div></div>' : '') + '<div class="btn-row"><button type="button" class="btn" data-au="cancel">Later</button><button class="btn pri" type="submit" style="flex:1">' + ico('refresh') + ' Reconnect and sync</button></div></form>';
   } else if (AUTH.mode === 'forgot') {
     box = '<form class="auth-box" data-au-form="recover"><div><span class="eyebrow">' + esc(firmName) + '</span><h1>Reset password</h1></div><div class="muted" style="font-size:13.5px">Staff: ask your administrator to reset your password from <b>Administration → Users & security</b>. Administrators can reset with the recovery key that was shown when password sign-in was turned on.</div>' +
       '<div class="field"><label for="rc_uid">User ID to reset</label><input class="inp" id="rc_uid" autocomplete="username" autocapitalize="none" required value="' + esc(lsGet('lastUid', '') || '') + '"></div><div class="field"><label for="rc_key">Recovery key</label><input class="inp mono" id="rc_key" autocomplete="off" required placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"></div>' + pwField('rc_pw', 'New password', 'new-password') + meter +
@@ -4829,6 +4861,7 @@ async function authClick(e) {
   if (a === 'peek') { const i = $('#' + b.dataset.for); if (i) i.type = i.type === 'password' ? 'text' : 'password'; return; }
   if (a === 'forgot') { AUTH.mode = 'forgot'; AUTH.err = ''; return renderAuth(); }
   if (a === 'back') { AUTH.mode = 'signin'; AUTH.err = ''; return renderAuth(); }
+  if (a === 'cancel') { AUTH.resolve = null; const ov = $('#auth'); if (ov) ov.remove(); return; }
   if (a === 'copyrk') return copyText(AUTH.rec, $('#rk'));
   if (a === 'rk-done') { if (!$('#rk_ok').checked) return toast('Tick the box once the key is saved', 'bad'); AUTH.rec = ''; authDone(); toast('Password sign-in is on. Add staff in Administration → Users & security.'); refresh(true); }
 }
@@ -4844,6 +4877,7 @@ async function authSubmit(e) {
       if (r.entry.mustChange) { AUTH.mode = 'change'; AUTH.err = ''; return renderAuth(); }
       return authDone();
     }
+    if (kind === 'switch') { busy('Checking…'); const r = await vaultSwitch($('#sw_uid').value, $('#sw_pw').value); if (r.err) { AUTH.err = r.err; return renderAuth(); } lsSet('lastUid', normUid($('#sw_uid').value)); toast('Reconnected — syncing'); return authDone(); }
     if (kind === 'recover') { busy('Checking…'); const r = await vaultRecover($('#rc_uid').value, $('#rc_key').value, $('#rc_pw').value); if (r.err) { AUTH.err = r.err; return renderAuth(); } lsSet('lastUid', normUid($('#rc_uid').value)); toast('Password reset'); return authDone(); }
     if (kind === 'change') {
       const p1 = $('#ch_pw').value, p2 = $('#ch_pw2').value; const probs = pwProblems(p1, Vault.user);
@@ -4864,7 +4898,7 @@ async function authSubmit(e) {
       const rec = await enableVault(uid, nm, p1); lsSet('lastUid', uid); lsSet('pin', null);
       AUTH.rec = rec; AUTH.mode = 'recovery'; AUTH.err = ''; return renderAuth();
     }
-  } catch (x) { AUTH.err = x.message || String(x); renderAuth(); }
+  } catch (x) { if (x && x.code === 'already') { AUTH.mode = 'signin'; AUTH.err = ''; AUTH.info = x.message; return renderAuth(); } AUTH.err = x.message || String(x); renderAuth(); }
 }
 
 /* ---------- after the app has loaded ---------- */
@@ -4881,7 +4915,7 @@ function securityAfterReady() {
     return;
   }
   const mayEnable = S.mode === 'drive' ? S.isOwner : true;
-  if (mayEnable) { let n = 0; const t = setInterval(() => { n++; if (Vault.on() || $('#auth') || n > 240) return clearInterval(t); if ($('#setup')) return; clearInterval(t); showAuth('setup'); }, 400); }
+  if (mayEnable) { let n = 0; const t = setInterval(() => { n++; if (Vault.on() || $('#auth') || n > 240) return clearInterval(t); if ($('#setup') || (S.mode !== 'local' && S.syncState === 'pending' && n < 50)) return; clearInterval(t); showAuth('setup').then(() => { if (!Vault.user) return; if (Vault.justEnabled) { Vault.justEnabled = false; applyVaultIdentity(); securityAfterReady(); } else afterLiveSignIn(); }); }, 400); }
 }
 ACT['sign-out'] = async () => { try { await Persist.flush(true); } catch (e) { /* sealed copy already on device */ } audit('logout', 'session', S.uid, 'Signed out'); try { await Persist.flush(true); } catch (e) { /* ignore */ } Vault.dek = null; location.reload(); };
 ACT['pw-change'] = () => { if (!Vault.on() || !Vault.user) return; modal({ body: () => '<h2>Change your password</h2><div class="grid"><div class="field"><label>Current password</label><input class="inp" type="password" id="cp_0" autocomplete="current-password"></div><div class="field"><label>New password</label><input class="inp" type="password" id="cp_1" autocomplete="new-password"><div class="hint">10+ characters with letters and numbers.</div></div><div class="field"><label>Repeat new password</label><input class="inp" type="password" id="cp_2" autocomplete="new-password"></div></div>', foot: () => '<button class="btn" data-m="close">Cancel</button><button class="btn pri" data-m="ok">Change password</button>',
@@ -5274,6 +5308,7 @@ const ADMIN = {
 };
 /* ---------- app updates ---------- */
 const RELEASE_NOTES = [
+  ['1.5.1', 'Fix: a second device (e.g. phone) now signs in with the office password instead of creating its own key; a device that already has a different key shows “Reconnect this device” and merges its changes; opening encrypted Drive data on a new device no longer fails.'],
   ['1.5.0', 'Client compliance status report (Insights): one page per client with pending monthly, quarterly and annual filings and the consequences of not filing — share as screenshot, PDF or email; penalty & interest estimates shown only to partners/administrators and never in the client copy. KYC numbers now marked SAMPLE (demo), New or Real with format checks; client turnover field.'],
   ['1.4.0', 'Classic enterprise design; task completion workflow (Mark as completed / Filed with acknowledgement, status path, Completed column); user ID + password sign-in with encrypted data, lockout, auto-lock, recovery key and Users & security; encrypted backups; Check for updates.'],
   ['1.3.0', 'GST lock for unregistered clients; search bars on rules, services and users; compliance lists update automatically.'],
@@ -5308,7 +5343,7 @@ ADMIN.updates = function () {
     '<div class="sect"><h3>What’s new</h3>' + RELEASE_NOTES.map(([v, n]) => '<div style="font-size:13px"><b>' + v + '</b> — ' + esc(n) + '</div>').join('') + '</div>';
 };
 ACT['upd-apply'] = () => applyUpdate();
-const APP_VERSION = '1.5.0';
+const APP_VERSION = '1.5.1';
 ACT['cfg-save'] = async () => {
   const form = $('[data-cfgform="firm"]'); if (!form) return; const patch = {};
   $$('[data-k]', form).forEach((el) => { const v = el.type === 'checkbox' ? el.checked : el.value.trim(); setPath(patch, el.dataset.k, el.classList.contains('mono') && typeof v === 'string' ? v.toUpperCase() : v); });
