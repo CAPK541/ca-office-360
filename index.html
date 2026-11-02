@@ -4712,6 +4712,24 @@ async function vaultSwitch(uid, pw) {
 /** After signing in while the app is already open: adopt identity, save audit, merge and upload. */
 function afterLiveSignIn() { if (typeof applyVaultIdentity === 'function') applyVaultIdentity(); flushAuthLog(); const e = Vault.entry(Vault.user) || {}; const go2 = () => Persist.flush(true).then(() => refresh(true)); if (e.mustChange) showAuth('change').then(go2); else go2(); }
 ACT['vault-switch'] = () => showAuth('switch').then(afterLiveSignIn);
+/** Reconnect with the recovery key of the shared office data, and set a new password for this user. */
+async function vaultSwitchRecover(uid, recKey, newPw) {
+  const env = Vault.foreign; if (!env) return { err: 'Nothing to reconnect — try Sync again.' };
+  if (!env.recovery) return { err: 'The shared office data has no recovery key. Use the password from the other device.' };
+  uid = normUid(uid); const f = failInfo('#recovery');
+  if (f.until > Date.now()) return { err: 'Too many attempts. Try again in ' + Math.ceil((f.until - Date.now()) / 60000) + ' minute(s).' };
+  if (!/^[a-z0-9._@-]{3,60}$/.test(uid)) return { err: 'Enter your user ID (with Google Drive it is your Google email).' };
+  let dek = null; try { dek = await unwrapDek(env.recovery, normRecovery(recKey)); await aesDec(dek, env.iv, env.ct); } catch (x) { dek = null; }
+  if (!dek) { const n = f.n + 1; setFail('#recovery', n >= AUTH_MAX ? { n: 0, until: Date.now() + AUTH_LOCK_MIN * 60000 } : { n, until: 0 }); queueAuthLog('login_failed', uid, 'Wrong recovery key for the shared office data'); return { err: 'That recovery key does not open the shared office data. Use the key shown when password sign-in was first turned on (on the other device).' }; }
+  const probs = pwProblems(newPw, uid); if (probs.length) return { err: 'New password needs ' + probs.join(', ') + '.' };
+  setFail('#recovery', null); setFail(uid, null);
+  const keys = JSON.parse(JSON.stringify(env.keys || {})); const prev = keys[uid] && !keys[uid].deleted ? keys[uid] : null;
+  const own = ((S.cfg && S.cfg.firm) || {}).ownerEmail;
+  keys[uid] = Object.assign({}, prev || { name: (S.me && S.me.name) || uid, owner: !prev && (normUid(own) === uid || S.isOwner), createdAt: nowISO() }, await wrapDek(dek, newPw), { mustChange: false, disabled: false, deleted: false, updatedAt: nowISO(), by: uid });
+  Vault.dek = dek; Vault.keys = keys; Vault.recovery = env.recovery; Vault.created = env.created || Vault.created; Vault.user = uid; Vault.foreign = null;
+  queueAuthLog('password', uid, 'Reconnected with the office recovery key and set a new password'); saveVaultSoon();
+  return { ok: true, entry: keys[uid] };
+}
 async function vaultRecover(uid, recKey, newPw) {
   uid = normUid(uid);
   if (!Vault.recovery) return { err: 'No recovery key is set up for this office.' };
@@ -4828,7 +4846,11 @@ function renderAuth() {
   } else if (AUTH.mode === 'switch') {
     box = '<form class="auth-box" data-au-form="switch" autocomplete="on"><div><span class="eyebrow">' + esc(firmName) + '</span><h1>Reconnect this device</h1></div><div class="banner info">' + ico('lock') + '<div>Password sign-in was turned on separately on another device, so the shared office data uses a different key. Sign in once with the <b>user ID and password you created on that device</b> (for example your computer). Changes made on this device are kept and merged.</div></div>' +
       '<div class="field"><label for="sw_uid">User ID</label><input class="inp" id="sw_uid" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required value="' + esc(Vault.user || lsGet('lastUid', '') || '') + '"></div>' + pwField('sw_pw', 'Password from the other device', 'current-password') +
-      (AUTH.err ? '<div class="banner bad" role="alert">' + ico('alert') + '<div>' + esc(AUTH.err) + '</div></div>' : '') + '<div class="btn-row"><button type="button" class="btn" data-au="cancel">Later</button><button class="btn pri" type="submit" style="flex:1">' + ico('refresh') + ' Reconnect and sync</button></div></form>';
+      (AUTH.err ? '<div class="banner bad" role="alert">' + ico('alert') + '<div>' + esc(AUTH.err) + '</div></div>' : '') + '<div class="btn-row"><button type="button" class="btn" data-au="cancel">Later</button><button class="btn pri" type="submit" style="flex:1">' + ico('refresh') + ' Reconnect and sync</button></div>' + ((Vault.foreign || {}).recovery ? '<button type="button" class="btn ghost sm" data-au="to-switch-rec">' + ico('key') + ' Forgot that password? Use the recovery key</button>' : '') + '</form>';
+  } else if (AUTH.mode === 'switch-rec') {
+    box = '<form class="auth-box" data-au-form="switch-rec"><div><span class="eyebrow">' + esc(firmName) + '</span><h1>Reconnect with recovery key</h1></div><div class="muted" style="font-size:13.5px">Use the <b>recovery key that was shown when password sign-in was first turned on</b> for this office (on the other device). You also choose a new password for your user ID.</div>' +
+      '<div class="field"><label for="sr_uid">User ID</label><input class="inp" id="sr_uid" autocomplete="username" autocapitalize="none" spellcheck="false" required value="' + esc(Vault.user || lsGet('lastUid', '') || (S.mode === 'drive' ? S.uid : '') || '') + '"></div><div class="field"><label for="sr_key">Recovery key</label><input class="inp mono" id="sr_key" autocomplete="off" required placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"></div>' + pwField('sr_pw', 'New password', 'new-password') + meter + pwField('sr_pw2', 'Repeat new password', 'new-password') +
+      (AUTH.err ? '<div class="banner bad" role="alert">' + ico('alert') + '<div>' + esc(AUTH.err) + '</div></div>' : '') + '<div class="btn-row"><button type="button" class="btn" data-au="to-switch">Back</button><button class="btn pri" type="submit" style="flex:1">' + ico('refresh') + ' Reconnect and sync</button></div></form>';
   } else if (AUTH.mode === 'forgot') {
     box = '<form class="auth-box" data-au-form="recover"><div><span class="eyebrow">' + esc(firmName) + '</span><h1>Reset password</h1></div><div class="muted" style="font-size:13.5px">Staff: ask your administrator to reset your password from <b>Administration → Users & security</b>. Administrators can reset with the recovery key that was shown when password sign-in was turned on.</div>' +
       '<div class="field"><label for="rc_uid">User ID to reset</label><input class="inp" id="rc_uid" autocomplete="username" autocapitalize="none" required value="' + esc(lsGet('lastUid', '') || '') + '"></div><div class="field"><label for="rc_key">Recovery key</label><input class="inp mono" id="rc_key" autocomplete="off" required placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"></div>' + pwField('rc_pw', 'New password', 'new-password') + meter +
@@ -4852,15 +4874,17 @@ function renderAuth() {
   setTimeout(() => { const f = ov.querySelector('input:not([readonly]):not([type=checkbox])'); const pw = $('#au_pw'); if ($('#au_uid') && $('#au_uid').value && pw) pw.focus(); else if (f) f.focus(); }, 30);
 }
 function authInput(e) {
-  const id = e.target.id; if (!/^(su_pw|rc_pw|ch_pw)$/.test(id)) return;
+  const id = e.target.id; if (!/^(su_pw|rc_pw|ch_pw|sr_pw)$/.test(id)) return;
   const m = $('#au_meter'); const sc = pwScore(e.target.value); if (m) { m.style.width = (sc * 100 / 6) + '%'; m.style.background = sc >= 5 ? 'var(--green)' : sc >= 3 ? 'var(--amber)' : 'var(--red)'; }
-  const uid = ($('#su_uid') || $('#rc_uid') || {}).value || Vault.user; const p = pwProblems(e.target.value, uid); const r = $('#au_rules'); if (r) r.textContent = p.length ? 'Needs ' + p.join(', ') + '.' : 'Strong enough.';
+  const uid = ($('#su_uid') || $('#rc_uid') || $('#sr_uid') || {}).value || Vault.user; const p = pwProblems(e.target.value, uid); const r = $('#au_rules'); if (r) r.textContent = p.length ? 'Needs ' + p.join(', ') + '.' : 'Strong enough.';
 }
 async function authClick(e) {
   const b = e.target.closest('[data-au]'); if (!b) return; const a = b.dataset.au;
   if (a === 'peek') { const i = $('#' + b.dataset.for); if (i) i.type = i.type === 'password' ? 'text' : 'password'; return; }
   if (a === 'forgot') { AUTH.mode = 'forgot'; AUTH.err = ''; return renderAuth(); }
   if (a === 'back') { AUTH.mode = 'signin'; AUTH.err = ''; return renderAuth(); }
+  if (a === 'to-switch-rec') { AUTH.mode = 'switch-rec'; AUTH.err = ''; return renderAuth(); }
+  if (a === 'to-switch') { AUTH.mode = 'switch'; AUTH.err = ''; return renderAuth(); }
   if (a === 'cancel') { AUTH.resolve = null; const ov = $('#auth'); if (ov) ov.remove(); return; }
   if (a === 'copyrk') return copyText(AUTH.rec, $('#rk'));
   if (a === 'rk-done') { if (!$('#rk_ok').checked) return toast('Tick the box once the key is saved', 'bad'); AUTH.rec = ''; authDone(); toast('Password sign-in is on. Add staff in Administration → Users & security.'); refresh(true); }
@@ -4877,6 +4901,7 @@ async function authSubmit(e) {
       if (r.entry.mustChange) { AUTH.mode = 'change'; AUTH.err = ''; return renderAuth(); }
       return authDone();
     }
+    if (kind === 'switch-rec') { if ($('#sr_pw').value !== $('#sr_pw2').value) { AUTH.err = 'The two passwords do not match.'; return renderAuth(); } busy('Checking…'); const r = await vaultSwitchRecover($('#sr_uid').value, $('#sr_key').value, $('#sr_pw').value); if (r.err) { AUTH.err = r.err; return renderAuth(); } lsSet('lastUid', normUid($('#sr_uid').value)); toast('Reconnected — new password saved, syncing'); return authDone(); }
     if (kind === 'switch') { busy('Checking…'); const r = await vaultSwitch($('#sw_uid').value, $('#sw_pw').value); if (r.err) { AUTH.err = r.err; return renderAuth(); } lsSet('lastUid', normUid($('#sw_uid').value)); toast('Reconnected — syncing'); return authDone(); }
     if (kind === 'recover') { busy('Checking…'); const r = await vaultRecover($('#rc_uid').value, $('#rc_key').value, $('#rc_pw').value); if (r.err) { AUTH.err = r.err; return renderAuth(); } lsSet('lastUid', normUid($('#rc_uid').value)); toast('Password reset'); return authDone(); }
     if (kind === 'change') {
@@ -5308,6 +5333,7 @@ const ADMIN = {
 };
 /* ---------- app updates ---------- */
 const RELEASE_NOTES = [
+  ['1.5.2', 'Reconnect this device can now use the office recovery key (and set a new password) when the password from the other device is not known.'],
   ['1.5.1', 'Fix: a second device (e.g. phone) now signs in with the office password instead of creating its own key; a device that already has a different key shows “Reconnect this device” and merges its changes; opening encrypted Drive data on a new device no longer fails.'],
   ['1.5.0', 'Client compliance status report (Insights): one page per client with pending monthly, quarterly and annual filings and the consequences of not filing — share as screenshot, PDF or email; penalty & interest estimates shown only to partners/administrators and never in the client copy. KYC numbers now marked SAMPLE (demo), New or Real with format checks; client turnover field.'],
   ['1.4.0', 'Classic enterprise design; task completion workflow (Mark as completed / Filed with acknowledgement, status path, Completed column); user ID + password sign-in with encrypted data, lockout, auto-lock, recovery key and Users & security; encrypted backups; Check for updates.'],
@@ -5343,7 +5369,7 @@ ADMIN.updates = function () {
     '<div class="sect"><h3>What’s new</h3>' + RELEASE_NOTES.map(([v, n]) => '<div style="font-size:13px"><b>' + v + '</b> — ' + esc(n) + '</div>').join('') + '</div>';
 };
 ACT['upd-apply'] = () => applyUpdate();
-const APP_VERSION = '1.5.1';
+const APP_VERSION = '1.5.2';
 ACT['cfg-save'] = async () => {
   const form = $('[data-cfgform="firm"]'); if (!form) return; const patch = {};
   $$('[data-k]', form).forEach((el) => { const v = el.type === 'checkbox' ? el.checked : el.value.trim(); setPath(patch, el.dataset.k, el.classList.contains('mono') && typeof v === 'string' ? v.toUpperCase() : v); });

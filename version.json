@@ -1,5 +1,5 @@
 {
- "version": "1.5.1",
- "released": "2026-10-31",
- "notes": "Fix for phones: sign in with the office password and reconnect devices that showed \u201csecured with a different key\u201d."
+ "version": "1.5.2",
+ "released": "2026-11-03",
+ "notes": "Reconnect this device with the office recovery key."
 }
