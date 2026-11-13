@@ -588,6 +588,47 @@ h1 { font-size: 1.45rem; font-weight: 650; } h2 { font-size: 1rem; font-weight: 
 .tag.real-tag { background: var(--green-soft); color: var(--green); border-color: transparent; font-weight: 700; font-family: var(--f-body); font-size: 10.5px; }
 @media (max-width: 820px) { .cs-sheet { padding: 18px; min-width: 720px; } }
 @media print { .side, .top, .tabbar, .page-head, .card.pad, #syncBar { display: none !important; } .cs-sheet { box-shadow: none; border: 0; } .cs-sheet:not(.internal) .cs-int, .cs-int { display: none !important; } }
+/* invoice templates */
+.tplgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+.tplc { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); display: flex; flex-direction: column; }
+.tplc.on { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.tplc-b { padding: 10px 12px 12px; border-top: 1px solid var(--line); }
+.tplc-b .sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.tm { background: #fff; padding: 10px; height: 168px; display: flex; flex-direction: column; gap: 5px; overflow: hidden; }
+.tm i { display: block; height: 5px; border-radius: 2px; background: #cfd5dd; }
+.tm-h { display: flex; gap: 6px; align-items: center; padding-bottom: 7px; margin-bottom: 4px; }
+.tm-h i { height: 6px; }
+.tm-row { display: flex; gap: 6px; margin-bottom: 4px; }
+.tm-t { height: 9px; border-radius: 1px; }
+.tm-r { height: 9px; border-bottom: 1px solid #eceff3; }
+.tm-r.z { background: #f3f5f8; }
+.tm-tot { height: 10px; width: 42%; margin-left: auto; border-radius: 1px; }
+.tm-f { display: flex; align-items: flex-end; gap: 6px; margin-top: auto; }
+.tm-f .qr { width: 22px; height: 22px; background: conic-gradient(#222 25%, #fff 0 50%, #222 0 75%, #fff 0) 0 0/6px 6px; opacity: .8; border: 2px solid #222; }
+/* signature */
+.sigbox { min-height: 120px; border: 1px dashed var(--line-2, var(--line)); border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 12px;
+  background: #fff linear-gradient(45deg, #f1f3f6 25%, transparent 25%, transparent 75%, #f1f3f6 75%) 0 0/16px 16px; }
+.sigbox img { max-height: 110px; max-width: 100%; }
+/* notes */
+.notegrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; align-items: start; }
+.notec { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; transition: box-shadow .15s, border-color .15s; }
+.notec:hover, .notec:focus-visible { border-color: var(--accent); box-shadow: var(--shadow-1, 0 2px 8px rgba(15, 27, 45, .08)); outline: none; }
+.notec-h { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; }
+.notec-h .pin { color: var(--accent); font-size: 10px; margin-top: 4px; }
+.notec-b { font-size: 13px; color: var(--ink-2); line-height: 1.5; max-height: 190px; overflow: hidden; overflow-wrap: anywhere; }
+.notec-f { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 12px; }
+.notec-f .sp { flex: 1; }
+.notec-f .chip { cursor: default; font-size: 11.5px; padding: 1px 8px; }
+.notec-f .chip.ghost { background: transparent; color: var(--muted); }
+.notec-f .chip svg { width: 11px; height: 11px; }
+.notec.nc-yellow { background: #fff8db; border-color: #f0dc8a; }
+.notec.nc-blue { background: #e9f1ff; border-color: #b9cff5; }
+.notec.nc-green { background: #e8f6ec; border-color: #b4dcbf; }
+.notec.nc-pink { background: #fdecf1; border-color: #f2bccb; }
+.notec.nc-grey { background: #f1f3f5; border-color: #d6dbe1; }
+.notec[class*="nc-"] { color: #1d232b; }
+.notec[class*="nc-"] .notec-b, .notec[class*="nc-"] .muted, .notec[class*="nc-"] .chip.ghost { color: #47505c; }
+.notec[class*="nc-"] .chip { background: rgba(255,255,255,.6); color: #2c333d; border-color: rgba(0,0,0,.12); }
 
 </style>
 </head>
@@ -776,6 +817,9 @@ async function __seedDemo() {
 
 </script>
 <script>
+/* QR Code Generator for JavaScript — Copyright (c) 2009 Kazuhiko Arase — MIT licence (http://www.opensource.org/licenses/mit-license.php). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED. */
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,(function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1}))},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(t,r){var e=n("友");if(2!=e.length||38726!=(e[0]<<8|e[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}((function(){return qrcode}));
+
 /* CA Office 360 — calculation core (pure functions, no DOM, no storage).
    All money is integer PAISE. Dates are ISO 'YYYY-MM-DD' strings. */
 (function (root) {
@@ -923,6 +967,23 @@ async function __seedDemo() {
     if (['Individual', 'HUF', 'Proprietorship', 'Partnership', 'LLP'].includes(t)) return t;
     return 'Other';
   };
+  /** Registration fields that apply to an entity type (others are hidden in the client form). */
+  C.entityFields = function (t) {
+    const g = C.entityGroup(t); const personal = g === 'Individual' || g === 'HUF';
+    const f = new Set(['gstin', 'pan', 'tan', 'gstType', 'gstFreq', 'gstRegDate', 'otherReg']);
+    if (g === 'Company') f.add('cin').add('agmDate');
+    if (t === 'LLP') f.add('llpin');
+    if (['Partnership', 'Trust/Society'].includes(g) || t === 'AOP/BOI') f.add('regNo');
+    if (!personal && g !== 'Trust/Society' && t !== 'Government') f.add('udyam');
+    if (!personal) ['ptNo', 'pfCode', 'esicCode', 'shopsNo', 'tradeLicence', 'labourLicence'].forEach((k) => f.add(k));
+    if (!personal && t !== 'Government') ['iec', 'fssai'].forEach((k) => f.add(k));
+    if (g === 'Individual' && t === 'Individual') f.add('ptNo');
+    return f;
+  };
+  C.regNoLabel = (t) => ({ Partnership: 'Firm registration no. (Registrar of Firms)', Trust: 'Trust registration no.', Society: 'Society registration no.', 'AOP/BOI': 'AOP / BOI registration no.' }[t] || 'Registration no.');
+  C.doiLabel = (t) => { const g = C.entityGroup(t); return g === 'Company' || t === 'LLP' ? 'Date of incorporation' : t === 'Individual' ? 'Date of birth' : g === 'HUF' ? 'Date of creation' : g === 'Trust/Society' ? 'Date of registration' : 'Date of commencement'; };
+  /** One value for exports: CIN, LLPIN or other registration number. */
+  C.regNumber = (c) => c.cin || c.llpin || c.regNo || '';
   C.PAN_TYPE = { P: 'Individual', C: 'Company', F: 'Firm/LLP', H: 'HUF', A: 'AOP', T: 'Trust', B: 'BOI', L: 'Local Authority', J: 'Artificial Juridical Person', G: 'Government' };
 
   /* ---------------- validators ---------------- */
@@ -953,7 +1014,7 @@ async function __seedDemo() {
   };
   C.normId = (s) => String(s || '').toUpperCase().replace(/\s/g, '');
   /* KYC identifiers: format check and whether the number is a sample (demo) or a real one entered by the firm */
-  C.ID_FIELDS = { gstin: 'GSTIN', pan: 'PAN', tan: 'TAN', cin: 'CIN', llpin: 'LLPIN', udyam: 'Udyam', ptNo: 'PT no.', pfCode: 'EPF code', esicCode: 'ESIC code', iec: 'IEC', fssai: 'FSSAI', shopsNo: 'Shops & Est. no.', tradeLicence: 'Trade licence', labourLicence: 'Labour licence' };
+  C.ID_FIELDS = { gstin: 'GSTIN', pan: 'PAN', tan: 'TAN', cin: 'CIN', llpin: 'LLPIN', regNo: 'Registration no.', udyam: 'Udyam', ptNo: 'PT no.', pfCode: 'EPF code', esicCode: 'ESIC code', iec: 'IEC', fssai: 'FSSAI', shopsNo: 'Shops & Est. no.', tradeLicence: 'Trade licence', labourLicence: 'Labour licence' };
   C.idCheck = function (k, raw) {
     const v = C.normId(raw); if (!v) return { ok: null, text: '' };
     switch (k) {
@@ -1440,19 +1501,38 @@ async function __seedDemo() {
     if (a.entityGroups && a.entityGroups.length && !a.entityGroups.includes(C.entityGroup(client.entityType))) return false;
     if (a.ptState && client.stateCode !== a.ptState) return false;
     if (C.isGstRule(rule) && !C.gstRegistered(client)) return false;
+    const only = C.RULE_ENTITY[rule.code]; if (only && !only.includes(C.entityGroup(client.entityType))) return false;
     return true;
   };
   C.GST_FLAGS = ['gst', 'gst9c', 'iff'];
+  /** Forms that exist only for some constitutions, whatever is ticked. */
+  C.RULE_ENTITY = { AOC4: ['Company'], MGT7: ['Company'], DPT3: ['Company'], MSME1: ['Company'], LLP11: ['LLP'], LLP8: ['LLP'] };
   C.isGstRule = (rule) => rule.category === 'GST' || ((rule.applies || {}).flags || []).some((f) => C.GST_FLAGS.includes(f));
   C.gstRegistered = (c) => !!c && c.gstType !== 'none';
   /** A period is covered only if it falls on/after the client's GST registration date (GST rules). */
-  C.periodAfterGstReg = function (rule, client, p) {
-    if (!C.isGstRule(rule) || !client || !C.isISO(client.gstRegDate)) return true;
-    if (/^\d{4}-\d{2}$/.test(p.periodKey)) return p.periodKey >= client.gstRegDate.slice(0, 7);
-    const fy = /^(\d{4}-\d{2})-/.exec(p.periodKey); // schedule periods: "2025-26-Annual", "2026-27-Q2"
-    if (fy && C.fyRange(fy[1])[1] < client.gstRegDate) return false; // whole FY ended before registration
-    return p.due >= client.gstRegDate;
+  /** Last day of the period a task covers (month, quarter, half-year, FY), or its due date for instalments. */
+  C.periodEnd = function (p) {
+    const k = p.periodKey || '';
+    if (/^\d{4}-\d{2}$/.test(k)) return C.addDays(C.ymd(+k.slice(0, 4), +k.slice(5, 7) + 1, 1), -1);
+    const m = /^(\d{4})-\d{2}-(.*)$/.exec(k); if (!m) return p.due; const y0 = +m[1]; const lab = m[2];
+    const fyMonth = (i) => C.addDays(C.ymd(y0, 4 + i, 1), -1); // i = months after March (1 = April end)
+    let x;
+    if ((x = /^Q([1-4])$/.exec(lab))) return fyMonth(+x[1] * 3);
+    if ((x = /^M([12])Q([1-4])$/.exec(lab))) return fyMonth((+x[2] - 1) * 3 + +x[1]);
+    if ((x = /^H([12])$/.exec(lab))) return fyMonth(+x[1] * 6);
+    if (/^Annual$/i.test(lab)) return fyMonth(12);
+    return p.due;
   };
+  /** The date from which a client can have this compliance: GST registration (GST rules) or incorporation / commencement. */
+  C.complianceStart = function (rule, client) {
+    if (!client) return '';
+    const doi = C.isISO(client.doi) ? client.doi : '';
+    if (C.isGstRule(rule)) return C.isISO(client.gstRegDate) ? client.gstRegDate : doi;
+    return doi;
+  };
+  /** A period is covered only if it ends on/after the client's start date (no GSTR-1 for months before incorporation or GST registration). */
+  C.periodInScope = function (rule, client, p) { const start = C.complianceStart(rule, client); return !start || C.periodEnd(p) >= start; };
+  C.periodAfterGstReg = C.periodInScope;
   /**
    * Plan how compliance tasks must change after clients or rules change.
    * rules: all rules (incl. deleted/inactive); clients: clients in scope; tasks: Map/array of ALL tasks (incl. deleted);
@@ -1741,7 +1821,7 @@ const Store = {
     if (failed) throw { code: 'partial', message: failed + ' of ' + jobs.length + ' storage writes failed' };
     return recs.length;
   },
-  async softDelete(ent, id, reason) { const r = this.get(ent, id); if (!r) return; await this.save(ent, { ...r, deleted: true, deletedAt: nowISO(), deletedBy: S.uid, deleteReason: reason || '' }, 'Moved to recycle bin'); },
+  async softDelete(ent, id, reason) { const r = this.get(ent, id); if (!r) return; await this.save(ent, { ...r, deleted: true, deletedAt: nowISO(), deletedBy: S.uid, deleteReason: reason || '' }, 'Moved to recycle bin' + (reason ? ' — ' + reason : '')); },
   async restore(ent, id) { const r = S.data[ent].get(id); if (!r) return; const x = { ...r }; delete x.deleted; x.deleted = false; await this.save(ent, x, 'Restored from recycle bin'); },
   async purge(ent, id) { const r = S.data[ent].get(id); if (!r) return; const t = { id, _b: r._b, _gone: true, updatedAt: nowISO() }; S.data[ent].set(id, t); bump(); audit('purge', ent, id, 'Permanently removed'); await this.writeDoc(ENT[ent].coll + '/' + r._b, { [id]: t }); },
   async saveCfg(name, patch, auditMsg) {
@@ -2419,7 +2499,7 @@ ACT['cl-more'] = () => { S.ui.clMore = (S.ui.clMore || 40) + 40; refresh(); };
 ACT['clv-save'] = () => promptBox('Save this view', 'View name', async (name) => { await Store.savePrefs({ savedViews: { clients: { [name]: { ...S.ui.clf } } } }); toast('View saved'); refresh(); });
 ACT['clv-load'] = (el) => { const v = ((S.prefs.savedViews || {}).clients || {})[el.value]; if (v) { S.ui.clf = { ...v }; refresh(); } };
 function clientExportCols(full) {
-  const cols = [['code', 'Client code'], ['legalName', 'Legal name'], ['tradeName', 'Trade name'], ['entityType', 'Entity type'], ['status', 'Status'], ['pan', 'PAN'], ['tan', 'TAN'], ['gstin', 'GSTIN'], ['cin', 'CIN'], ['llpin', 'LLPIN'], ['udyam', 'Udyam'], ['doi', 'Date of incorporation'], ['industry', 'Industry'], ['activity', 'Business activity'], ['address', 'Registered address'], ['city', 'City'], ['stateCode', 'State code'], ['pincode', 'PIN'], ['email', 'Email'], ['mobile', 'Mobile'], ['contactPerson', 'Contact person'], ['gstType', 'GST type'], ['gstFreq', 'GST frequency'], ['taxRegime', 'Tax regime'], ['fyEnd', 'Accounting year end'], ['engagementStart', 'Engagement start'], ['creditLimit', 'Credit limit'], ['risk', 'Risk'], ['notes', 'Notes']].map(([k, l]) => ({ label: l, get: (c) => c[k] || '' }));
+  const cols = [['code', 'Client code'], ['legalName', 'Legal name'], ['tradeName', 'Trade name'], ['entityType', 'Entity type'], ['status', 'Status'], ['pan', 'PAN'], ['tan', 'TAN'], ['gstin', 'GSTIN'], ['regnum', 'CIN / LLPIN / Reg. No'], ['udyam', 'Udyam'], ['doi', 'Date of incorporation'], ['industry', 'Industry'], ['activity', 'Business activity'], ['address', 'Registered address'], ['city', 'City'], ['stateCode', 'State code'], ['pincode', 'PIN'], ['email', 'Email'], ['mobile', 'Mobile'], ['contactPerson', 'Contact person'], ['gstType', 'GST type'], ['gstFreq', 'GST frequency'], ['taxRegime', 'Tax regime'], ['fyEnd', 'Accounting year end'], ['engagementStart', 'Engagement start'], ['creditLimit', 'Credit limit'], ['risk', 'Risk'], ['notes', 'Notes']].map(([k, l]) => ({ label: l, get: (c) => (k === 'regnum' ? C.regNumber(c) : c[k] || '') }));
   cols.splice(5, 0, { label: 'Responsible', get: (c) => eName(c.rm) });
   cols.push({ label: 'Compliances', get: (c) => CLIENT_FLAGS.filter(([k]) => (c.flags || {})[k]).map(([, l]) => l).join('; ') });
   if (full && can('billing.view')) cols.push({ label: 'Outstanding', money: true, get: (c) => (D().ledger.client[c.id] || {}).outstanding || 0 });
@@ -2462,19 +2542,19 @@ function clientForm(existing, onSaved) {
   openDrawer({ title: existing ? 'Edit client · ' + (existing.tradeName || existing.legalName) : 'Add new client', state: { c, origIds },
     render: (dr) => {
       const isCo = C.entityGroup(c.entityType) === 'Company', isLLP = c.entityType === 'LLP';
+      const EF = C.entityFields(c.entityType); const HID = [['cin', 'CIN'], ['llpin', 'LLPIN'], ['regNo', 'registration no.'], ['udyam', 'Udyam'], ['pfCode', 'EPF'], ['esicCode', 'ESIC'], ['iec', 'IEC'], ['fssai', 'FSSAI']].filter(([k]) => !EF.has(k)).map(([, l]) => l);
       let h = '<div class="jump">' + SECS.map(([id, l]) => '<button data-d="jump" data-s="' + id + '">' + l + '</button>').join('') + '</div><div class="req-note">Fields marked <b>*</b> are required. Everything else can be filled now or later. ID numbers are checked as you type.</div><div id="dupSlot"></div>';
       h += sec(0, '', '<div class="grid g3">' + fld({ k: 'code', label: 'Client code', v: c.code, mono: 1, req: 1, hint: 'Suggested automatically' }) + fld({ k: 'legalName', label: 'Legal name (as per PAN)', v: c.legalName, req: 1, cls: 'span2' }) + fld({ k: 'tradeName', label: 'Trade / brand name', v: c.tradeName }) +
         fld({ k: 'entityType', label: 'Entity type / constitution', type: 'select', options: opts(C.ENTITY_TYPES, c.entityType), req: 1, hint: 'Sets the usual compliances below' }) + fld({ k: 'status', label: 'Client status', type: 'select', options: opts([['active', 'Active'], ['prospective', 'Prospective'], ['inactive', 'Inactive'], ['discontinued', 'Discontinued']], c.status) }) +
-        fld({ k: 'doi', label: 'Date of incorporation / birth / commencement', type: 'date', v: c.doi }) + fld({ k: 'industry', label: 'Industry', v: c.industry, ph: 'e.g. Manufacturing, IT services' }) + fld({ k: 'activity', label: 'Nature of business', v: c.activity }) + '</div>');
+        fld({ k: 'doi', label: C.doiLabel(c.entityType), type: 'date', v: c.doi, hint: 'No compliance is due for periods before this date' }) + fld({ k: 'industry', label: 'Industry', v: c.industry, ph: 'e.g. Manufacturing, IT services' }) + fld({ k: 'activity', label: 'Nature of business', v: c.activity }) + '</div>');
       h += sec(1, 'Type the GSTIN first — PAN and state are filled from it. Leave blank what does not apply.' + (c.demo ? ' <b>This is a demo client:</b> numbers marked <span class="idst sample" style="margin:0">SAMPLE</span> are made up — overwrite them with the real ones.' : ''), '<div class="grid g3">' +
-        fld({ k: 'gstin', label: 'GSTIN', v: c.gstin, mono: 1, max: 15, ph: '36ABCDE1234F1Z5' }) + fld({ k: 'pan', label: 'PAN', v: c.pan, mono: 1, max: 10, ph: 'ABCDE1234F' }) + fld({ k: 'tan', label: 'TAN', v: c.tan, mono: 1, max: 10, ph: 'HYDA12345B' }) +
-        fld({ k: 'cin', label: 'CIN' + (isCo ? '' : ' (companies)'), v: c.cin, mono: 1, max: 21 }) + fld({ k: 'llpin', label: 'LLPIN' + (isLLP ? '' : ' (LLPs)'), v: c.llpin, mono: 1, max: 8, ph: 'AAB-1234' }) + fld({ k: 'udyam', label: 'Udyam registration no.', v: c.udyam, mono: 1, max: 19, ph: 'UDYAM-TS-02-0012345' }) +
+        fld({ k: 'gstin', label: 'GSTIN', v: c.gstin, mono: 1, max: 15 }) + fld({ k: 'pan', label: 'PAN', v: c.pan, mono: 1, max: 10 }) + fld({ k: 'tan', label: 'TAN', v: c.tan, mono: 1, max: 10 }) +
+        (EF.has('cin') ? fld({ k: 'cin', label: 'CIN', v: c.cin, mono: 1, max: 21 }) : '') + (EF.has('llpin') ? fld({ k: 'llpin', label: 'LLPIN', v: c.llpin, mono: 1, max: 8 }) : '') + (EF.has('regNo') ? fld({ k: 'regNo', label: C.regNoLabel(c.entityType), v: c.regNo, mono: 1 }) : '') + (EF.has('udyam') ? fld({ k: 'udyam', label: 'Udyam registration no.', v: c.udyam, mono: 1, max: 19 }) : '') +
         fld({ k: 'gstType', label: 'GST registration type', type: 'select', options: opts([['regular', 'Regular'], ['composition', 'Composition'], ['casual', 'Casual'], ['isd', 'Input service distributor'], ['tds', 'GST TDS deductor'], ['none', 'Not registered']], c.gstType) }) +
-        (c.gstType === 'none' ? fld({ k: 'gstFreq', label: 'GST return frequency', type: 'select', options: opt('', 'Not applicable — not registered', ''), dis: 1, hint: '🔒 Locked because GST is not registered' }) + fld({ k: 'gstRegDate', label: 'GST registration date', v: '', ph: 'Not applicable', dis: 1, hint: '🔒 Locked because GST is not registered' })
+        (c.gstType === 'none' ? fld({ k: 'gstFreq', label: 'GST return frequency', type: 'select', options: opt('', 'Not applicable — not registered', ''), dis: 1, hint: '🔒 Locked because GST is not registered' }) + fld({ k: 'gstRegDate', label: 'GST registration date', v: '', dis: 1, hint: '🔒 Locked because GST is not registered' })
           : fld({ k: 'gstFreq', label: 'GST return frequency', type: 'select', options: opts([['monthly', 'Monthly'], ['qrmp', 'Quarterly (QRMP)']], c.gstFreq || 'monthly') }) + fld({ k: 'gstRegDate', label: 'GST registration date', type: 'date', v: c.gstRegDate, hint: 'GST tasks start from this month' })) +
-        fld({ k: 'ptNo', label: 'Professional tax no.', v: c.ptNo, mono: 1 }) + fld({ k: 'pfCode', label: 'EPF establishment code', v: c.pfCode, mono: 1 }) + fld({ k: 'esicCode', label: 'ESIC code', v: c.esicCode, mono: 1 }) +
-        fld({ k: 'iec', label: 'IEC (import / export)', v: c.iec, mono: 1 }) + fld({ k: 'fssai', label: 'FSSAI licence no.', v: c.fssai, mono: 1 }) + fld({ k: 'shopsNo', label: 'Shops & Establishments no.', v: c.shopsNo, mono: 1 }) +
-        fld({ k: 'tradeLicence', label: 'Trade licence no.', v: c.tradeLicence, mono: 1 }) + fld({ k: 'labourLicence', label: 'Labour licence no.', v: c.labourLicence, mono: 1 }) + fld({ k: 'otherReg', label: 'Other registrations', v: c.otherReg, ph: 'e.g. RERA, Drug licence' }) + '</div>');
+        [['ptNo', 'Professional tax no.'], ['pfCode', 'EPF establishment code'], ['esicCode', 'ESIC code'], ['iec', 'IEC (import / export)'], ['fssai', 'FSSAI licence no.'], ['shopsNo', 'Shops & Establishments no.'], ['tradeLicence', 'Trade licence no.'], ['labourLicence', 'Labour licence no.']].filter(([k]) => EF.has(k)).map(([k, l]) => fld({ k, label: l, v: c[k], mono: 1 })).join('') +
+        fld({ k: 'otherReg', label: 'Other registrations', v: c.otherReg }) + '</div>' + (HID.length ? '<div class="muted" style="font-size:12px">Not shown for ' + esc(c.entityType) + ': ' + esc(HID.join(', ')) + '.</div>' : ''));
       h += sec(2, '', '<div class="grid g3">' + fld({ k: 'address', label: 'Registered office address', type: 'textarea', v: c.address, cls: 'span2', rows: 2 }) + fld({ k: 'ppob', label: 'Principal place of business', type: 'textarea', v: c.ppob, rows: 2 }) +
         fld({ k: 'commAddress', label: 'Communication address (if different)', type: 'textarea', v: c.commAddress, rows: 2, cls: 'span2' }) + fld({ k: 'city', label: 'City', v: c.city }) +
         fld({ k: 'stateCode', label: 'State (place of supply)', type: 'select', options: opts(Object.entries(C.STATES).map(([k, v]) => [k, k + ' · ' + v]), c.stateCode) }) + fld({ k: 'pincode', label: 'PIN code', v: c.pincode, num: 1, max: 6 }) + fld({ k: 'website', label: 'Website', v: c.website }) +
@@ -2482,7 +2562,7 @@ function clientForm(existing, onSaved) {
       h += sec(3, 'Who you deal with for documents and payments.', c.contacts.map((p, i) => '<div class="grid g4" style="align-items:end">' + fld({ k: 'contacts.' + i + '.name', label: 'Name', v: p.name }) + fld({ k: 'contacts.' + i + '.role', label: 'Role', v: p.role, ph: 'Accounts / Owner' }) + fld({ k: 'contacts.' + i + '.email', label: 'Email', v: p.email }) + '<div class="btn-row" style="flex-wrap:nowrap">' + fld({ k: 'contacts.' + i + '.mobile', label: 'Mobile', v: p.mobile }) + '<button class="btn sm danger" data-d="rm" data-l="contacts" data-i="' + i + '" aria-label="Remove contact">' + ico('trash') + '</button></div></div>').join('') + '<div><button class="btn sm" data-d="add" data-l="contacts">' + ico('plus') + ' Add contact person</button></div>');
       h += sec(4, 'Proprietor, partners, designated partners, directors, karta, trustees and authorised signatories.', c.people.map((p, i) => '<div class="grid g4" style="align-items:end">' + fld({ k: 'people.' + i + '.name', label: 'Name', v: p.name }) + fld({ k: 'people.' + i + '.designation', label: 'Designation', type: 'select', options: opts(['Proprietor', 'Partner', 'Designated partner', 'Director', 'Managing director', 'Karta', 'Trustee', 'Authorised signatory', 'Other'], p.designation) }) + fld({ k: 'people.' + i + '.din', label: 'DIN / DPIN / PAN', v: p.din, mono: 1 }) + '<div class="btn-row" style="flex-wrap:nowrap">' + fld({ k: 'people.' + i + '.mobile', label: 'Mobile', v: p.mobile }) + '<button class="btn sm danger" data-d="rm" data-l="people" data-i="' + i + '" aria-label="Remove person">' + ico('trash') + '</button></div>' + fld({ k: 'people.' + i + '.signatory', label: 'Authorised signatory', type: 'check', v: p.signatory }) + fld({ k: 'people.' + i + '.dscExpiry', label: 'DSC expiry', type: 'date', v: p.dscExpiry }) + '</div>').join('') + '<div><button class="btn sm" data-d="add" data-l="people">' + ico('plus') + ' Add person</button></div>');
       h += sec(5, 'Tick what you handle for this client. Compliance tasks and due dates are created from these.', (c.gstType === 'none' ? '<div class="banner info">' + ico('lock') + '<div>GST compliances are locked because GST registration type is <b>Not registered</b>. Change it in section 2 to enable them.</div></div>' : '') + '<div class="grid g3 flag-grid">' + CLIENT_FLAGS.map(([k, l]) => (c.gstType === 'none' && C.GST_FLAGS.includes(k)) ? '<label class="chk dis"><input type="checkbox" disabled> ' + esc(l) + ' <span class="faint">(not registered)</span></label>' : fld({ k: 'flags.' + k, label: l, type: 'check', v: c.flags[k] })).join('') + '</div><div class="grid g3">' +
-        fld({ k: 'fyEnd', label: 'Accounting year-end', v: c.fyEnd, ph: '31-Mar' }) + fld({ k: 'taxRegime', label: 'Income-tax regime', type: 'select', options: opts([['', 'Not set'], ['new', 'New regime'], ['old', 'Old regime'], ['115BAA', 'Sec 115BAA (22%)'], ['115BAB', 'Sec 115BAB (15%)'], ['presumptive', 'Presumptive (44AD/44ADA/44AE)']], c.taxRegime) }) + fld({ k: 'agmDate', label: 'Last AGM date', type: 'date', v: c.agmDate, hint: 'Companies: AOC-4 / MGT-7 run from this date' }) + fld({ k: 'turnover', label: 'Aggregate turnover, last FY (₹)', v: c.turnover, num: 1, hint: 'Used for GST late-fee caps and tax-audit penalty estimates' }) + '</div>');
+        fld({ k: 'fyEnd', label: 'Accounting year-end', v: c.fyEnd, ph: '31-Mar' }) + fld({ k: 'taxRegime', label: 'Income-tax regime', type: 'select', options: opts([['', 'Not set'], ['new', 'New regime'], ['old', 'Old regime'], ['115BAA', 'Sec 115BAA (22%)'], ['115BAB', 'Sec 115BAB (15%)'], ['presumptive', 'Presumptive (44AD/44ADA/44AE)']], c.taxRegime) }) + (isCo ? fld({ k: 'agmDate', label: 'Last AGM date', type: 'date', v: c.agmDate, hint: 'AOC-4 / MGT-7 run from this date' }) : '') + fld({ k: 'turnover', label: 'Aggregate turnover, last FY (₹)', v: c.turnover, num: 1, hint: 'Used for GST late-fee caps and tax-audit penalty estimates' }) + '</div>');
       h += sec(6, '', '<div class="grid g3">' + fld({ k: 'rm', label: 'Responsible CA / relationship manager', type: 'select', options: empOpts(c.rm) }) + fld({ k: 'assignee', label: 'Default preparer', type: 'select', options: empOpts(c.assignee) }) + fld({ k: 'reviewer', label: 'Default reviewer', type: 'select', options: empOpts(c.reviewer) }) +
         fld({ k: 'engagementStart', label: 'Engagement start', type: 'date', v: c.engagementStart }) + fld({ k: 'engagementStatus', label: 'Engagement status', type: 'select', options: opts([['active', 'Active'], ['proposed', 'Proposed'], ['paused', 'Paused'], ['ended', 'Ended']], c.engagementStatus || 'active') }) + fld({ k: 'engagementLetter', label: 'Engagement letter date / reference', v: c.engagementLetter }) +
         fld({ k: 'feeArrangement', label: 'Fee arrangement', type: 'textarea', v: c.feeArrangement, cls: 'span2', rows: 2, ph: 'e.g. ₹5,000 + GST per month for GST & TDS; ITR ₹15,000 annually' }) + fld({ k: 'creditLimit', label: 'Credit limit (₹)', v: c.creditLimit, num: 1 }) + fld({ k: 'paymentTerms', label: 'Payment terms (days)', v: c.paymentTerms, num: 1, ph: String(firm().termsDays) }) + fld({ k: 'risk', label: 'Risk flag', type: 'select', options: opts([['', 'None'], ['low', 'Low'], ['medium', 'Medium'], ['high', 'High']], c.risk) }) + fld({ k: 'referredBy', label: 'Referred by', v: c.referredBy }) + '</div>');
@@ -2497,7 +2577,7 @@ function clientForm(existing, onSaved) {
     mount: (dr) => {
       const check = debounce(() => validateCF(dr), 250);
       bindInputs(dr.body, c, (k, v, el, type) => {
-        if (k === 'entityType' && !existing) { c.flags = defaultFlags(c.entityType); if (c.gstType === 'none') C.GST_FLAGS.forEach((f) => (c.flags[f] = false)); dr.render(); }
+        if (k === 'entityType') { if (!existing) { c.flags = defaultFlags(c.entityType); if (c.gstType === 'none') C.GST_FLAGS.forEach((f) => (c.flags[f] = false)); } dr.render(); }
         if (k === 'gstType' && type === 'change') { if (v === 'none') { c.gstFreq = ''; c.gstRegDate = ''; C.GST_FLAGS.forEach((f) => (c.flags[f] = false)); toast('GST not registered — return frequency, registration date and GST compliances are locked'); } else { c.gstFreq = c.gstFreq || 'monthly'; c.flags.gst = true; } dr.render(); }
         if (k === 'gstFreq' && type === 'change') { if (v === 'qrmp') c.flags.iff = c.flags.iff || false; }
         if (k === 'gstin') { const gi = C.normId(v); if (C.V.gstin(gi)) { let changed = false; if (!c.pan) { c.pan = gi.slice(2, 12); changed = true; } if (C.STATES[gi.slice(0, 2)] && c.stateCode !== gi.slice(0, 2)) { c.stateCode = gi.slice(0, 2); changed = true; } c.flags.gst = true; if (c.gstType === 'none') c.gstType = 'regular'; if (changed) { dr.render(); const el2 = $('[data-k="gstin"]', dr.body); if (el2) { el2.focus(); el2.setSelectionRange(99, 99); } toast('PAN and state filled from GSTIN'); } } }
@@ -2517,6 +2597,7 @@ function clientForm(existing, onSaved) {
       addStdP: (a, dr) => { newPortals.push({ portal: 'Income Tax e-Filing', userId: C.normId(c.pan) }); if (c.flags.gst || c.gstin) newPortals.push({ portal: 'GST Portal' }); if (c.flags.tds || c.tan) newPortals.push({ portal: 'TRACES', userId: C.normId(c.tan) }); if (C.entityGroup(c.entityType) === 'Company' || c.entityType === 'LLP') newPortals.push({ portal: 'MCA V3' }); if (c.flags.pf) newPortals.push({ portal: 'EPFO (Employer)' }); if (c.flags.esic) newPortals.push({ portal: 'ESIC' }); dr.render(); dr.dirty = true; },
       del: (a, dr) => deleteClients([c.id], () => dr.close(true)),
       save: async (a, dr) => {
+        { const EF = C.entityFields(c.entityType); ['cin', 'llpin', 'regNo', 'agmDate'].forEach((k) => { if (!EF.has(k) && c[k]) delete c[k]; }); }
         ['pan', 'tan', 'gstin', 'cin', 'llpin', 'udyam'].forEach((k) => { if (c[k]) c[k] = C.normId(c[k]); });
         c.idSrc = c.idSrc || {}; for (const k of Object.keys(C.ID_FIELDS)) { const v = C.normId(c[k]); if (!v) delete c.idSrc[k]; else if (v !== C.normId(origIds[k]) && !(c.idSrc[k] && c.idSrc[k].v === v)) c.idSrc[k] = { by: 'entered', v, at: today(), u: S.uid || '' }; }
         if (c.gstType === 'none') { c.gstFreq = ''; c.gstRegDate = ''; C.GST_FLAGS.forEach((f) => (c.flags[f] = false)); if (c.gstin) { toast('Remove the GSTIN, or choose a GST registration type other than “Not registered”', 'bad'); const el = $('[data-k="gstType"]', dr.body); if (el) el.scrollIntoView({ block: 'center' }); return; } }
@@ -2616,7 +2697,7 @@ function openClient(id, tab) {
       const c = Store.get('clients', id); if (!c) return '<div class="muted">This client was removed.</div>';
       dr.setTitle((c.code ? c.code + ' · ' : '') + (c.tradeName || c.legalName));
       const d = D(), l = d.ledger.client[id] || { outstanding: 0, overdue: 0, unallocated: 0, billed: 0, received: 0, tds: 0, unadjCredit: 0 };
-      const tabsL = [['overview', 'Overview'], ...(can('billing.view') ? [['billing', 'Billing']] : []), ['tasks', 'Compliance'], ...(can('portals.view') ? [['portals', 'Portals']] : []), ['docs', 'Documents'], ['crm', 'CRM'], ['onboard', 'Onboarding']];
+      const tabsL = [['overview', 'Overview'], ...(can('billing.view') ? [['billing', 'Billing']] : []), ['tasks', 'Compliance'], ...(can('portals.view') ? [['portals', 'Portals']] : []), ['docs', 'Documents'], ['notes', 'Notes'], ['crm', 'CRM'], ['onboard', 'Onboarding']];
       const t = dr.state.tab;
       let h = '<div class="btn-row">' + badge(c.status, { active: 'green', inactive: 'slate', prospective: 'blue', discontinued: 'red' }[c.status]) + badge(c.entityType, 'accent', 1) + (c.risk ? badge(c.risk + ' risk', c.risk === 'high' ? 'red' : c.risk === 'medium' ? 'amber' : 'slate') : '') + (c.demo ? badge('Demo record', 'saffron') : '') + '<span class="sp" style="flex:1"></span>' +
         (can('billing.edit') ? '<button class="btn sm" data-d="inv">' + ico('invoice') + ' Invoice</button><button class="btn sm" data-d="rcpt">' + ico('wallet') + ' Receipt</button>' : '') + (can('tasks.edit') ? '<button class="btn sm" data-d="task">' + ico('check') + ' Task</button>' : '') + (can('billing.view') ? '<button class="btn sm" data-d="stmt">' + ico('file') + ' Statement</button>' : '') + '<button class="btn sm" data-act="cs-open" data-id="' + esc(id) + '">' + ico('check') + ' Status report</button>' + '</div>';
@@ -2627,7 +2708,7 @@ function openClient(id, tab) {
         h += (can('billing.view') ? '<div class="kpis">' + [['Outstanding', money(l.outstanding), l.overdue ? 'red' : ''], ['Overdue', money(l.overdue), l.overdue ? 'red' : ''], ['Advance / unallocated', money(l.unallocated + l.unadjCredit), ''], ['Billed (all time)', money(l.billed), ''], ['Received incl. TDS', money(l.received + l.tds), 'green']].map(([a2, b, tone]) => '<div class="kpi ' + tone + '" style="cursor:default"><span class="k-lbl">' + a2 + '</span><span class="k-val" style="font-size:1.15rem">' + b + '</span></div>').join('') + '</div>' : '');
         const missing = [['pan', 'PAN'], ...(c.flags && c.flags.gst ? [['gstin', 'GSTIN']] : []), ...(c.flags && c.flags.tds ? [['tan', 'TAN']] : []), ...(C.entityGroup(c.entityType) === 'Company' ? [['cin', 'CIN']] : []), ...(c.entityType === 'LLP' ? [['llpin', 'LLPIN']] : []), ['email', 'email'], ['mobile', 'mobile']].filter(([k]) => !c[k]).map(([, l]) => l);
         if (missing.length && can('clients.edit')) h += '<div class="banner warn">' + ico('alert') + '<div style="flex:1"><b>Details missing:</b> ' + missing.join(', ') + '.</div><button class="btn sm pri" data-d="edit">Complete details</button></div>';
-        h += '<div class="grid g2"><div class="sect"><h3>Profile & KYC</h3><dl class="kv">' + [['Legal name', c.legalName], ['Trade name', c.tradeName], ['PAN', c.pan], ['TAN', c.tan], ['GSTIN', c.gstin], ['CIN / LLPIN', c.cin || c.llpin], ['Udyam', c.udyam], ['PT / EPF / ESIC', [c.ptNo, c.pfCode, c.esicCode].filter(Boolean).join(' · ')], ['IEC / FSSAI', [c.iec, c.fssai].filter(Boolean).join(' · ')], ['Shops / trade / labour', [c.shopsNo, c.tradeLicence, c.labourLicence].filter(Boolean).join(' · ')], ['Other', c.otherReg], ['Incorporated', c.doi ? fd(c.doi) : ''], ['Business', [c.industry, c.activity].filter(Boolean).join(' · ')], ['State', c.stateCode ? C.STATES[c.stateCode] : ''], ['Address', c.address], ['Email', c.email], ['Mobile', c.mobile], ['Responsible', eName(c.rm)], ['Preparer / reviewer', eName(c.assignee) + ' / ' + eName(c.reviewer)], ['GST', c.gstType === 'none' ? 'Not registered' : (c.gstType || '') + ' · ' + (c.gstFreq === 'qrmp' ? 'QRMP' : 'monthly')], ['Tax regime', c.taxRegime], ['Engagement', (c.engagementStart ? 'since ' + fd(c.engagementStart) : '') + (c.feeArrangement ? ' · ' + c.feeArrangement : '')]].filter(([, v]) => v).map(([k, v]) => { const IDK = { PAN: ['pan'], TAN: ['tan'], GSTIN: ['gstin'], 'CIN / LLPIN': ['cin', 'llpin'], Udyam: ['udyam'], 'PT / EPF / ESIC': ['ptNo', 'pfCode', 'esicCode'], 'IEC / FSSAI': ['iec', 'fssai'], 'Shops / trade / labour': ['shopsNo', 'tradeLicence', 'labourLicence'] }; return '<dt>' + k + '</dt><dd' + (/PAN|TAN|GSTIN|CIN|Udyam|EPF|IEC|Shops/.test(k) ? ' class="mono"' : '') + '>' + esc(v) + (IDK[k] ? idTag(c, IDK[k]) : '') + '</dd>'; }).join('') + '</dl>' + (c.instructions ? '<div class="banner info">' + ico('alert') + '<div><b>Special instructions.</b> ' + esc(c.instructions) + '</div></div>' : '') + '</div>' +
+        h += '<div class="grid g2"><div class="sect"><h3>Profile & KYC</h3><dl class="kv">' + [['Legal name', c.legalName], ['Trade name', c.tradeName], ['PAN', c.pan], ['TAN', c.tan], ['GSTIN', c.gstin], ['CIN / LLPIN / Reg. No', C.regNumber(c)], ['Udyam', c.udyam], ['PT / EPF / ESIC', [c.ptNo, c.pfCode, c.esicCode].filter(Boolean).join(' · ')], ['IEC / FSSAI', [c.iec, c.fssai].filter(Boolean).join(' · ')], ['Shops / trade / labour', [c.shopsNo, c.tradeLicence, c.labourLicence].filter(Boolean).join(' · ')], ['Other', c.otherReg], ['Incorporated', c.doi ? fd(c.doi) : ''], ['Business', [c.industry, c.activity].filter(Boolean).join(' · ')], ['State', c.stateCode ? C.STATES[c.stateCode] : ''], ['Address', c.address], ['Email', c.email], ['Mobile', c.mobile], ['Responsible', eName(c.rm)], ['Preparer / reviewer', eName(c.assignee) + ' / ' + eName(c.reviewer)], ['GST', c.gstType === 'none' ? 'Not registered' : (c.gstType || '') + ' · ' + (c.gstFreq === 'qrmp' ? 'QRMP' : 'monthly')], ['Tax regime', c.taxRegime], ['Engagement', (c.engagementStart ? 'since ' + fd(c.engagementStart) : '') + (c.feeArrangement ? ' · ' + c.feeArrangement : '')]].filter(([, v]) => v).map(([k, v]) => { const IDK = { PAN: ['pan'], TAN: ['tan'], GSTIN: ['gstin'], 'CIN / LLPIN / Reg. No': ['cin', 'llpin', 'regNo'], Udyam: ['udyam'], 'PT / EPF / ESIC': ['ptNo', 'pfCode', 'esicCode'], 'IEC / FSSAI': ['iec', 'fssai'], 'Shops / trade / labour': ['shopsNo', 'tradeLicence', 'labourLicence'] }; return '<dt>' + k + '</dt><dd' + (/PAN|TAN|GSTIN|CIN|Udyam|EPF|IEC|Shops/.test(k) ? ' class="mono"' : '') + '>' + esc(v) + (IDK[k] ? idTag(c, IDK[k]) : '') + '</dd>'; }).join('') + '</dl>' + (c.instructions ? '<div class="banner info">' + ico('alert') + '<div><b>Special instructions.</b> ' + esc(c.instructions) + '</div></div>' : '') + '</div>' +
           '<div class="sect"><h3>Open compliance (' + open.length + ')</h3>' + (open.length ? open.sort(by((x) => x.dueDate || '')).slice(0, 10).map((x) => { const fl = d.taskFlags.get(x.id); return '<div class="alert" data-d="task-open" data-id="' + x.id + '"><span class="stripe ' + fl.tone + '"></span><div><div class="a-t">' + esc(x.form || x.title) + ' · ' + esc(x.period || '') + '</div><div class="a-s">Due ' + fd(x.dueDate) + ' · ' + eName(x.assignee) + '</div></div>' + taskStatusBadge(x.status) + '</div>'; }).join('') : '<div class="muted">No open tasks.</div>') +
           '<h3>Compliances</h3><div class="btn-row">' + (CLIENT_FLAGS.filter(([k]) => (c.flags || {})[k]).map(([, l2]) => '<span class="tag">' + esc(l2) + '</span>').join(' ') || '<span class="muted">None ticked</span>') + '</div>' +
           ((c.contacts || []).length ? '<h3>Contacts</h3>' + c.contacts.map((p) => '<div style="font-size:13px"><b>' + esc(p.name || '') + '</b> ' + esc(p.role || '') + ' · <span class="muted">' + esc([p.email, p.mobile].filter(Boolean).join(' · ')) + '</span></div>').join('') : '') +
@@ -2636,6 +2717,7 @@ function openClient(id, tab) {
       else if (t === 'tasks') h += '<div class="card">' + renderTable('cl-tasks-' + id, taskCols(true), myTasks.sort(by((x) => x.dueDate || '', 'desc')), { rowAct: 'task-open', compact: 1 }) + '</div>';
       else if (t === 'portals') h += '<div class="btn-row"><button class="btn sm pri" data-d="portal-new">' + ico('plus') + ' Add portal</button></div><div class="card">' + renderTable('cl-portals-' + id, portalCols(false), Store.all('portals').filter((p) => p.clientId === id), { compact: 1, noPage: 1 }) + '</div>';
       else if (t === 'docs') h += '<div class="btn-row"><button class="btn sm pri" data-d="doc-new">' + ico('upload') + ' Add document</button></div><div class="card">' + renderTable('cl-docs-' + id, docCols(false), Store.all('documents').filter((x) => x.clientId === id).sort(by((x) => x.received || x.createdAt, 'desc')), { rowAct: 'doc-open', compact: 1 }) + '</div>';
+      else if (t === 'notes') { const ns = visibleNotes().filter((n) => n.clientId === id).sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || String(b.updatedAt || '').localeCompare(String(a.updatedAt || ''))); h += '<div class="btn-row"><button class="btn sm pri" data-act="note-new" data-client="' + esc(id) + '">' + ico('plus') + ' Add note</button></div>' + (ns.length ? '<div class="notegrid" style="margin-top:10px">' + ns.map(noteCard).join('') + '</div>' : '<div class="card">' + emptyState('note', 'No notes for this client', 'Notes you link to this client appear here.') + '</div>'); }
       else if (t === 'crm') h += crmTab(id);
       else if (t === 'onboard') {
         const ob = c.onboarding || {}; const items = ONBOARD.concat((firm().onboardingExtra || []));
@@ -2814,7 +2896,7 @@ ACT['inv-export'] = () => {
   cols.push({ label: 'Outstanding', money: true, get: (i) => (d.ledger.inv[i.id] || {}).outstanding || 0 });
   exportDialog({ title: 'Invoice register FY ' + S.fy, name: 'Invoice_register_' + S.fy, cols, rows, totals: totalsOf(cols, rows), subtitle: 'Credit notes shown as negative; cancelled and estimates at zero' });
 };
-ACT['inv-bulk-pdf'] = async () => { const st = tableState('inv'); const list = Array.from(st.sel).map((id) => Store.get('invoices', id)).filter((i) => i && i.status !== 'draft'); if (!list.length) return toast('Select issued invoices, notes or estimates (drafts have no number yet)', 'bad'); try { await invoicePDF(list); } catch (e) { toast(e.message, 'bad'); } };
+ACT['inv-bulk-pdf'] = async () => { const st = tableState('inv'); const list = Array.from(st.sel).map((id) => Store.get('invoices', id)).filter(Boolean); if (!list.length) return toast('Select invoices, notes or estimates first', 'bad'); try { await invoicePDF(list); } catch (e) { toast(e.message, 'bad'); } };
 ACT['inv-bulk-issue'] = () => {
   const st = tableState('inv'); const list = Array.from(st.sel).map((id) => Store.get('invoices', id)).filter((i) => i && i.status === 'draft');
   if (!list.length) return toast('No drafts selected', 'bad');
@@ -2837,7 +2919,8 @@ function invToForm(inv) {
 }
 function formToCalc(f) { return { items: f.items.map((it) => ({ qty: Number(it.qty || 1), rate: C.toPaise(it.rateStr) || 0, discount: C.toPaise(it.discStr) || 0, gstRate: Number(it.gstRate || 0) })), placeOfSupply: f.placeOfSupply, treatment: f.treatment, roundOff: firm().roundOff !== false && f.roundOff !== false }; }
 function invoiceForm(existing, defaults) {
-  if (existing && existing.status !== 'draft') return toast('Issued documents cannot be edited. Use a credit note or cancel and re-issue.', 'bad');
+  const revise = !!(existing && existing.status !== 'draft');
+  if (revise && !(defaults && defaults.reviseReason)) return reviseInvoice(existing.id);
   const fm = firm(); const T = today();
   const f = existing ? invToForm(existing) : Object.assign({ type: 'invoice', date: T, treatment: 'taxable', items: [], inst: [], useInst: false, notes: '', terms: fm.terms || '' }, defaults || {});
   if (!f.items.length) f.items.push(blankItem(null));
@@ -2846,10 +2929,10 @@ function invoiceForm(existing, defaults) {
   if (!f.dueDate) f.dueDate = C.addDays(f.date, +(fm.termsDays || 15));
   if (f.type === 'opening') f.treatment = 'nongst';
   const svcs = D().services.sort(by((s) => s.name));
-  openDrawer({ title: (existing ? 'Edit draft ' : 'New ') + INV_TYPES[f.type].toLowerCase(), state: {},
+  openDrawer({ title: revise ? 'Edit ' + existing.no : (existing ? 'Edit draft ' : 'New ') + INV_TYPES[f.type].toLowerCase(), state: {},
     render: (dr) => {
       const refList = D().invoices.filter((i) => i.clientId === f.clientId && i.status === 'issued' && C.DEBIT_TYPES.includes(i.type || 'invoice'));
-      let h = '<div class="sect"><div class="grid g4">' + fld({ k: 'type', label: 'Document', type: 'select', options: opts(Object.entries(INV_TYPES), f.type), dis: !!existing }) + fld({ k: 'clientId', label: 'Client', type: 'select', options: clientOpts(f.clientId), req: 1, cls: 'span2' }) + fld({ k: 'date', label: 'Date', type: 'date', v: f.date, req: 1 }) +
+      let h = (revise ? '<div class="banner warn">' + ico('edit') + '<div><b>Editing issued ' + esc(existing.no) + '.</b> Number stays the same. Reason recorded: “' + esc(defaults.reviseReason) + '”. If this period’s GSTR-1 is already filed, amend it there too.</div></div>' : '') + '<div class="sect"><div class="grid g4">' + fld({ k: 'type', label: 'Document', type: 'select', options: opts(Object.entries(INV_TYPES), f.type), dis: !!existing }) + fld({ k: 'clientId', label: 'Client', type: 'select', options: clientOpts(f.clientId), req: 1, cls: 'span2', dis: revise && ((D().ledger.inv[existing.id] || {}).settled > 0) }) + fld({ k: 'date', label: 'Date', type: 'date', v: f.date, req: 1 }) +
         fld({ k: 'placeOfSupply', label: 'Place of supply', type: 'select', options: opts(Object.entries(C.STATES).map(([k, v]) => [k, k + ' · ' + v]), f.placeOfSupply) }) +
         fld({ k: 'treatment', label: 'GST treatment', type: 'select', options: opts([['taxable', 'Taxable'], ['rcm', 'Reverse charge (recipient pays)'], ['exempt', 'Exempt'], ['nongst', 'Non-GST / outside scope'], ['lut', 'Export / SEZ under LUT (zero-rated)']], f.treatment) }) +
         fld({ k: 'dueDate', label: 'Payment due', type: 'date', v: f.dueDate }) + fld({ k: 'poRef', label: 'Client PO / engagement ref.', v: f.poRef }) +
@@ -2866,7 +2949,7 @@ function invoiceForm(existing, defaults) {
       return h;
     },
     after: () => invTotals(f),
-    footer: () => (existing ? '<button class="btn danger" data-d="del">Delete draft</button>' : '') + '<span class="sp"></span><button class="btn" data-d="close">Cancel</button><button class="btn" data-d="draft">Save draft</button><button class="btn pri" data-d="issue">' + (f.type === 'proforma' ? 'Save estimate' : 'Issue ' + (f.type === 'invoice' ? 'invoice' : 'note')) + '</button>',
+    footer: () => revise ? '<span class="sp"></span><button class="btn" data-d="close">Cancel</button><button class="btn pri" data-d="saveRevise">Save changes</button>' : (existing ? '<button class="btn danger" data-d="del">Delete draft</button>' : '') + '<span class="sp"></span><button class="btn" data-d="close">Cancel</button><button class="btn" data-d="draft">Save draft</button><button class="btn pri" data-d="issue">' + (f.type === 'proforma' ? 'Save estimate' : 'Issue ' + (f.type === 'invoice' ? 'invoice' : 'note')) + '</button>',
     mount: (dr) => bindInputs(dr.body, f, (k, v, el, type) => {
       if (k === 'clientId') { setClient(); dr.render(); return; }
       if (k === 'date' && type === 'change') { const c = Store.get('clients', f.clientId); f.dueDate = C.addDays(f.date, +((c && c.paymentTerms) || fm.termsDays || 15)); dr.render(); return; }
@@ -2881,6 +2964,15 @@ function invoiceForm(existing, defaults) {
       split: (a, dr) => { splitInst(f, +($('#spN', dr.body).value || 2), +($('#spM', dr.body).value || 1)); dr.render(); dr.dirty = true; },
       draft: async (a, dr) => { const inv = formToInvoice(f, existing); if (!inv.clientId) return toast('Choose a client', 'bad'); inv.status = 'draft'; await Store.save('invoices', inv, 'Draft ' + INV_TYPES[inv.type] + ' for ' + cName(inv.clientId)); dr.dirty = false; dr.close(true); toast('Draft saved'); },
       issue: async (a, dr) => { const inv = formToInvoice(f, existing); a.disabled = true; const r = await issueInvoice(inv); a.disabled = false; if (r === true) { dr.dirty = false; dr.close(true); openInvoice(inv.id); } else toast(r, 'bad'); },
+      saveRevise: async (a, dr) => {
+        const before = Store.get('invoices', existing.id); const inv = formToInvoice(f, before); const errs = validateInvoice(inv);
+        if (before.fy && C.fyOf(inv.date) !== before.fy) errs.push('The date must stay in FY ' + before.fy + ' (the number belongs to that year)');
+        const li = D().ledger.inv[existing.id] || {}; if ((li.settled || 0) > inv.totals.total) errs.push('Receipts / credits of ' + money(li.settled) + ' exceed the new total — reverse them first');
+        if (errs.length) return toast(errs.join(' · '), 'bad');
+        inv.revisions = (before.revisions || []).concat([{ at: nowISO(), by: S.uid, reason: defaults.reviseReason, prevTotal: before.totals.total, newTotal: inv.totals.total, prevDate: before.date }]).slice(-20); inv.revisedAt = nowISO();
+        a.disabled = true; await Store.save('invoices', inv, 'Edited issued ' + inv.no + ' (' + money(before.totals.total) + ' → ' + money(inv.totals.total) + '). Reason: ' + defaults.reviseReason);
+        dr.dirty = false; dr.close(true); toast(inv.no + ' updated — reason recorded');
+      },
       del: (a, dr) => confirmBox('Delete this draft?', 'Drafts have no number, so deleting leaves no gap in the series.', 'Delete', async () => { await Store.softDelete('invoices', existing.id, 'Draft deleted'); dr.close(true); }),
     } });
 }
@@ -2909,17 +3001,34 @@ function formToInvoice(f, existing) {
   inv.instalments = f.useInst && f.type !== 'proforma' && f.type !== 'credit' ? f.inst.map((x, i) => ({ no: i + 1, desc: x.desc || 'Instalment ' + (i + 1), amount: C.toPaise(x.amountStr) || 0, dueDate: x.dueDate })) : [];
   return inv;
 }
+/** Edit an issued document: ask for the reason first (kept in the revision history and audit trail). */
+function reviseInvoice(id) {
+  const inv = Store.get('invoices', id); if (!inv || !need('billing.edit')) return;
+  if (inv.status === 'cancelled') return toast('Cancelled documents cannot be edited', 'bad');
+  promptBox('Edit ' + inv.no + '?', 'Reason for the change (recorded)', (reason) => invoiceForm(Store.get('invoices', id), { reviseReason: reason }), { text: 'The invoice number stays the same. Every change is recorded with your reason in the invoice history and the audit trail.', ok: 'Continue to edit', multi: 1 });
+}
+function deleteIssuedInvoice(id) {
+  const inv = Store.get('invoices', id); if (!inv || !need('billing.edit')) return; const li = D().ledger.inv[id] || {};
+  if ((li.settled || 0) > 0) return toast('This invoice has receipts, credit notes or write-offs. Reverse or delete them first.', 'bad');
+  if (D().invoices.some((n) => n.refInvoiceId === id && n.status !== 'cancelled')) return toast('A credit / debit note refers to this invoice. Delete or cancel that note first.', 'bad');
+  promptBox('Delete ' + inv.no + '?', 'Reason for deleting (recorded)', async (reason) => { await Store.softDelete('invoices', id, 'Deleted ' + (inv.status === 'issued' ? 'issued ' : '') + (inv.no || 'document') + ' — ' + reason); drawers.slice().forEach((x) => x.close(true)); toast((inv.no || 'Document') + ' moved to the recycle bin — reason recorded'); },
+    { text: 'The number ' + (inv.no || '') + ' is not reused, so the series will show a gap; the reason explains it. You can restore it from Administration → Data & recycle bin.', ok: 'Delete invoice', multi: 1 });
+}
 /** Validate and issue: assigns series number. Returns true or an error message. */
-async function issueInvoice(inv, quiet) {
-  const fm = firm(); const errs = [];
+function validateInvoice(inv) {
+  const errs = [];
   if (!inv.clientId) errs.push('Choose a client');
   if (!C.isISO(inv.date)) errs.push('Enter the date');
   if (!inv.items || !inv.items.length) errs.push('Add at least one service line');
-  (inv.items || []).forEach((it, i) => { if (!it.desc) errs.push('Line ' + (i + 1) + ': add a description'); if (!(it.rate > 0)) errs.push('Line ' + (i + 1) + ': enter the rate'); if (inv.type !== 'opening' && inv.treatment !== 'nongst' && !C.V.sac(it.sac || '')) errs.push('Line ' + (i + 1) + ': SAC should be a 6-digit code starting 99 (e.g. 998221)'); });
+  (inv.items || []).forEach((it, i) => { if (!it.desc) errs.push('Line ' + (i + 1) + ': add a description'); if (!(it.rate > 0)) errs.push('Line ' + (i + 1) + ': enter the rate'); if (it.sac && !C.V.sac(it.sac)) errs.push('Line ' + (i + 1) + ': SAC should be a 6-digit code starting 99 (e.g. 998221) — or leave it blank'); });
   if (inv.totals && inv.totals.total <= 0) errs.push('The total must be more than zero');
   if (inv.instalments && inv.instalments.length) errs.push(...C.validateInstalments(inv.instalments, inv.totals.total));
   if ((inv.type === 'credit') && inv.refInvoiceId) { const ref = Store.get('invoices', inv.refInvoiceId); if (ref && inv.totals.total > ref.totals.total) errs.push('Credit note exceeds the original invoice value'); }
   if (inv.type === 'credit' && inv.refInvoiceId) { const li = D().ledger.inv[inv.refInvoiceId]; if (li && inv.totals.total > li.outstanding && !quiet) { /* allowed: excess becomes client credit */ } }
+  return errs;
+}
+async function issueInvoice(inv, quiet) {
+  const fm = firm(); const errs = validateInvoice(inv);
   if (errs.length) return errs.join(' · ');
   if (inv.type === 'proforma' && inv.status === 'issued') return true;
   const fy = C.fyOf(inv.date); const series = seriesFor(inv.type);
@@ -2947,9 +3056,9 @@ function openInvoice(id) {
         (live && li.outstanding > 0 && canE ? '<button class="btn sm pri" data-d="rcpt">' + ico('wallet') + ' Record receipt</button><button class="btn sm" data-d="remind">' + ico('mail') + ' Reminder</button>' : '') +
         (live && canE ? '<button class="btn sm" data-d="cn">Credit note</button>' : '') + (live && li.outstanding > 0 && can('billing.approve') ? '<button class="btn sm" data-d="wo">Write off / waive</button>' : '') +
         (inv.type === 'proforma' && inv.status !== 'cancelled' && canE ? '<button class="btn sm pri" data-d="convert">Convert to invoice</button>' : '') +
-        (inv.status === 'issued' && canE ? '<button class="btn sm danger" data-d="cancel">Cancel</button>' : '') + (canE ? '<button class="btn sm ghost" data-d="dup">Duplicate</button>' : '') + '</div>';
+        ((inv.status === 'issued') && canE ? '<button class="btn sm" data-d="revise">' + ico('edit') + ' Edit</button><button class="btn sm danger" data-d="cancel">Cancel</button>' : '') + (inv.status !== 'draft' && canE ? '<button class="btn sm danger" data-d="delIssued">' + ico('trash') + ' Delete</button>' : '') + (canE ? '<button class="btn sm ghost" data-d="dup">Duplicate</button>' : '') + '</div>';
       if (inv.status === 'cancelled') h += '<div class="banner bad">' + ico('alert') + '<div><b>Cancelled</b> on ' + fd((inv.cancelledAt || '').slice(0, 10)) + '. ' + esc(inv.cancelReason || '') + '</div></div>';
-      h += '<div class="grid g2"><div class="sect"><dl class="kv"><dt>Client</dt><dd><a href="#" data-act="client-open" data-id="' + esc(inv.clientId) + '">' + esc(cName(inv.clientId)) + '</a></dd><dt>GSTIN</dt><dd class="mono">' + esc(c.gstin || 'Unregistered') + '</dd><dt>Date</dt><dd>' + fd(inv.date) + '</dd><dt>Payment due</dt><dd>' + fd(inv.dueDate) + '</dd><dt>Place of supply</dt><dd>' + esc((inv.placeOfSupply || '') + ' · ' + (C.STATES[inv.placeOfSupply] || '')) + '</dd>' + (inv.refInvoiceNo ? '<dt>Against</dt><dd><a href="#" data-act="inv-open" data-id="' + esc(inv.refInvoiceId) + '">' + esc(inv.refInvoiceNo) + '</a></dd>' : '') + (inv.reason ? '<dt>Reason</dt><dd>' + esc(inv.reason) + '</dd>' : '') + (inv.poRef ? '<dt>Reference</dt><dd>' + esc(inv.poRef) + '</dd>' : '') + (inv.period ? '<dt>Billing period</dt><dd>' + esc(inv.period) + '</dd>' : '') + '</dl></div>' +
+      h += '<div class="grid g2"><div class="sect"><dl class="kv"><dt>Client</dt><dd><a href="#" data-act="client-open" data-id="' + esc(inv.clientId) + '">' + esc(cName(inv.clientId)) + '</a></dd><dt>GSTIN</dt><dd' + (c.gstin ? ' class="mono"' : '') + '>' + esc(c.gstin || 'Unregistered') + '</dd><dt>Date</dt><dd>' + fd(inv.date) + '</dd><dt>Payment due</dt><dd>' + fd(inv.dueDate) + '</dd><dt>Place of supply</dt><dd>' + esc((inv.placeOfSupply || '') + ' · ' + (C.STATES[inv.placeOfSupply] || '')) + '</dd>' + (inv.refInvoiceNo ? '<dt>Against</dt><dd><a href="#" data-act="inv-open" data-id="' + esc(inv.refInvoiceId) + '">' + esc(inv.refInvoiceNo) + '</a></dd>' : '') + (inv.reason ? '<dt>Reason</dt><dd>' + esc(inv.reason) + '</dd>' : '') + (inv.poRef ? '<dt>Reference</dt><dd>' + esc(inv.poRef) + '</dd>' : '') + (inv.period ? '<dt>Billing period</dt><dd>' + esc(inv.period) + '</dd>' : '') + '</dl></div>' +
         '<div class="sect"><div class="totals" style="justify-self:stretch"><div><span>Taxable</span><span>' + money(inv.totals.taxable) + '</span></div><div><span>CGST + SGST</span><span>' + money(inv.totals.cgst + inv.totals.sgst) + '</span></div><div><span>IGST</span><span>' + money(inv.totals.igst) + '</span></div>' + (inv.totals.roundOff ? '<div><span>Round off</span><span>' + money(inv.totals.roundOff) + '</span></div>' : '') + '<div class="grand"><span>Total</span><span>' + money(inv.totals.total) + '</span></div>' +
         (live ? '<div><span>Received (incl. TDS)</span><span style="color:var(--green)">' + money(li.received || 0) + '</span></div>' + (li.credited ? '<div><span>Credit notes</span><span>' + money(li.credited) + '</span></div>' : '') + (li.writtenOff ? '<div><span>Written off / waived</span><span>' + money(li.writtenOff) + '</span></div>' : '') + '<div class="grand"><span>Outstanding</span><span style="color:var(--' + (li.overdue ? 'red' : 'ink') + ')">' + money(li.outstanding || 0) + '</span></div>' : '') + '</div></div></div>';
       h += '<div class="card"><div class="card-h"><h3>Services</h3></div>' + renderTable('inv-items-' + id, [{ k: 'desc', label: 'Description' }, { k: 'sac', label: 'SAC', html: (r) => '<span class="mono">' + esc(r.sac) + '</span>' }, { k: 'qty', label: 'Qty', num: 1 }, { k: 'rate', label: 'Rate', num: 1, val: (r) => money(r.rate) }, { k: 'discount', label: 'Discount', num: 1, val: (r) => r.discount ? money(r.discount) : '' }, { k: 'gstRate', label: 'GST', num: 1, val: (r) => r.gstRate + '%' }, { k: 'tx', label: 'Taxable', num: 1, val: (r) => money(Math.round(r.qty * r.rate) - (r.discount || 0)) }], (inv.items || []).map((x, i) => ({ ...x, id: i })), { noPage: 1, compact: 1 }) + '</div>';
@@ -2961,11 +3070,14 @@ function openInvoice(id) {
       for (const a of d.adjustments) if (a.invoiceId === id) hist.push({ date: a.date, what: (a.type === 'waiver' ? 'Waiver' : 'Write-off') + (a.instNo ? ' (instalment ' + a.instNo + ')' : '') + ' · ' + (a.reason || ''), amt: a.amount, act: '', aid: a.id });
       if (live || hist.length) h += '<div class="sect"><h3>Settlement history</h3>' + (hist.length ? hist.sort(by((x) => x.date)).map((x) => '<div class="alert" ' + (x.act ? 'data-act="' + x.act + '" data-id="' + x.aid + '"' : '') + '><span class="stripe ' + (x.rev ? 'slate' : 'green') + '"></span><div><div class="a-t">' + esc(x.what) + (x.rev ? ' — reversed' : '') + '</div><div class="a-s">' + fd(x.date) + '</div></div><b class="num">' + money(x.amt) + '</b></div>').join('') : '<div class="muted">No receipts or adjustments yet.</div>') + '</div>';
       if (live) h += '<div class="sect"><h3>Reminders</h3>' + ((inv.reminders || []).length ? inv.reminders.map((r) => '<div style="font-size:13px">' + fd(r.date) + ' · ' + esc(r.channel) + (r.note ? ' · ' + esc(r.note) : '') + '</div>').join('') : '<div class="muted">No reminders logged.</div>') + (canE ? '<div><button class="btn sm" data-d="logRem">Log a reminder sent</button></div>' : '') + '</div>';
+      if ((inv.revisions || []).length) h += '<div class="sect"><h3>Edit history</h3>' + inv.revisions.slice().reverse().map((r) => '<div style="font-size:13px">' + new Date(r.at).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) + ' · ' + esc(r.by || '') + ' · ' + money(r.prevTotal) + ' → ' + money(r.newTotal) + ' · <i>' + esc(r.reason) + '</i></div>').join('') + '</div>';
       h += '<div class="muted" style="font-size:12px">Created ' + fd((inv.createdAt || '').slice(0, 10)) + (inv.issuedAt ? ' · issued ' + fd(inv.issuedAt.slice(0, 10)) : '') + (inv.recurringId ? ' · generated from a recurring schedule' : '') + '</div>';
       return h;
     },
     acts: {
-      pdf: async () => { const inv = Store.get('invoices', id); if (inv.status === 'draft') return toast('Issue the invoice first — drafts have no number.', 'bad'); try { await invoicePDF([inv]); } catch (e) { toast(e.message, 'bad'); } },
+      pdf: async () => { const inv = Store.get('invoices', id); try { await invoicePDF([inv]); } catch (e) { toast(e.message, 'bad'); } },
+      revise: () => reviseInvoice(id),
+      delIssued: () => deleteIssuedInvoice(id),
       edit: () => invoiceForm(Store.get('invoices', id)),
       issue: async () => { const r = await issueInvoice(JSON.parse(JSON.stringify(Store.get('invoices', id)))); if (r !== true) toast(r, 'bad'); },
       rcpt: () => { const inv = Store.get('invoices', id); receiptForm(null, { clientId: inv.clientId, preferInvoice: id }); },
@@ -3216,57 +3328,157 @@ function statementDialog(clientId) {
 }
 
 /* ---------- PDF documents ---------- */
-async function invoicePDF(list) {
-  const JsPDF = await pdfLib(); const fm = firm(); const doc = new JsPDF({ unit: 'pt', format: 'a4' }); const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
+/** Invoice templates. Each one changes the header, table and accent; the content and GST layout are identical. */
+const INV_TEMPLATES = {
+  classic: { name: 'Classic', desc: 'Firm name left, title right, ruled table. Safe for every client.', accent: [23, 50, 92], font: 'helvetica', table: 'grid' },
+  modern: { name: 'Modern', desc: 'Solid colour band across the top with white lettering, striped rows.', accent: [31, 79, 209], font: 'helvetica', table: 'striped' },
+  minimal: { name: 'Minimal', desc: 'Black and grey only, hairlines, lots of white space. Prints well in B/W.', accent: [33, 37, 41], font: 'helvetica', table: 'plain' },
+  elegant: { name: 'Elegant', desc: 'Serif type, centred letterhead, double rule and a muted gold accent.', accent: [138, 106, 42], font: 'times', table: 'plain' },
+  bold: { name: 'Bold', desc: 'Accent stripe down the left edge and a large title. Stands out on screen.', accent: [11, 110, 99], font: 'helvetica', table: 'striped' },
+};
+const INV_ACCENTS = { '': 'Template default', navy: [23, 50, 92], blue: [31, 79, 209], teal: [11, 110, 99], green: [30, 120, 60], maroon: [128, 28, 40], purple: [86, 52, 140], charcoal: [45, 50, 58], gold: [138, 106, 42] };
+function upiLink(fm, amount, note) {
+  if (!fm.upi || !/^[\w.\-]{2,}@[a-zA-Z][\w.\-]{1,}$/.test(fm.upi)) return '';
+  return 'upi://pay?pa=' + fm.upi + '&pn=' + encodeURIComponent((fm.upiName || fm.name || '').slice(0, 40)) + (amount > 0 ? '&am=' + (amount / 100).toFixed(2) : '') + '&cu=INR' + (note ? '&tn=' + encodeURIComponent(String(note).slice(0, 40)) : '');
+}
+/** Draw a QR code as vector squares (sharp at any zoom, no canvas needed). */
+function pdfQR(doc, text, x, y, size) {
+  if (typeof qrcode !== 'function') return false;
+  const q = qrcode(0, 'M'); q.addData(text); q.make(); const n = q.getModuleCount(); const s = size / n;
+  doc.setFillColor(255, 255, 255); doc.rect(x - 3, y - 3, size + 6, size + 6, 'F'); doc.setFillColor(0, 0, 0);
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) doc.rect(x + c * s, y + r * s, s + 0.15, s + 0.15, 'F');
+  return true;
+}
+function imgFmt(d) { return /^data:image\/png/.test(d) ? 'PNG' : 'JPEG'; }
+function imgOk(d) { return typeof d === 'string' && /^data:image\/(png|jpe?g);base64,/.test(d); }
+async function invoicePDF(list, opts) {
+  opts = opts || {};
+  const JsPDF = await pdfLib(); const fm = Object.assign({}, firm(), opts.firm || {}); const doc = new JsPDF({ unit: 'pt', format: 'a4' }); const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
+  const tplKey = INV_TEMPLATES[opts.template || fm.invTemplate] ? (opts.template || fm.invTemplate) : 'classic'; const T = INV_TEMPLATES[tplKey];
+  const A = INV_ACCENTS[opts.accent !== undefined ? opts.accent : fm.invAccent] || T.accent; const F = T.font; const M = 40;
+  const ink = () => doc.setTextColor(25, 28, 33); const grey = () => doc.setTextColor(105, 112, 122); const acc = () => doc.setTextColor(A[0], A[1], A[2]);
+  const font = (st, sz) => { doc.setFont(F, st); if (sz) doc.setFontSize(sz); };
+  const mark = (txt) => { try { doc.saveGraphicsState(); doc.setGState(new doc.GState({ opacity: 0.07 })); font('bold', 96); doc.setTextColor(0); doc.text(txt, W / 2, H / 2 + 40, { align: 'center', angle: 35 }); doc.restoreGraphicsState(); } catch (e) { /* older viewers */ } ink(); };
   list.forEach((inv, idx) => {
-    if (idx) doc.addPage();
-    const c = Store.get('clients', inv.clientId) || {}; const t = inv.totals; const M = 40;
-    const title = { invoice: 'TAX INVOICE', credit: 'CREDIT NOTE', debit: 'DEBIT NOTE', proforma: 'ESTIMATE / PROFORMA INVOICE', opening: 'STATEMENT OF OPENING BALANCE' }[inv.type || 'invoice'] + (inv.status === 'cancelled' ? ' — CANCELLED' : '');
-    let x = M;
-    if (fm.logo && /^data:image\/(png|jpe?g)/.test(fm.logo)) { try { doc.addImage(fm.logo, fm.logo.includes('png') ? 'PNG' : 'JPEG', M, 30, 48, 48); x = M + 58; } catch (e) { /* ignore bad logo */ } }
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.setTextColor(14, 92, 88); doc.text(pdfSafe(fm.name || ''), x, 44); doc.setTextColor(20);
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
-    doc.text(doc.splitTextToSize(pdfSafe([fm.address, [fm.phone, fm.email].filter(Boolean).join(' | '), [fm.gstin ? 'GSTIN: ' + fm.gstin : '', fm.pan ? 'PAN: ' + fm.pan : '', fm.frn ? 'ICAI FRN: ' + fm.frn : ''].filter(Boolean).join('  |  ')].filter(Boolean).join('\n')), W - x - M - 160), x, 57);
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(11.5); doc.text(title, W - M, 44, { align: 'right' });
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
-    const meta = [['No.', inv.no || 'DRAFT'], ['Date', C.fmtDate(inv.date)], ...(inv.dueDate && inv.type !== 'credit' ? [['Due', C.fmtDate(inv.dueDate)]] : []), ['Place of supply', (inv.placeOfSupply || '') + ' - ' + (C.STATES[inv.placeOfSupply] || '')], ...(inv.refInvoiceNo ? [['Against invoice', inv.refInvoiceNo]] : []), ...(inv.treatment === 'rcm' ? [['Reverse charge', 'Yes']] : [])];
-    meta.forEach(([k, v], i) => { doc.setTextColor(110); doc.text(k, W - M - 150, 60 + i * 12); doc.setTextColor(20); doc.text(pdfSafe(v), W - M, 60 + i * 12, { align: 'right' }); });
-    let y = Math.max(108, 66 + meta.length * 12);
-    doc.setDrawColor(210); doc.line(M, y, W - M, y); y += 16;
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(110); doc.text('BILL TO', M, y); doc.setTextColor(20); y += 12;
-    doc.setFontSize(10.5); doc.text(pdfSafe(c.legalName || ''), M, y); doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
-    const billTo = doc.splitTextToSize(pdfSafe([c.address, [c.gstin ? 'GSTIN: ' + c.gstin : 'Unregistered', c.pan ? 'PAN: ' + c.pan : ''].filter(Boolean).join('  |  '), c.stateCode ? 'State: ' + C.STATES[c.stateCode] + ' (' + c.stateCode + ')' : ''].filter(Boolean).join('\n')), W / 2);
-    doc.text(billTo, M, y + 12); y += 16 + billTo.length * 10;
+    if (idx) doc.addPage(); const startPage = doc.getNumberOfPages();
+    const c = inv._client || Store.get('clients', inv.clientId) || {}; const t = inv.totals; const draft = inv.status === 'draft'; const cancelled = inv.status === 'cancelled';
+    const base = { invoice: fm.gstRegistered === false ? 'INVOICE' : 'TAX INVOICE', credit: 'CREDIT NOTE', debit: 'DEBIT NOTE', proforma: 'ESTIMATE / PROFORMA', opening: 'OPENING BALANCE' }[inv.type || 'invoice'];
+    const title = draft ? 'DRAFT ' + base : base; const no = inv.no || ('DRAFT-' + String(inv.id || '').replace(/^in_/, '').slice(-6).toUpperCase());
+    if (draft) mark('DRAFT'); else if (cancelled) mark('CANCELLED');
+    const firmLines = [fm.address, [fm.phone, fm.email].filter(Boolean).join('  |  '), [fm.gstin ? 'GSTIN: ' + fm.gstin : '', fm.pan ? 'PAN: ' + fm.pan : '', fm.frn ? 'FRN: ' + fm.frn : ''].filter(Boolean).join('  |  ')].filter(Boolean).map(pdfSafe);
+    const logo = imgOk(fm.logo) ? fm.logo : ''; let y;
+    // ----- header -----
+    if (tplKey === 'modern') {
+      doc.setFillColor(A[0], A[1], A[2]); doc.rect(0, 0, W, 96, 'F'); let x = M;
+      if (logo) { doc.setFillColor(255, 255, 255); doc.roundedRect(M, 22, 52, 52, 6, 6, 'F'); try { doc.addImage(logo, imgFmt(logo), M + 4, 26, 44, 44); } catch (e) { /* bad logo */ } x = M + 64; }
+      doc.setTextColor(255); font('bold', 16); doc.text(pdfSafe(fm.name || ''), x, 42); font('normal', 8.3); doc.text(doc.splitTextToSize(firmLines.join('\n'), W - x - M - 170), x, 56);
+      font('bold', 15); doc.text(title, W - M, 48, { align: 'right' }); font('normal', 9); doc.text(pdfSafe(no), W - M, 64, { align: 'right' }); ink(); y = 120;
+    } else if (tplKey === 'elegant') {
+      if (logo) { try { doc.addImage(logo, imgFmt(logo), W / 2 - 22, 26, 44, 44); } catch (e) { /* bad logo */ } }
+      const ty = logo ? 88 : 50; acc(); font('bold', 19); doc.text(pdfSafe(fm.name || ''), W / 2, ty, { align: 'center' }); ink(); font('normal', 8.8);
+      firmLines.forEach((l, i) => doc.text(l, W / 2, ty + 15 + i * 11, { align: 'center' }));
+      let ry = ty + 22 + firmLines.length * 11; doc.setDrawColor(A[0], A[1], A[2]); doc.setLineWidth(1.2); doc.line(M, ry, W - M, ry); doc.setLineWidth(0.4); doc.line(M, ry + 3, W - M, ry + 3);
+      font('bold', 12.5); acc(); doc.text(title.split('').join(' '), W / 2, ry + 24, { align: 'center' }); ink(); y = ry + 44;
+    } else if (tplKey === 'bold') {
+      acc(); font('bold', 26); doc.text(title, M, 58); ink(); font('normal', 9); grey(); doc.text(pdfSafe(no), M, 74); ink();
+      let rx = W - M; if (logo) { try { doc.addImage(logo, imgFmt(logo), W - M - 44, 30, 44, 44); } catch (e) { /* bad logo */ } rx = W - M - 54; }
+      font('bold', 12); doc.text(pdfSafe(fm.name || ''), rx, 44, { align: 'right' }); font('normal', 8.2); grey();
+      doc.splitTextToSize(firmLines.join('\n'), 240).forEach((l, i) => doc.text(l, rx, 57 + i * 10, { align: 'right' })); ink(); y = 112;
+    } else {
+      let x = M; if (logo) { try { doc.addImage(logo, imgFmt(logo), M, 30, 48, 48); x = M + 58; } catch (e) { /* bad logo */ } }
+      if (tplKey === 'minimal') ink(); else acc(); font('bold', 15); doc.text(pdfSafe(fm.name || ''), x, 44); ink(); font('normal', 8.5); if (tplKey === 'minimal') grey();
+      const fl = doc.splitTextToSize(firmLines.join('\n'), W - x - M - 170); doc.text(fl, x, 58); ink();
+      if (tplKey === 'minimal') { font('normal', 20); doc.setTextColor(150); doc.text(title.charAt(0) + title.slice(1).toLowerCase(), W - M, 48, { align: 'right' }); ink(); }
+      else { font('bold', 13); acc(); doc.text(title, W - M, 46, { align: 'right' }); ink(); }
+      y = Math.max(92, 62 + fl.length * 10); doc.setDrawColor(tplKey === 'minimal' ? 220 : A[0], tplKey === 'minimal' ? 220 : A[1], tplKey === 'minimal' ? 220 : A[2]); doc.setLineWidth(tplKey === 'minimal' ? 0.5 : 1.4); doc.line(M, y, W - M, y); doc.setLineWidth(0.5); y += 20;
+    }
+    // ----- bill to + document details -----
+    const meta = [['Number', no], ['Date', C.fmtDate(inv.date)], ...(inv.dueDate && inv.type !== 'credit' && !cancelled ? [['Due date', C.fmtDate(inv.dueDate)]] : []), ['Place of supply', (C.STATES[inv.placeOfSupply] || '') + (inv.placeOfSupply ? ' (' + inv.placeOfSupply + ')' : '')], ...(inv.refInvoiceNo ? [['Against invoice', inv.refInvoiceNo]] : []), ...(inv.treatment === 'rcm' ? [['Reverse charge', 'Yes']] : []), ...(c.poNo || inv.poNo ? [['PO / reference', inv.poNo || c.poNo]] : [])];
+    const top = y; font('bold', 7.6); grey(); doc.text(inv.type === 'credit' || inv.type === 'debit' ? 'ISSUED TO' : 'BILL TO', M, y); ink(); y += 13;
+    font('bold', 10.8); doc.text(doc.splitTextToSize(pdfSafe(c.legalName || ''), W / 2 - 10), M, y); y += 12 * Math.max(1, doc.splitTextToSize(pdfSafe(c.legalName || ''), W / 2 - 10).length);
+    font('normal', 8.6);
+    const billTo = doc.splitTextToSize(pdfSafe([c.address, 'GSTIN: ' + (c.gstin || 'Unregistered') + (c.pan ? '   |   PAN: ' + c.pan : ''), c.stateCode ? 'State: ' + (C.STATES[c.stateCode] || '') + ' (' + c.stateCode + ')' : ''].filter(Boolean).join('\n')), W / 2 - 10);
+    doc.text(billTo, M, y); y += billTo.length * 10.5;
+    let my = top; const mx = W - M - 210;
+    if (tplKey === 'modern' || tplKey === 'bold') { doc.setFillColor(245, 247, 250); doc.roundedRect(mx - 10, top - 12, 220, meta.length * 13.5 + 12, 4, 4, 'F'); }
+    meta.forEach(([k, v]) => { font('normal', 8.4); grey(); doc.text(k, mx, my); ink(); font(k === 'Number' ? 'bold' : 'normal'); doc.text(pdfSafe(v), W - M, my, { align: 'right' }); my += 13.5; });
+    y = Math.max(y, my) + 10;
+    // ----- items -----
+    const noGst = ['exempt', 'nongst', 'lut'].includes(inv.treatment) || fm.gstRegistered === false;
+    const items = inv.items || []; const showSac = items.some((it) => it.sac); const showDisc = items.some((it) => it.discount); const showQty = items.some((it) => Number(it.qty) !== 1);
+    const cols = [['#', (it, i) => String(i + 1), { cellWidth: 20 }], ['Description of service', (it) => pdfSafe(it.desc || '')], ...(showSac ? [['SAC', (it) => it.sac || '', { cellWidth: 46 }]] : []), ...(showQty ? [['Qty', (it) => String(it.qty), { halign: 'right', cellWidth: 32 }], ['Rate', (it) => C.fmtINR(it.rate, { noSym: true }), { halign: 'right', cellWidth: 70 }]] : []),
+      ...(showDisc ? [['Discount', (it) => it.discount ? C.fmtINR(it.discount, { noSym: true }) : '', { halign: 'right', cellWidth: 62 }]] : []), ...(noGst ? [] : [['GST', (it) => it.gstRate + '%', { halign: 'right', cellWidth: 36 }]]), ['Amount', (it) => C.fmtINR(Math.round(it.qty * it.rate) - (it.discount || 0), { noSym: true }), { halign: 'right', cellWidth: 78 }]];
+    const colStyles = {}; cols.forEach((cl, i) => { if (cl[2]) colStyles[i] = cl[2]; });
+    const head = { fillColor: tplKey === 'minimal' || tplKey === 'elegant' ? [255, 255, 255] : A, textColor: tplKey === 'minimal' ? 90 : tplKey === 'elegant' ? A : 255, fontStyle: 'bold', lineWidth: tplKey === 'minimal' || tplKey === 'elegant' ? { bottom: 0.8 } : 0, lineColor: tplKey === 'elegant' ? A : [190, 190, 190] };
+    doc.autoTable({ startY: y, head: [cols.map((cl) => cl[0])], body: items.map((it, i) => cols.map((cl) => cl[1](it, i))), theme: T.table, styles: { font: F, fontSize: 8.6, cellPadding: { top: 5, bottom: 5, left: 5, right: 5 }, textColor: [25, 28, 33], lineColor: [222, 226, 232], lineWidth: T.table === 'grid' ? 0.5 : 0 },
+      headStyles: head, alternateRowStyles: T.table === 'striped' ? { fillColor: [246, 248, 251] } : {}, bodyStyles: T.table === 'plain' ? { lineWidth: { bottom: 0.4 }, lineColor: [228, 228, 228] } : {}, columnStyles: colStyles, margin: { left: M, right: M, top: 52, bottom: 44 }, didParseCell: (d) => { const cs = colStyles[d.column.index]; if (d.section === 'head' && cs && cs.halign) d.cell.styles.halign = cs.halign; } });
+    y = doc.lastAutoTable.finalY + 12;
+    // ----- totals (right) + amount in words (left) -----
     const intra = t.supply === 'intra';
-    const head = [['#', 'Description of service', 'SAC', 'Qty', 'Rate', 'Discount', 'Taxable', 'GST %']];
-    const body = (inv.items || []).map((it, i) => [i + 1, pdfSafe(it.desc), it.sac || '', String(it.qty), C.fmtINR(it.rate, { noSym: true }), it.discount ? C.fmtINR(it.discount, { noSym: true }) : '', C.fmtINR(Math.round(it.qty * it.rate) - (it.discount || 0), { noSym: true }), inv.treatment === 'exempt' || inv.treatment === 'nongst' || inv.treatment === 'lut' ? '-' : it.gstRate + '%']);
-    doc.autoTable({ startY: y, head, body, theme: 'grid', styles: { fontSize: 8.2, cellPadding: 4 }, headStyles: { fillColor: [14, 124, 116], textColor: 255 }, columnStyles: { 0: { cellWidth: 20 }, 2: { cellWidth: 48 }, 3: { halign: 'right', cellWidth: 32 }, 4: { halign: 'right' }, 5: { halign: 'right' }, 6: { halign: 'right' }, 7: { halign: 'right', cellWidth: 40 } }, margin: { left: M, right: M } });
-    y = doc.lastAutoTable.finalY + 10;
     const tx = (t.byRate || []).filter((g) => g.rate > 0).flatMap((g) => intra ? [['CGST @ ' + g.rate / 2 + '%', g.cgst], ['SGST @ ' + g.rate / 2 + '%', g.sgst]] : [['IGST @ ' + g.rate + '%', g.igst]]);
     const tot = [['Taxable value', t.taxable], ...(inv.treatment === 'rcm' ? [] : tx), ...(t.roundOff ? [['Round off', t.roundOff]] : [])];
-    tot.forEach(([k, v]) => { doc.text(k, W - M - 170, y + 4); doc.text(C.fmtINR(v, { noSym: true }), W - M, y + 4, { align: 'right' }); y += 13; });
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); doc.text('Total (Rs.)', W - M - 170, y + 8); doc.text(C.fmtINR(t.total, { noSym: true }), W - M, y + 8, { align: 'right' }); doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); y += 22;
-    doc.text(doc.splitTextToSize(pdfSafe(C.inWords(t.total)), W - 2 * M), M, y); y += 14;
-    if (inv.treatment === 'rcm') { doc.text(pdfSafe('Tax of Rs. ' + C.fmtINR(t.rcmTax, { noSym: true }) + ' is payable by the recipient under reverse charge.'), M, y); y += 12; }
-    if (inv.treatment === 'lut') { doc.text('Supply meant for export / SEZ under LUT without payment of IGST.', M, y); y += 12; }
+    if (y + 40 + tot.length * 13 > H - 60) { doc.addPage(); y = 56; }
+    const tx0 = W - M - 200; const ty0 = y;
+    font('normal', 8.6); tot.forEach(([k, v]) => { grey(); doc.text(k, tx0, y + 4); ink(); doc.text(C.fmtINR(v, { noSym: true }), W - M, y + 4, { align: 'right' }); y += 13.5; });
+    if (tplKey === 'minimal' || tplKey === 'elegant') { doc.setDrawColor(150); doc.line(tx0, y - 2, W - M, y - 2); } else { doc.setFillColor(A[0], A[1], A[2]); doc.rect(tx0 - 6, y - 4, 206, 22, 'F'); doc.setTextColor(255); }
+    font('bold', 10.5); doc.text('Total (Rs.)', tx0, y + 11); doc.text(C.fmtINR(t.total, { noSym: true }), W - M - 4, y + 11, { align: 'right' }); ink(); y += 26;
+    let ly = ty0; font('bold', 7.6); grey(); doc.text('AMOUNT IN WORDS', M, ly + 4); ink(); font('normal', 8.6);
+    const words = doc.splitTextToSize(pdfSafe(C.inWords(t.total)), tx0 - M - 24); doc.text(words, M, ly + 17); ly += 17 + words.length * 10.5;
+    const notesL = [];
+    if (inv.treatment === 'rcm') notesL.push('Tax of Rs. ' + C.fmtINR(t.rcmTax, { noSym: true }) + ' is payable by the recipient under reverse charge.');
+    if (inv.treatment === 'lut') notesL.push('Supply meant for export / SEZ under LUT without payment of IGST.');
+    if (notesL.length) { const nl = doc.splitTextToSize(pdfSafe(notesL.join('\n')), tx0 - M - 24); doc.text(nl, M, ly + 4); ly += nl.length * 10.5 + 4; }
+    y = Math.max(y, ly) + 8;
     if ((inv.instalments || []).length > 1) {
-      doc.autoTable({ startY: y + 4, head: [['Instalment', 'Milestone', 'Due date', 'Amount']], body: inv.instalments.map((s) => [s.no, pdfSafe(s.desc || ''), C.fmtDate(s.dueDate), C.fmtINR(s.amount, { noSym: true })]), theme: 'striped', styles: { fontSize: 8 }, headStyles: { fillColor: [201, 122, 18] }, columnStyles: { 3: { halign: 'right' } }, margin: { left: M, right: M } });
+      doc.autoTable({ startY: y, head: [['Instalment', 'Milestone', 'Due date', 'Amount']], body: inv.instalments.map((s) => [s.no, pdfSafe(s.desc || ''), C.fmtDate(s.dueDate), C.fmtINR(s.amount, { noSym: true })]), theme: 'plain', styles: { font: F, fontSize: 8.2, cellPadding: 4, lineWidth: { bottom: 0.4 }, lineColor: [228, 228, 228] }, headStyles: { textColor: A, fontStyle: 'bold' }, columnStyles: { 3: { halign: 'right' } }, margin: { left: M, right: M, top: 52, bottom: 44 }, didParseCell: (d) => { if (d.column.index === 3) d.cell.styles.halign = 'right'; } });
       y = doc.lastAutoTable.finalY + 12;
     }
-    const foot = [];
-    if (fm.bankName && inv.type !== 'credit') foot.push('Bank: ' + fm.bankName + ' | A/c: ' + (fm.bankAc || '') + ' | IFSC: ' + (fm.ifsc || '') + (fm.upi ? ' | UPI: ' + fm.upi : ''));
-    if (inv.notes) foot.push('Notes: ' + inv.notes);
-    if (inv.terms) foot.push('Terms: ' + inv.terms);
-    if (inv.reason) foot.push('Reason: ' + inv.reason);
-    if (foot.length) { const lines = doc.splitTextToSize(pdfSafe(foot.join('\n')), W - 2 * M - 180); doc.text(lines, M, y + 6); y += lines.length * 10 + 8; }
-    const sy = Math.max(y + 10, H - 120);
-    doc.setFont('helvetica', 'bold'); doc.text(pdfSafe('For ' + (fm.name || '')), W - M, sy, { align: 'right' }); doc.text('Chartered Accountants', W - M, sy + 11, { align: 'right' });
-    doc.setFont('helvetica', 'normal'); doc.text(pdfSafe((fm.partner || 'Partner') + (fm.membershipNo ? ' | M. No. ' + fm.membershipNo : '')), W - M, sy + 52, { align: 'right' }); doc.text('Authorised signatory', W - M, sy + 63, { align: 'right' });
-    doc.setFontSize(7.5); doc.setTextColor(130); doc.text('This is a computer-generated document.' + (inv.status !== 'issued' ? ' ' + (inv.status || '').toUpperCase() : ''), M, H - 24); doc.setTextColor(20);
+    // ----- payment details + QR (left) and signature (right), placed right after the content -----
+    const li = (D().ledger.inv || {})[inv.id] || {}; const due = Math.max(0, (t.total || 0) - (li.settled || 0));
+    const payable = !cancelled && inv.type !== 'credit' && due > 0;
+    const qrText = payable && fm.upiQr !== false ? upiLink(fm, due, no) : '';
+    const left = [];
+    if (fm.bankName && payable) left.push(['Bank details', [fm.bankName + (fm.bankBranch ? ', ' + fm.bankBranch : ''), 'A/c ' + (fm.bankAc || '') + (fm.ifsc ? '   IFSC ' + fm.ifsc : ''), fm.bankAcName ? 'A/c name: ' + fm.bankAcName : ''].filter(Boolean).join('\n')]);
+    if (fm.upi && payable) left.push(['UPI', fm.upi + (qrText ? '  (scan the QR to pay Rs. ' + C.fmtINR(due, { noSym: true }) + ')' : '')]);
+    if (inv.notes) left.push(['Notes', inv.notes]); if (inv.terms) left.push(['Terms', inv.terms]); if (inv.reason) left.push(['Reason', inv.reason]);
+    const qrS = qrText ? 76 : 0; const lw = W - 2 * M - 190 - (qrS ? qrS + 16 : 0);
+    font('normal', 8.4); const blocks = left.map(([k, v]) => [k, doc.splitTextToSize(pdfSafe(v), lw)]);
+    const leftH = blocks.reduce((s, b) => s + 12 + b[1].length * 10.2 + 6, 0);
+    const sig = !draft && !cancelled && fm.sigOnPdf !== false && imgOk(fm.signature) ? fm.signature : '';
+    const blockH = Math.max(leftH, qrS ? qrS + 18 : 0, 92);
+    if (y + blockH > H - 44) { doc.addPage(); y = 56; }
+    y += 6; doc.setDrawColor(228); doc.setLineWidth(0.5); doc.line(M, y - 6, W - M, y - 6); y += 8;
+    let by = y; const bx = M + (qrS ? qrS + 16 : 0);
+    if (qrS) { pdfQR(doc, qrText, M, y + 2, qrS); font('normal', 6.8); grey(); doc.text('Scan with any UPI app', M + qrS / 2, y + qrS + 12, { align: 'center' }); ink(); }
+    blocks.forEach(([k, lines]) => { font('bold', 7.4); grey(); doc.text(k.toUpperCase(), bx, by + 4); ink(); font('normal', 8.4); doc.text(lines, bx, by + 15); by += 12 + lines.length * 10.2 + 6; });
+    const sx = W - M; font('bold', 9); doc.text(pdfSafe('For ' + (fm.name || '')), sx, y + 4, { align: 'right' }); font('normal', 8); grey(); doc.text(fm.firmType || 'Chartered Accountants', sx, y + 15, { align: 'right' }); ink();
+    if (sig) { try { const p = doc.getImageProperties(sig); const sh = 38, sw = Math.min(150, sh * p.width / p.height); doc.addImage(sig, imgFmt(sig), sx - sw, y + 22, sw, sh); } catch (e) { /* bad image */ } }
+    else if (draft) { font('normal', 7.5); grey(); doc.text('(draft - not signed)', sx, y + 44, { align: 'right' }); ink(); }
+    font('normal', 8.4); doc.text(pdfSafe((fm.partner || 'Partner') + (fm.membershipNo ? '  |  M. No. ' + fm.membershipNo : '')), sx, y + 72, { align: 'right' }); grey(); doc.text('Authorised signatory', sx, y + 83, { align: 'right' }); ink();
+    // footer, page numbers and the template's page decoration on every page of this document
+    const endPage = doc.getNumberOfPages(); const pages = endPage - startPage + 1;
+    for (let pg = startPage; pg <= endPage; pg++) {
+      doc.setPage(pg);
+      if (tplKey === 'bold') { doc.setFillColor(A[0], A[1], A[2]); doc.rect(0, 0, 10, H, 'F'); }
+      if (pg > startPage) { font('bold', 8.5); grey(); doc.text(pdfSafe(title + '  ' + no + '  (continued)'), M, 32); doc.text(pdfSafe(c.legalName || ''), W - M, 32, { align: 'right' }); ink(); }
+      font('normal', 7.2); grey();
+      doc.text(draft ? 'DRAFT for review only - not a valid tax invoice. The final number is assigned when issued.' : cancelled ? 'This document has been CANCELLED and is not payable.' : 'This is a computer-generated document.' + (inv.revisedAt ? ' Revised on ' + C.fmtDate(String(inv.revisedAt).slice(0, 10)) + '.' : ''), M, H - 22);
+      const right = (pages > 1 ? 'Page ' + (pg - startPage + 1) + ' of ' + pages : '') + (fm.footerNote ? (pages > 1 ? '  |  ' : '') + fm.footerNote : '');
+      if (right) doc.text(doc.splitTextToSize(pdfSafe(right), W / 2 - M)[0], W - M, H - 22, { align: 'right' }); ink();
+    }
   });
+  if (opts.returnDoc) return doc;
   const out = doc.output('arraybuffer');
-  const nm = list.length === 1 ? (list[0].no || 'invoice').replace(/[\/\\]/g, '-') : 'Invoices_' + list.length + '_' + today();
+  const nm = opts.fileName || (list.length === 1 ? (list[0].no || ('DRAFT-' + String(list[0].id || '').replace(/^in_/, '').slice(-6).toUpperCase() + '_' + ((list[0]._client || Store.get('clients', list[0].clientId) || {}).code || ''))).replace(/[\/\\]/g, '-') : 'Invoices_' + list.length + '_' + today());
   return X.save(nm + '.pdf', new Blob([out], { type: 'application/pdf' }));
+}
+/** A demo invoice (clearly marked sample data) used for template previews in settings. */
+function sampleInvoice() {
+  const fm = firm(); const st = fm.stateCode || '36';
+  const items = [{ desc: 'Statutory audit fee for FY 2025-26', sac: '998221', qty: 1, rate: 7500000, discount: 0, gstRate: 18 }, { desc: 'GST return filing - GSTR-1 & GSTR-3B (Apr-Jun)', sac: '998231', qty: 3, rate: 350000, discount: 0, gstRate: 18 }];
+  return { id: 'in_sample', type: 'invoice', status: 'issued', no: 'SAMPLE/' + C.fyOf(today()) + '/0001', date: today(), dueDate: C.addDays(today(), 15), placeOfSupply: st, items, notes: 'Sample preview with demo data.',
+    totals: C.calcInvoice({ items, placeOfSupply: st, treatment: 'taxable', roundOff: fm.roundOff !== false }, fm),
+    _client: { legalName: 'DEMO CLIENT PRIVATE LIMITED (sample)', address: 'Plot 1, Demo Industrial Area, Hyderabad 500001', gstin: '', pan: '', stateCode: st, code: 'DEMO' } };
 }
 async function receiptPDF(r) {
   const JsPDF = await pdfLib(); const fm = firm(); const c = Store.get('clients', r.clientId) || {}; const doc = new JsPDF({ unit: 'pt', format: 'a5', orientation: 'landscape' }); const W = doc.internal.pageSize.getWidth(); const M = 32;
@@ -3379,6 +3591,7 @@ function whyNoTasks(c) {
   if (!ticked.length) return 'No compliances are ticked for this client.';
   const rules = Store.all('rules').filter((r) => r.active !== false);
   if (!rules.some((r) => C.ruleApplies(r, c))) return 'No active due-date rule matches the ticked compliances' + (c.gstType === 'none' ? ' (GST is set to Not registered)' : '') + '. Check Administration → Due-date rules → “Applies to”.';
+  if (C.isISO(c.doi) && c.doi > C.addDays(today(), -1)) return 'Tasks start from the ' + C.doiLabel(c.entityType).toLowerCase() + ' (' + fd(c.doi) + '); the first ones appear as their due dates approach.';
   return '';
 }
 
@@ -3777,12 +3990,12 @@ const clientByCode = (s) => { s = String(s || '').trim().toUpperCase(); if (!s) 
 const IMPORTS = {
   clients: { label: 'Clients', perm: 'clients.edit', fields: [
     { key: 'code', label: 'Client code', aliases: ['code', 'client id'], sample: 'C0101' }, { key: 'legalName', label: 'Legal name', req: 1, aliases: ['name', 'client name', 'party name'], sample: 'Sri Venkateswara Agencies Pvt Ltd' }, { key: 'tradeName', label: 'Trade name', sample: 'SV Agencies' }, { key: 'entityType', label: 'Entity type', req: 1, aliases: ['constitution', 'type'], sample: 'Private Limited', hint: C.ENTITY_TYPES.join(' / ') },
-    { key: 'status', label: 'Status', sample: 'active', hint: 'active / prospective / inactive / discontinued' }, { key: 'pan', label: 'PAN', aliases: ['pan no', 'pan number', 'income tax pan'], sample: 'AAKCS1234M' }, { key: 'tan', label: 'TAN', aliases: ['tan no', 'tan number'], sample: 'HYDS12345A' }, { key: 'gstin', label: 'GSTIN', aliases: ['gst no', 'gst number', 'gstin no', 'gstin/uin'], sample: '' }, { key: 'cin', label: 'CIN', sample: '' }, { key: 'llpin', label: 'LLPIN' }, { key: 'udyam', label: 'Udyam number' }, { key: 'doi', label: 'Date of incorporation', type: 'date', sample: '15/06/2018' },
+    { key: 'status', label: 'Status', sample: 'active', hint: 'active / prospective / inactive / discontinued' }, { key: 'pan', label: 'PAN', aliases: ['pan no', 'pan number', 'income tax pan'], sample: 'AAKCS1234M' }, { key: 'tan', label: 'TAN', aliases: ['tan no', 'tan number'], sample: 'HYDS12345A' }, { key: 'gstin', label: 'GSTIN', aliases: ['gst no', 'gst number', 'gstin no', 'gstin/uin'], sample: '' }, { key: 'cin', label: 'CIN / LLPIN / Reg. No', aliases: ['cin', 'cin/llpin', 'cin / llpin', 'cin/llpin/reg.no', 'registration no', 'reg no', 'llpin/cin'], sample: '', hint: 'CIN, LLPIN or registration number — the app sorts it' }, { key: 'llpin', label: 'LLPIN (optional, old templates)' }, { key: 'udyam', label: 'Udyam number' }, { key: 'doi', label: 'Date of incorporation', type: 'date', sample: '15/06/2018' },
     { key: 'industry', label: 'Industry' }, { key: 'activity', label: 'Business activity' }, { key: 'address', label: 'Registered address', aliases: ['address'] }, { key: 'city', label: 'City', sample: 'Hyderabad' }, { key: 'stateCode', label: 'State code', sample: '36', hint: 'Two-digit GST state code' }, { key: 'pincode', label: 'PIN code' }, { key: 'email', label: 'Email', aliases: ['email id', 'e-mail', 'mail id'], sample: 'accounts@example.com' }, { key: 'mobile', label: 'Mobile', aliases: ['mobile no', 'mobile number', 'phone', 'contact no', 'phone no'], sample: '9876543210' }, { key: 'contactPerson', label: 'Contact person' },
     { key: 'gstFreq', label: 'GST frequency', hint: 'monthly / qrmp' }, { key: 'rm', label: 'Responsible staff', hint: 'Employee name or email' }, { key: 'flags', label: 'Compliances', hint: 'e.g. gst; tds; itr; roc', sample: 'gst; tds; itr; roc' }, { key: 'creditLimit', label: 'Credit limit', type: 'money' }, { key: 'notes', label: 'Notes' }],
     build(v, ctx) {
       const errors = [], warnings = [];
-      const c = { code: v.code || '', legalName: v.legalName, tradeName: v.tradeName, entityType: C.ENTITY_TYPES.find((t) => t.toLowerCase() === String(v.entityType || '').toLowerCase()) || v.entityType, status: (v.status || 'active').toLowerCase(), pan: C.normId(v.pan), tan: C.normId(v.tan), gstin: C.normId(v.gstin), cin: C.normId(v.cin), llpin: C.normId(v.llpin), udyam: C.normId(v.udyam), doi: v.doi || '', industry: v.industry, activity: v.activity, address: v.address, city: v.city, stateCode: v.stateCode ? C.pad(String(v.stateCode).replace(/\D/g, ''), 2) : (C.normId(v.gstin).slice(0, 2) || firm().stateCode), pincode: v.pincode, email: v.email, mobile: v.mobile ? C.normMobile(v.mobile) : '', contactPerson: v.contactPerson, gstFreq: v.gstin ? (/q/i.test(v.gstFreq || '') ? 'qrmp' : 'monthly') : '', gstType: v.gstin ? 'regular' : 'none', flags: v.flags ? flagByText(v.flags) : defaultFlags(v.entityType), creditLimit: v.creditLimit ? C.paiseToStr(v.creditLimit) : '', notes: v.notes, contacts: v.contactPerson ? [{ name: v.contactPerson, email: v.email, mobile: v.mobile }] : [], people: [], onboarding: {} };
+      const c = { code: v.code || '', legalName: v.legalName, tradeName: v.tradeName, entityType: C.ENTITY_TYPES.find((t) => t.toLowerCase() === String(v.entityType || '').toLowerCase()) || v.entityType, status: (v.status || 'active').toLowerCase(), pan: C.normId(v.pan), tan: C.normId(v.tan), gstin: C.normId(v.gstin), cin: C.V.cin(C.normId(v.cin)) ? C.normId(v.cin) : '', regNo: v.cin && !C.V.cin(C.normId(v.cin)) && !C.V.llpin(C.normId(v.cin)) ? String(v.cin).trim() : '', llpin: C.normId(v.llpin) || (v.cin && C.V.llpin(C.normId(v.cin)) ? C.normId(v.cin) : ''), udyam: C.normId(v.udyam), doi: v.doi || '', industry: v.industry, activity: v.activity, address: v.address, city: v.city, stateCode: v.stateCode ? C.pad(String(v.stateCode).replace(/\D/g, ''), 2) : (C.normId(v.gstin).slice(0, 2) || firm().stateCode), pincode: v.pincode, email: v.email, mobile: v.mobile ? C.normMobile(v.mobile) : '', contactPerson: v.contactPerson, gstFreq: v.gstin ? (/q/i.test(v.gstFreq || '') ? 'qrmp' : 'monthly') : '', gstType: v.gstin ? 'regular' : 'none', flags: v.flags ? flagByText(v.flags) : defaultFlags(v.entityType), creditLimit: v.creditLimit ? C.paiseToStr(v.creditLimit) : '', notes: v.notes, contacts: v.contactPerson ? [{ name: v.contactPerson, email: v.email, mobile: v.mobile }] : [], people: [], onboarding: {} };
       if (c.gstin || c.flags.gst) { c.flags.gst = true; c.gstType = 'regular'; c.gstFreq = c.gstFreq || (/q/i.test(v.gstFreq || '') ? 'qrmp' : 'monthly'); } else C.GST_FLAGS.forEach((f) => (c.flags[f] = false));
       if (!C.ENTITY_TYPES.includes(c.entityType)) errors.push('Entity type "' + (v.entityType || '') + '" is not recognised');
       if (!['active', 'prospective', 'inactive', 'discontinued'].includes(c.status)) { warnings.push('Status "' + v.status + '" read as active'); c.status = 'active'; }
@@ -5124,6 +5337,67 @@ async function csPDF(internal) {
   } catch (e) { toast(e.message || 'Could not create the PDF', 'bad'); }
 }
 
+/* ---------- Notes (Work → Notes): free-form notes, optionally linked to a client ---------- */
+ENT.notes = { coll: 'notes', shards: 4 }; S.data.notes = S.data.notes || new Map();
+IP.note = 'M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5zM15 3v6h6M7 13h10M7 17h6';
+const NOTE_COLOURS = [['', 'Plain'], ['yellow', 'Yellow'], ['blue', 'Blue'], ['green', 'Green'], ['pink', 'Pink'], ['grey', 'Grey']];
+/** Notes must never hold passwords, OTPs or secrets — the portal register stores only a reference. */
+const NOTE_SECRET = /\b(pass ?word|passwd|pwd|otp|m?pin|secret|api[ _-]?key|recovery code|security answer)\b\s*(is|[:=\-–])\s*\S{3,}/i;
+function visibleNotes() { return Store.all('notes').filter((n) => !n.private || n.createdBy === S.uid); }
+function noteTags(n) { return String(n.tags || '').split(',').map((t) => t.trim()).filter(Boolean); }
+VIEWS.notes = {
+  title: 'Notes',
+  render() {
+    const f = S.ui.nf || (S.ui.nf = { q: '', client: '', tag: '', show: 'all' }); const q = f.q.trim().toLowerCase();
+    const all = visibleNotes(); const tags = uniq(all.flatMap(noteTags)).sort();
+    const rows = all.filter((n) => (!f.client || n.clientId === f.client) && (!f.tag || noteTags(n).includes(f.tag)) && (f.show !== 'pinned' || n.pinned) && (f.show !== 'mine' || n.createdBy === S.uid) && (!q || [n.title, n.body, n.tags, cName(n.clientId)].some((v) => String(v || '').toLowerCase().includes(q))))
+      .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
+    let h = '<div class="page-head"><div class="t"><span class="eyebrow">Work</span><h1>Notes</h1></div><div class="btn-row"><button class="btn pri" data-act="note-new">' + ico('plus') + ' New note</button></div></div>';
+    h += '<div class="card"><div class="card-h filters"><input class="inp grow" type="search" placeholder="Search notes, clients, tags…" data-nf="q" value="' + esc(f.q) + '">' +
+      '<select class="inp" data-nf="client">' + clientOpts(f.client, 'All clients') + '</select>' +
+      (tags.length ? '<select class="inp" data-nf="tag"><option value="">All tags</option>' + tags.map((t) => opt(t, '#' + t, f.tag)).join('') + '</select>' : '') +
+      '<div class="seg">' + [['all', 'All'], ['pinned', 'Pinned'], ['mine', 'Mine']].map(([k, l]) => '<button class="' + (f.show === k ? 'on' : '') + '" data-act="note-show" data-s="' + k + '">' + l + '</button>').join('') + '</div></div></div>';
+    if (!rows.length) return h + '<div class="card">' + emptyState('note', all.length ? 'No notes match' : 'No notes yet', all.length ? 'Clear the search or filters.' : 'Write meeting notes, client instructions, follow-ups or anything you want to remember. Link a note to a client to see it on their profile.') + '</div>';
+    return h + '<div class="notegrid">' + rows.map(noteCard).join('') + '</div><div class="muted" style="font-size:12px;margin-top:10px">Do not write passwords, OTPs or other secrets in notes — the app blocks text that looks like one.</div>';
+  },
+};
+function noteCard(n) {
+  const body = String(n.body || ''); const short = body.length > 420 ? body.slice(0, 420) + '…' : body;
+  return '<div class="notec' + (n.colour ? ' nc-' + n.colour : '') + '" data-act="note-open" data-id="' + n.id + '" tabindex="0" role="button">' +
+    '<div class="notec-h"><div class="strong">' + esc(n.title || 'Untitled') + '</div>' + (n.pinned ? '<span class="pin" title="Pinned">●</span>' : '') + '</div>' +
+    (short ? '<div class="notec-b">' + esc(short).replace(/\n/g, '<br>') + '</div>' : '') +
+    '<div class="notec-f">' + (n.clientId ? '<span class="chip">' + esc(cName(n.clientId)) + '</span>' : '') + noteTags(n).map((t) => '<span class="chip ghost">#' + esc(t) + '</span>').join('') +
+    (n.private ? '<span class="chip ghost">' + ico('lock') + ' only me</span>' : '') + '<span class="sp"></span><span class="muted">' + fd(String(n.updatedAt || n.createdAt || '').slice(0, 10)) + '</span></div></div>';
+}
+function noteForm(existing, defaults) {
+  const n = existing ? JSON.parse(JSON.stringify(existing)) : Object.assign({ title: '', body: '', clientId: '', tags: '', colour: '', pinned: false, private: false }, defaults || {});
+  if (existing && existing.private && existing.createdBy !== S.uid) return toast('This note is private to its author', 'bad');
+  openDrawer({ title: existing ? 'Note' : 'New note', narrow: true, state: n,
+    render: () => '<div class="sect"><div class="grid g2">' + fld({ k: 'title', label: 'Title', v: n.title, req: 1, cls: 'span-all', max: 120 }) +
+      fld({ k: 'body', label: 'Note', type: 'textarea', v: n.body, rows: 12, cls: 'span-all' }) +
+      fld({ k: 'clientId', label: 'Client (optional)', type: 'select', options: clientOpts(n.clientId, 'Not linked') }) + fld({ k: 'tags', label: 'Tags', v: n.tags, hint: 'Comma separated, e.g. meeting, follow-up' }) +
+      fld({ k: 'colour', label: 'Colour', type: 'select', options: opts(NOTE_COLOURS, n.colour) }) + '<div></div>' +
+      fld({ k: 'pinned', label: 'Pin to the top', type: 'check', v: n.pinned }) + fld({ k: 'private', label: 'Only me (hidden from colleagues in the app)', type: 'check', v: n.private }) + '</div></div>' +
+      (existing ? '<div class="muted" style="font-size:12px">Created ' + fd(String(existing.createdAt || '').slice(0, 10)) + ' · last edited ' + new Date(existing.updatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) + '</div>' : '') +
+      '<div class="muted" style="font-size:12px;margin-top:6px">Never store passwords, OTPs or recovery codes here. Use the Portal register for login IDs.</div>',
+    footer: () => (existing ? '<button class="btn danger" data-d="del">' + ico('trash') + ' Delete</button><button class="btn" data-d="copy">' + ico('copy') + ' Copy</button>' : '') + '<span class="sp"></span><button class="btn" data-d="close">Cancel</button><button class="btn pri" data-d="save">Save note</button>',
+    mount: (dr) => bindInputs(dr.body, n, () => { dr.dirty = true; }),
+    acts: {
+      save: async (a, dr) => {
+        n.title = String(n.title || '').trim(); if (!n.title) { n.title = String(n.body || '').trim().split('\n')[0].slice(0, 80); }
+        if (!n.title && !String(n.body || '').trim()) return toast('Write something first', 'bad');
+        if (NOTE_SECRET.test(n.title + '\n' + n.body)) return toast('This looks like a password, OTP or secret. Notes must not hold credentials — remove it and save again.', 'bad');
+        n.tags = noteTags(n).join(', ');
+        await Store.save('notes', n, existing ? 'Note edited' : 'Note added'); dr.dirty = false; dr.close(true); toast('Note saved');
+      },
+      copy: async () => copyText((n.title ? n.title + '\n\n' : '') + (n.body || '')),
+      del: (a, dr) => confirmBox('Delete this note?', 'It moves to the recycle bin (Administration → Data & recycle bin).', 'Delete', async () => { await Store.softDelete('notes', existing.id, 'Note deleted'); dr.dirty = false; dr.close(true); toast('Note deleted'); }),
+    } });
+}
+ACT['note-new'] = (a) => noteForm(null, a && a.dataset.client ? { clientId: a.dataset.client } : null);
+ACT['note-open'] = (a) => noteForm(Store.get('notes', a.dataset.id));
+ACT['note-show'] = (a) => { S.ui.nf.show = a.dataset.s; refresh(); };
+
 /* ===== Ask CA AI, administration, shell & boot ===== */
 
 /* ---------- Ask CA AI ---------- */
@@ -5247,7 +5521,7 @@ VIEWS.admin = {
   title: 'Administration',
   render() {
     const p = S.params; const f = S.ui.adm || (S.ui.adm = { tab: 'firm' }); if (p.tab) { f.tab = p.tab; S.params = {}; }
-    const tabs = [['firm', 'Firm & branding', 'admin'], ['billing', 'Invoicing & GST', 'admin'], ['services', 'Service master', 'billing.edit'], ['rules', 'Due-date rules', 'rules.edit'], ['users', S.platform === 'standalone' ? 'Users & security' : 'Users & roles', 'admin'], ['storage', 'Storage & backup', 'admin'], ['prefs', 'Notifications & security', 'admin'], ['data', 'Data & recycle bin', 'admin'], ['tests', 'Self-test', ''], ['updates', 'App updates', '']].filter((t) => !t[2] || can(t[2]));
+    const tabs = [['firm', 'Firm & branding', 'admin'], ['billing', 'Invoicing & GST', 'admin'], ['templates', 'Invoice templates', 'admin'], ['signature', 'Signature', 'admin'], ['services', 'Service master', 'billing.edit'], ['rules', 'Due-date rules', 'rules.edit'], ['users', S.platform === 'standalone' ? 'Users & security' : 'Users & roles', 'admin'], ['storage', 'Storage & backup', 'admin'], ['prefs', 'Notifications & security', 'admin'], ['data', 'Data & recycle bin', 'admin'], ['tests', 'Self-test', ''], ['updates', 'App updates', '']].filter((t) => !t[2] || can(t[2]));
     if (!tabs.length) return '<div class="card">' + emptyState('lock', 'No administration access', 'Your role does not include settings.') + '</div>';
     if (!tabs.some((t) => t[0] === f.tab)) f.tab = tabs[0][0];
     let h = '<div class="page-head"><div class="t"><span class="eyebrow">Settings</span><h1>Administration</h1></div></div><div class="card"><div class="tabs" style="padding:0 8px">' + tabs.map(([k, l]) => '<button data-act="adm-tab" data-t="' + k + '" class="' + (f.tab === k ? 'on' : '') + '">' + l + '</button>').join('') + '</div><div class="card-b" style="padding-top:16px;display:grid;gap:16px">';
@@ -5274,9 +5548,33 @@ const ADMIN = {
     return '<form class="grid g3" data-cfgform="firm" onsubmit="return false">' + fld({ k: 'gstRegistered', label: 'Firm is registered under GST', type: 'check', v: fm.gstRegistered !== false }) + fld({ k: 'roundOff', label: 'Round invoice totals to the nearest rupee', type: 'check', v: fm.roundOff !== false }) + '<div></div>' +
       fld({ k: 'invoicePattern', label: 'Number pattern', v: fm.invoicePattern, hint: 'Tokens: {PREFIX} {FY} (26-27) {FYFULL} {SEQ4}. Sample: <b>' + esc(sample) + '</b> (' + sample.length + '/16 characters)' }) +
       fld({ k: 'series.invoice', label: 'Tax invoice prefix', v: se.invoice || 'CA', mono: 1 }) + fld({ k: 'series.credit', label: 'Credit note prefix', v: se.credit || 'CN', mono: 1 }) + fld({ k: 'series.debit', label: 'Debit note prefix', v: se.debit || 'DN', mono: 1 }) + fld({ k: 'series.proforma', label: 'Estimate prefix', v: se.proforma || 'PF', mono: 1 }) + fld({ k: 'series.receipt', label: 'Receipt prefix', v: se.receipt || 'RC', mono: 1 }) +
-      fld({ k: 'termsDays', label: 'Default payment terms (days)', v: fm.termsDays, num: 1 }) + fld({ k: 'bankName', label: 'Bank name & branch', v: fm.bankName }) + fld({ k: 'bankAc', label: 'Account number', v: fm.bankAc, mono: 1 }) + fld({ k: 'ifsc', label: 'IFSC', v: fm.ifsc, mono: 1 }) + fld({ k: 'upi', label: 'UPI ID', v: fm.upi }) +
+      fld({ k: 'termsDays', label: 'Default payment terms (days)', v: fm.termsDays, num: 1 }) +
+      '<div class="span-all sect" style="margin:6px 0 0"><h3>Payment details printed on invoices</h3></div>' +
+      fld({ k: 'bankName', label: 'Bank name & branch', v: fm.bankName }) + fld({ k: 'bankAcName', label: 'Account name', v: fm.bankAcName }) + fld({ k: 'bankAc', label: 'Account number', v: fm.bankAc, mono: 1 }) + fld({ k: 'ifsc', label: 'IFSC', v: fm.ifsc, mono: 1 }) +
+      fld({ k: 'upi', label: 'UPI ID', v: fm.upi, hint: 'e.g. yourfirm@okicici — shown with a scan-to-pay QR' }) + fld({ k: 'upiName', label: 'UPI payee name', v: fm.upiName, hint: 'Name shown in the payer’s UPI app (defaults to firm name)' }) +
+      fld({ k: 'upiQr', label: 'Print UPI QR code on invoices (amount pre-filled with the balance due)', type: 'check', v: fm.upiQr !== false, cls: 'span-all' }) +
       fld({ k: 'terms', label: 'Default terms and conditions', type: 'textarea', v: fm.terms, cls: 'span-all', rows: 3, ph: 'Payment within 15 days. Interest may be charged on delayed payment. Subject to Hyderabad jurisdiction.' }) + '</form><div class="btn-row"><button class="btn pri" data-act="cfg-save" data-f="firm">Save invoicing settings</button></div>' +
       '<div class="muted" style="font-size:12.5px">Numbers are assigned only when a document is issued, in date order of issue, and never reused. GST rules limit invoice numbers to 16 characters using letters, digits, “/” and “-”. Tax rates are set per service and per invoice line; changing a default does not change issued invoices.</div>';
+  },
+  templates() {
+    const fm = firm(); const cur = INV_TEMPLATES[fm.invTemplate] ? fm.invTemplate : 'classic';
+    const mock = (k) => { const a = 'rgb(' + (INV_ACCENTS[fm.invAccent] || INV_TEMPLATES[k].accent).join(',') + ')';
+      const hd = { classic: '<div class="tm-h" style="border-bottom:2px solid ' + a + '"><i style="background:' + a + ';width:45%"></i><i style="background:' + a + ';width:22%;margin-left:auto"></i></div>', modern: '<div class="tm-h" style="background:' + a + ';margin:-10px -10px 6px;padding:12px 10px"><i style="background:#fff;width:45%"></i><i style="background:#fff;width:22%;margin-left:auto"></i></div>', minimal: '<div class="tm-h" style="border-bottom:1px solid #ddd"><i style="background:#333;width:40%"></i><i style="background:#bbb;width:18%;margin-left:auto"></i></div>', elegant: '<div class="tm-h" style="flex-direction:column;align-items:center;border-bottom:3px double ' + a + '"><i style="background:' + a + ';width:50%"></i><i style="background:#999;width:30%;height:3px"></i></div>', bold: '<div class="tm-h" style="border-left:5px solid ' + a + ';margin-left:-10px;padding-left:8px"><i style="background:' + a + ';width:55%;height:9px"></i><i style="background:#999;width:20%;margin-left:auto"></i></div>' }[k];
+      const th = k === 'minimal' || k === 'elegant' ? 'border-bottom:1px solid ' + (k === 'elegant' ? a : '#999') : 'background:' + a;
+      return '<div class="tm">' + hd + '<div class="tm-row"><i style="width:35%"></i><i style="width:25%;margin-left:auto"></i></div><div class="tm-t" style="' + th + '"></div>' + [1, 2, 3].map((n) => '<div class="tm-r' + ((k === 'modern' || k === 'bold') && n % 2 ? ' z' : '') + '"></div>').join('') + '<div class="tm-tot" style="background:' + (k === 'minimal' || k === 'elegant' ? '#ccc' : a) + '"></div><div class="tm-f"><b class="qr"></b><i style="width:30%;margin-left:auto"></i></div></div>'; };
+    return '<div class="muted" style="font-size:13px">Choose how your invoices, notes and estimates look. Every template carries the same GST details; only the design changes. Preview opens a sample PDF with demo data.</div>' +
+      '<div class="tplgrid">' + Object.entries(INV_TEMPLATES).map(([k, t]) => '<div class="tplc' + (k === cur ? ' on' : '') + '">' + mock(k) + '<div class="tplc-b"><div class="strong">' + esc(t.name) + (k === cur ? ' ' + badge('In use', 'green') : '') + '</div><div class="sub">' + esc(t.desc) + '</div><div class="btn-row" style="margin-top:8px">' + (k === cur ? '' : '<button class="btn xs pri" data-act="inv-tpl" data-t="' + k + '">Use this</button>') + '<button class="btn xs" data-act="inv-tpl-prev" data-t="' + k + '">' + ico('download') + ' Preview PDF</button></div></div></div>').join('') + '</div>' +
+      '<form class="grid g3" data-cfgform="firm" onsubmit="return false">' + fld({ k: 'invAccent', label: 'Accent colour', type: 'select', options: Object.keys(INV_ACCENTS).map((k) => opt(k, k ? k.charAt(0).toUpperCase() + k.slice(1) : INV_ACCENTS[''], fm.invAccent || '')).join('') }) +
+      fld({ k: 'firmType', label: 'Line under the firm name at the signature', v: fm.firmType || 'Chartered Accountants' }) + fld({ k: 'footerNote', label: 'Footer note (optional)', v: fm.footerNote, ph: 'e.g. Subject to Hyderabad jurisdiction' }) +
+      '</form><div class="btn-row"><button class="btn pri" data-act="cfg-save" data-f="firm">Save</button></div>';
+  },
+  signature() {
+    const fm = firm(); const has = !!fm.signature;
+    return '<div class="grid g2" style="align-items:start"><div><div class="sigbox">' + (has ? '<img src="' + esc(fm.signature) + '" alt="Signature">' : '<span class="muted">No signature added</span>') + '</div>' +
+      '<div class="btn-row" style="margin-top:10px"><label class="btn sm pri">' + ico('upload') + ' ' + (has ? 'Replace' : 'Upload') + ' signature<input type="file" id="sigFile" accept="image/png,image/jpeg" hidden></label>' + (has ? '<button class="btn sm danger" data-act="sig-rm">Remove</button>' : '') + '</div>' +
+      '<label class="chk" style="margin-top:10px"><input type="checkbox" id="sigClean" checked> Remove the white / paper background when uploading</label></div>' +
+      '<div><form data-cfgform="firm" onsubmit="return false">' + fld({ k: 'sigOnPdf', label: 'Print this signature on issued invoices, notes and estimates', type: 'check', v: fm.sigOnPdf !== false }) + '</form><div class="btn-row" style="margin:8px 0"><button class="btn sm" data-act="cfg-save" data-f="firm">Save</button>' + (has ? '<button class="btn sm" data-act="inv-tpl-prev" data-t="">' + ico('download') + ' Preview on an invoice</button>' : '') + '</div>' +
+      '<div class="muted" style="font-size:12.5px">Sign on plain white paper with a dark pen, take a clear photo or scan, and crop it close. It prints above “Authorised signatory”. Drafts and cancelled documents are never signed. The image is stored with your firm settings (encrypted when password sign-in is on); only administrators can change it, and every change is in the audit log.</div></div></div>';
   },
   services() {
     const rows = D().services.sort(by((s) => s.category + s.name));
@@ -5333,6 +5631,7 @@ const ADMIN = {
 };
 /* ---------- app updates ---------- */
 const RELEASE_NOTES = [
+  ['1.6.0', 'Five invoice templates (Classic, Modern, Minimal, Elegant, Bold) with PDF preview; compact invoice layout that ends right after the content; UPI scan-to-pay QR; Signature tab; draft PDFs marked DRAFT; edit or delete issued invoices with a recorded reason; SAC optional; “GSTIN: Unregistered”; KYC fields shown by entity type with blank inputs; single CIN / LLPIN / Reg. No column; no compliance tasks before incorporation or GST registration; new Notes page under Work.'],
   ['1.5.2', 'Reconnect this device can now use the office recovery key (and set a new password) when the password from the other device is not known.'],
   ['1.5.1', 'Fix: a second device (e.g. phone) now signs in with the office password instead of creating its own key; a device that already has a different key shows “Reconnect this device” and merges its changes; opening encrypted Drive data on a new device no longer fails.'],
   ['1.5.0', 'Client compliance status report (Insights): one page per client with pending monthly, quarterly and annual filings and the consequences of not filing — share as screenshot, PDF or email; penalty & interest estimates shown only to partners/administrators and never in the client copy. KYC numbers now marked SAMPLE (demo), New or Real with format checks; client turnover field.'],
@@ -5369,7 +5668,7 @@ ADMIN.updates = function () {
     '<div class="sect"><h3>What’s new</h3>' + RELEASE_NOTES.map(([v, n]) => '<div style="font-size:13px"><b>' + v + '</b> — ' + esc(n) + '</div>').join('') + '</div>';
 };
 ACT['upd-apply'] = () => applyUpdate();
-const APP_VERSION = '1.5.2';
+const APP_VERSION = '1.6.0';
 ACT['cfg-save'] = async () => {
   const form = $('[data-cfgform="firm"]'); if (!form) return; const patch = {};
   $$('[data-k]', form).forEach((el) => { const v = el.type === 'checkbox' ? el.checked : el.value.trim(); setPath(patch, el.dataset.k, el.classList.contains('mono') && typeof v === 'string' ? v.toUpperCase() : v); });
@@ -5377,12 +5676,32 @@ ACT['cfg-save'] = async () => {
   ['termsDays', 'credentialReviewDays', 'idleMinutes', 'retentionYears'].forEach((k) => { if (patch[k] !== undefined) patch[k] = Number(patch[k]) || 0; });
   if (patch.idleMinutes !== undefined && S.platform === 'standalone' && Vault.on() && !(patch.idleMinutes >= 1 && patch.idleMinutes <= 60)) return toast('Auto-lock must be between 1 and 60 minutes while password sign-in is on', 'bad');
   if (patch.gstin && !C.V.gstin(patch.gstin)) return toast('Firm GSTIN is not valid', 'bad');
+  if (patch.upi && !/^[\w.\-]{2,}@[a-zA-Z][\w.\-]{1,}$/.test(patch.upi)) return toast('UPI ID should look like name@bank', 'bad');
   if (patch.pan && !C.V.pan(patch.pan)) return toast('Firm PAN is not valid', 'bad');
   if (patch.gstin) patch.stateCode = patch.stateCode || patch.gstin.slice(0, 2);
   if (patch.invoicePattern !== undefined) { const s = C.formatInvNo(patch.invoicePattern, (patch.series || {}).invoice || 'CA', C.fyOf(today()), 1); if (!/\{SEQ\d?\}/.test(patch.invoicePattern)) return toast('The pattern needs {SEQ4} (or {SEQ3} etc.)', 'bad'); if (!C.V.invoiceNo(s)) return toast('Numbers like "' + s + '" break the 16-character GST rule', 'bad'); }
   await Store.saveCfg('firm', patch, 'Firm settings updated'); toast('Settings saved'); applyTheme();
 };
 ACT['accent'] = async (a) => { await Store.saveCfg('firm', { theme: { accent: a.dataset.c } }, 'Theme colour changed'); applyTheme(); };
+ACT['inv-tpl'] = async (a) => { await Store.saveCfg('firm', { invTemplate: a.dataset.t }, 'Invoice template changed to ' + INV_TEMPLATES[a.dataset.t].name); toast(INV_TEMPLATES[a.dataset.t].name + ' template in use'); };
+ACT['inv-tpl-prev'] = async (a) => { try { await invoicePDF([sampleInvoice()], { template: a.dataset.t || undefined, fileName: 'Template_preview_' + (a.dataset.t || firm().invTemplate || 'classic') }); } catch (e) { toast(e.message, 'bad'); } };
+ACT['sig-rm'] = () => confirmBox('Remove the signature?', 'Invoices will print a blank space for a manual signature.', 'Remove', async () => { await Store.saveCfg('firm', { signature: '' }, 'Signature removed'); toast('Signature removed'); });
+async function setSignature(file, clean) {
+  if (!/^image\/(png|jpeg)$/.test(file.type)) return toast('Choose a PNG or JPG image', 'bad');
+  const url = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = rej; fr.readAsDataURL(file); });
+  const img = new Image(); await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
+  const s = Math.min(1, 600 / img.width, 220 / img.height); const cv = document.createElement('canvas'); cv.width = Math.max(1, Math.round(img.width * s)); cv.height = Math.max(1, Math.round(img.height * s));
+  const cx = cv.getContext('2d'); cx.drawImage(img, 0, 0, cv.width, cv.height);
+  if (clean) { const d = cx.getImageData(0, 0, cv.width, cv.height); const p = d.data; let minX = cv.width, minY = cv.height, maxX = -1, maxY = -1;
+    for (let i = 0; i < p.length; i += 4) { const l = 0.299 * p[i] + 0.587 * p[i + 1] + 0.114 * p[i + 2]; if (l > 200) p[i + 3] = 0; else { if (l > 150) p[i + 3] = Math.round(255 * (200 - l) / 50); const k = i / 4, x = k % cv.width, y = (k - x) / cv.width; if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y; } }
+    cx.putImageData(d, 0, 0);
+    if (maxX < 0) return toast('No ink found in the image. Use a darker pen or a clearer photo.', 'bad');
+    const pad = 6; minX = Math.max(0, minX - pad); minY = Math.max(0, minY - pad); maxX = Math.min(cv.width - 1, maxX + pad); maxY = Math.min(cv.height - 1, maxY + pad);
+    const cr = document.createElement('canvas'); cr.width = maxX - minX + 1; cr.height = maxY - minY + 1; cr.getContext('2d').drawImage(cv, minX, minY, cr.width, cr.height, 0, 0, cr.width, cr.height);
+    var out = cr.toDataURL('image/png'); } else var out = cv.toDataURL(file.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.9);
+  if (out.length > 250000) return toast('Signature image is too large. Crop it closer and try again.', 'bad');
+  await Store.saveCfg('firm', { signature: out }, 'Signature updated'); toast('Signature saved');
+}
 ACT['logo-rm'] = async () => { await Store.saveCfg('firm', { logo: '' }, 'Logo removed'); };
 async function setLogo(file) {
   if (!/^image\/(png|jpeg)$/.test(file.type)) return toast('Choose a PNG or JPG image', 'bad');
@@ -5516,6 +5835,7 @@ const PAGE_INFO = {
   compliance: ['check', 'var(--m-comp)', 'Every GST, TDS, Income-tax, ROC and payroll filing with its due date and status. Red = overdue, amber = due soon.'],
   staff: ['team', 'var(--m-staff)', 'Team members, their workload, review queue and timesheets.'],
   documents: ['folder', 'var(--m-docs)', 'Client documents — acknowledgements, notices, certificates — with expiry reminders.'],
+  notes: ['note', 'var(--m-docs)', 'Your notes — meeting minutes, client instructions, follow-ups. Link a note to a client, pin the important ones, and search everything.'],
   reports: ['chart', 'var(--m-rep)', 'Ready-made registers and MIS reports. Pick one on the left and export to Excel, PDF or Word.'],
   ai: ['spark', 'var(--m-ai)', 'Ask questions about your practice in plain English.'],
   cstatus: ['file', 'var(--m-rep)', 'Pick a client to see every pending monthly, quarterly and annual filing with its consequences — share it as a screenshot or PDF. Penalty estimates stay visible only to you.'],
@@ -5525,7 +5845,7 @@ const PAGE_INFO = {
 const NAV = [
   ['Practice', [['dashboard', 'home', 'Dashboard'], ['clients', 'users', 'Clients'], ['portals', 'key', 'Portal register', 'portals.view']]],
   ['Billing', [['billing', 'invoice', 'Invoices', 'billing.view'], ['receipts', 'wallet', 'Receipts', 'billing.view'], ['receivables', 'ageing', 'Receivables', 'billing.view']]],
-  ['Work', [['compliance', 'check', 'Compliance'], ['staff', 'team', 'Staff & timesheets'], ['documents', 'folder', 'Documents']]],
+  ['Work', [['compliance', 'check', 'Compliance'], ['staff', 'team', 'Staff & timesheets'], ['documents', 'folder', 'Documents'], ['notes', 'note', 'Notes']]],
   ['Insight', [['reports', 'chart', 'Reports'], ['cstatus', 'file', 'Client status report'], ['ai', 'spark', 'Ask CA AI', 'ai'], ['imports', 'io', 'Import & export']]],
   ['Settings', [['admin', 'cog', 'Administration']]],
 ];
@@ -5573,6 +5893,7 @@ function globalSearch(q) {
   for (const c of d.clients) if ([c.code, c.legalName, c.tradeName, c.pan, c.gstin, c.mobile].some((v) => String(v || '').toLowerCase().includes(q))) out.push({ act: 'client-open', id: c.id, icon: 'users', t: c.tradeName || c.legalName, s: 'Client · ' + (c.code || '') });
   if (can('billing.view')) { for (const i of d.invoices) if (String(i.no || '').toLowerCase().includes(q)) out.push({ act: 'inv-open', id: i.id, icon: 'invoice', t: i.no, s: INV_TYPES[i.type] + ' · ' + cName(i.clientId) + ' · ' + money(i.totals.total) }); for (const r of d.receipts) if ([r.no, r.ref].some((v) => String(v || '').toLowerCase().includes(q))) out.push({ act: 'rcpt-open', id: r.id, icon: 'wallet', t: r.no, s: 'Receipt · ' + cName(r.clientId) + ' · ' + money(r.amount) }); }
   for (const t of d.tasks) if ([t.form, t.ackNo].some((v) => String(v || '').toLowerCase().includes(q)) && out.length < 40) out.push({ act: 'task-open', id: t.id, icon: 'check', t: (t.form || t.title) + ' · ' + (t.period || ''), s: 'Task · ' + cName(t.clientId) + ' · due ' + fd(t.dueDate) });
+  for (const x of visibleNotes()) if ([x.title, x.body, x.tags].some((v) => String(v || '').toLowerCase().includes(q))) out.push({ act: 'note-open', id: x.id, icon: 'note', t: x.title || 'Note', s: 'Note' + (x.clientId ? ' · ' + cName(x.clientId) : '') });
   for (const x of Store.all('documents')) if ([x.title, x.fileName, x.tags].some((v) => String(v || '').toLowerCase().includes(q))) out.push({ act: 'doc-open', id: x.id, icon: 'folder', t: x.title || x.type, s: 'Document · ' + cName(x.clientId) });
   return out.slice(0, 30);
 }
@@ -5625,7 +5946,7 @@ function armIdle() { clearTimeout(idleT); let m = +firm().idleMinutes; if (S.pla
 ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((ev) => document.addEventListener(ev, () => { if (!$('#lock')) armIdle(); }, { passive: true }));
 
 /* ---------- global event wiring ---------- */
-const FILTER_MAP = { 'data-clf': 'clf', 'data-pf': 'pf', 'data-bf': 'bf', 'data-rf': 'rf', 'data-rv': 'rv', 'data-cf': 'cf', 'data-df': 'df', 'data-sf': 'sf', 'data-dash': 'dash', 'data-rep': 'rep' };
+const FILTER_MAP = { 'data-clf': 'clf', 'data-pf': 'pf', 'data-bf': 'bf', 'data-rf': 'rf', 'data-rv': 'rv', 'data-cf': 'cf', 'data-df': 'df', 'data-nf': 'nf', 'data-sf': 'sf', 'data-dash': 'dash', 'data-rep': 'rep' };
 const refreshSoon = debounce(() => refresh(), 220);
 document.addEventListener('click', (e) => {
   const gr = e.target.closest('#gres button'); if (gr) { $('#gres').hidden = true; $('#gsearch').value = ''; const fn = ACT[gr.dataset.act]; if (fn) fn(gr); return; }
@@ -5668,6 +5989,7 @@ document.addEventListener('change', (e) => {
   if (el.id === 'impFile' && el.files[0]) readImportFile(el.files[0]);
   if (el.id === 'restoreFile' && el.files[0]) { restoreFile(el.files[0]); el.value = ''; }
   if (el.id === 'logoFile' && el.files[0]) setLogo(el.files[0]).catch((err) => toast('Could not read the image', 'bad'));
+  if (el.id === 'sigFile' && el.files[0]) { setSignature(el.files[0], ($('#sigClean') || {}).checked !== false).catch(() => toast('Could not read the image', 'bad')); el.value = ''; }
   for (const attr in FILTER_MAP) if (el.hasAttribute(attr) && (el.type === 'date' || el.type === 'month')) { refresh(); return; }
 });
 document.addEventListener('dragover', (e) => { const z = e.target.closest('#impDz'); if (z) { e.preventDefault(); z.classList.add('over'); } const k = e.target.closest('[data-drop]'); if (k) { e.preventDefault(); k.classList.add('drop'); } });

@@ -1,5 +1,5 @@
 {
- "version": "1.5.2",
- "released": "2026-11-03",
- "notes": "Reconnect this device with the office recovery key."
+ "version": "1.6.0",
+ "released": "2026-11-14",
+ "notes": "Invoice templates, UPI QR, signature, draft PDFs, edit/delete issued invoices with reason, entity-wise KYC, Notes page."
 }
