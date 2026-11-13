@@ -81,7 +81,7 @@ h1 { font-size: 1.6rem; font-weight: 700; } h2 { font-size: 1.15rem; font-weight
 .side { position: sticky; top: 0; height: 100vh; height: 100dvh; background: var(--nav-bg); color: var(--nav-ink); display: flex; flex-direction: column; overflow-y: auto; padding-top: env(safe-area-inset-top, 0px); padding-left: env(safe-area-inset-left, 0px); }
 .brand { display: flex; gap: 10px; align-items: center; padding: 16px 16px 14px; border-bottom: 1px solid var(--nav-bg-2); }
 .brand-mark { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--saffron)); display: grid; place-items: center; color: #fff; font-family: var(--f-display); font-weight: 800; font-size: 15px; flex: none; overflow: hidden; }
-.brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+.brand-mark img { width: 100%; height: 100%; object-fit: contain; background: #fff; padding: 2px; border-radius: inherit; }
 .brand-name { font-family: var(--f-display); font-weight: 700; color: var(--nav-active); font-size: 15px; line-height: 1.15; }
 .brand-sub { font-size: 11px; color: var(--nav-muted); }
 .nav { padding: 10px 8px; display: flex; flex-direction: column; gap: 1px; }
@@ -547,7 +547,7 @@ h1 { font-size: 1.45rem; font-weight: 650; } h2 { font-size: 1rem; font-weight: 
 .cs-sheet h2, .cs-sheet h3 { color: var(--pk); }
 .cs-sub { color: var(--pm); font-size: 11.5px; margin-top: 1px; }
 .cs-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; border-bottom: 2px solid #0f1b2d; padding-bottom: 14px; }
-.cs-firm { display: flex; gap: 12px; align-items: center; } .cs-firm img, .cs-mark { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
+.cs-firm { display: flex; gap: 12px; align-items: center; } .cs-firm img, .cs-mark { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; } .cs-firm img { width: auto; max-width: 110px; object-fit: contain; border-radius: 0; }
 .cs-mark { display: grid; place-items: center; background: #0f1b2d; color: #fff; font-weight: 700; }
 .cs-firm b { font-size: 15px; }
 .cs-title { text-align: right; display: grid; gap: 2px; } .cs-title span { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--pb); font-weight: 700; } .cs-title b { font-size: 15px; }
@@ -3369,30 +3369,45 @@ async function invoicePDF(list, opts) {
     if (draft) mark('DRAFT'); else if (cancelled) mark('CANCELLED');
     const firmLines = [fm.address, [fm.phone, fm.email].filter(Boolean).join('  |  '), [fm.gstin ? 'GSTIN: ' + fm.gstin : '', fm.pan ? 'PAN: ' + fm.pan : '', fm.frn ? 'FRN: ' + fm.frn : ''].filter(Boolean).join('  |  ')].filter(Boolean).map(pdfSafe);
     const logo = CU.logo !== false && imgOk(fm.logo) ? fm.logo : ''; let y;
+    // logo keeps its own proportions: fit inside a box, never stretched or squashed
+    let LP = null; if (logo) { try { const pr = doc.getImageProperties(logo); if (pr.width && pr.height) LP = pr; } catch (e) { /* bad logo */ } }
+    const fitLogo = (maxW, maxH) => { if (!LP) return { w: 0, h: 0 }; const r = Math.min(maxW / LP.width, maxH / LP.height); return { w: LP.width * r, h: LP.height * r }; };
+    const putLogo = (x, yy, f) => { try { doc.addImage(logo, imgFmt(logo), x, yy, f.w, f.h, undefined, 'SLOW'); } catch (e) { /* bad logo */ } };
+    // break firm lines at the “|” separators (never mid-number) when a line is too wide
+    const smartLines = (lines, width) => lines.flatMap((ln) => { if (doc.getTextWidth(ln) <= width) return [ln]; const parts = ln.split(/\s+\|\s+/); const out = []; let cur = '';
+      parts.forEach((pt) => { const t = cur ? cur + '  |  ' + pt : pt; if (cur && doc.getTextWidth(t) > width) { out.push(cur); cur = pt; } else cur = t; }); if (cur) out.push(cur); return out.flatMap((x) => doc.getTextWidth(x) > width ? doc.splitTextToSize(x, width) : [x]); });
+    const LH = 13 * ZS, NH = 18 * ZS; // address line height, firm-name block height
     // ----- header -----
     if (tplKey === 'modern') {
-      doc.setFillColor(A[0], A[1], A[2]); doc.rect(0, 0, W, 96, 'F'); let x = M;
-      if (logo) { doc.setFillColor(255, 255, 255); doc.roundedRect(M, 22, 52, 52, 6, 6, 'F'); try { doc.addImage(logo, imgFmt(logo), M + 4, 26, 44, 44); } catch (e) { /* bad logo */ } x = M + 64; }
-      doc.setTextColor(255); font('bold', 16); doc.text(pdfSafe(fm.name || ''), x, 42); font('normal', 8.3); doc.text(doc.splitTextToSize(firmLines.join('\n'), W - x - M - 170), x, 56);
-      font('bold', 15); doc.text(title, W - M, 48, { align: 'right' }); font('normal', 9); doc.text(pdfSafe(no), W - M, 64, { align: 'right' }); ink(); y = 120;
+      const band = 100; doc.setFillColor(A[0], A[1], A[2]); doc.rect(0, 0, W, band, 'F'); let x = M;
+      if (LP) { const f = fitLogo(96, 54); const bw = f.w + 12, bh = f.h + 12, by0 = (band - bh) / 2; doc.setFillColor(255, 255, 255); doc.roundedRect(M, by0, bw, bh, 6, 6, 'F'); putLogo(M + 6, by0 + 6, f); x = M + bw + 14; }
+      font('bold', 15); const tw = Math.max(doc.getTextWidth(title), 90); doc.setTextColor(255); font('normal', 8.3); const fl = smartLines(firmLines, W - x - M - tw - 24); const th = NH + fl.length * LH; const t0 = (band - th) / 2;
+      font('bold', 16); doc.text(pdfSafe(fm.name || ''), x, t0 + 13 * ZS); font('normal', 8.3); fl.forEach((l, i) => doc.text(l, x, t0 + NH + 9 * ZS + i * LH));
+      font('bold', 15); doc.text(title, W - M, t0 + 13 * ZS, { align: 'right' }); font('normal', 9); doc.text(pdfSafe(no), W - M, t0 + NH + 9 * ZS, { align: 'right' }); ink(); y = band + 24;
     } else if (tplKey === 'elegant') {
-      if (logo) { try { doc.addImage(logo, imgFmt(logo), W / 2 - 22, 26, 44, 44); } catch (e) { /* bad logo */ } }
-      const ty = logo ? 88 : 50; acc(); font('bold', 19); doc.text(pdfSafe(fm.name || ''), W / 2, ty, { align: 'center' }); ink(); font('normal', 8.8);
+      let ty = 50; if (LP) { const f = fitLogo(140, 56); putLogo(W / 2 - f.w / 2, 26, f); ty = 26 + f.h + 22; }
+      acc(); font('bold', 19); doc.text(pdfSafe(fm.name || ''), W / 2, ty, { align: 'center' }); ink(); font('normal', 8.8);
       firmLines.forEach((l, i) => doc.text(l, W / 2, ty + 15 + i * 11, { align: 'center' }));
       let ry = ty + 22 + firmLines.length * 11; doc.setDrawColor(A[0], A[1], A[2]); doc.setLineWidth(1.2); doc.line(M, ry, W - M, ry); doc.setLineWidth(0.4); doc.line(M, ry + 3, W - M, ry + 3);
       font('bold', 12.5); acc(); doc.text(title.split('').join(' '), W / 2, ry + 24, { align: 'center' }); ink(); y = ry + 44;
     } else if (tplKey === 'bold') {
       acc(); font('bold', 26); doc.text(title, M, 58); ink(); font('normal', 9); grey(); doc.text(pdfSafe(no), M, 74); ink();
-      let rx = W - M; if (logo) { try { doc.addImage(logo, imgFmt(logo), W - M - 44, 30, 44, 44); } catch (e) { /* bad logo */ } rx = W - M - 54; }
-      font('bold', 12); doc.text(pdfSafe(fm.name || ''), rx, 44, { align: 'right' }); font('normal', 8.2); grey();
-      doc.splitTextToSize(firmLines.join('\n'), 240).forEach((l, i) => doc.text(l, rx, 57 + i * 10, { align: 'right' })); ink(); y = 112;
+      font('bold', 26); const tw = doc.getTextWidth(title); font('normal', 8.2); const fl0 = fitLogo(96, 56); const fl = smartLines(firmLines, Math.max(200, W - 2 * M - tw - 30 - (LP ? fl0.w + 12 : 0))); const th = NH + fl.length * LH;
+      let rx = W - M; const f = fitLogo(96, 56); const bh = Math.max(f.h, th); const t0 = 30 + (bh - th) / 2;
+      if (LP) { putLogo(W - M - f.w, 30 + (bh - f.h) / 2, f); rx = W - M - f.w - 12; }
+      font('bold', 12); doc.text(pdfSafe(fm.name || ''), rx, t0 + 11 * ZS, { align: 'right' }); font('normal', 8.2); grey();
+      fl.forEach((l, i) => doc.text(l, rx, t0 + NH + 8 * ZS + i * LH, { align: 'right' })); ink(); y = Math.max(112, 30 + bh + 26);
     } else {
-      let x = M; if (logo) { try { doc.addImage(logo, imgFmt(logo), M, 30, 48, 48); x = M + 58; } catch (e) { /* bad logo */ } }
-      if (tplKey === 'minimal') ink(); else acc(); font('bold', 15); doc.text(pdfSafe(fm.name || ''), x, 44); ink(); font('normal', 8.5); if (tplKey === 'minimal') grey();
-      const fl = doc.splitTextToSize(firmLines.join('\n'), W - x - M - 170); doc.text(fl, x, 58); ink();
-      if (tplKey === 'minimal') { font('normal', 20); doc.setTextColor(150); doc.text(title.charAt(0) + title.slice(1).toLowerCase(), W - M, 48, { align: 'right' }); ink(); }
-      else { font('bold', 13); acc(); doc.text(title, W - M, 46, { align: 'right' }); ink(); }
-      y = Math.max(92, 62 + fl.length * 10); doc.setDrawColor(tplKey === 'minimal' ? 220 : A[0], tplKey === 'minimal' ? 220 : A[1], tplKey === 'minimal' ? 220 : A[2]); doc.setLineWidth(tplKey === 'minimal' ? 0.5 : 1.4); doc.line(M, y, W - M, y); doc.setLineWidth(0.5); y += 20;
+      const top = 28; let x = M; const f = fitLogo(110, 58); if (LP) x = M + f.w + 14;
+      if (tplKey === 'minimal') font('normal', 20); else font('bold', 13); const tw = doc.getTextWidth(tplKey === 'minimal' ? title.charAt(0) + title.slice(1).toLowerCase() : title);
+      font('normal', 8.5); const fl = smartLines(firmLines, W - x - M - tw - 24);
+      const th = NH + fl.length * LH; const bh = Math.max(f.h, th); const t0 = top + (bh - th) / 2;
+      if (LP) putLogo(M, top + (bh - f.h) / 2, f);
+      if (tplKey === 'minimal') ink(); else acc(); font('bold', 15); doc.text(pdfSafe(fm.name || ''), x, t0 + 12 * ZS); ink(); font('normal', 8.5); if (tplKey === 'minimal') grey();
+      fl.forEach((l, i) => doc.text(l, x, t0 + NH + 8 * ZS + i * LH)); ink();
+      if (tplKey === 'minimal') { font('normal', 20); doc.setTextColor(150); doc.text(title.charAt(0) + title.slice(1).toLowerCase(), W - M, t0 + 14 * ZS, { align: 'right' }); ink(); }
+      else { font('bold', 13); acc(); doc.text(title, W - M, t0 + 12 * ZS, { align: 'right' }); ink(); }
+      y = top + bh + 14; doc.setDrawColor(tplKey === 'minimal' ? 220 : A[0], tplKey === 'minimal' ? 220 : A[1], tplKey === 'minimal' ? 220 : A[2]); doc.setLineWidth(tplKey === 'minimal' ? 0.5 : 1.4); doc.line(M, y, W - M, y); doc.setLineWidth(0.5); y += 20;
     }
     // ----- bill to + document details -----
     const meta = [['Number', no], ['Date', C.fmtDate(inv.date)], ...(inv.dueDate && inv.type !== 'credit' && !cancelled ? [['Due date', C.fmtDate(inv.dueDate)]] : []), ['Place of supply', (C.STATES[inv.placeOfSupply] || '') + (inv.placeOfSupply ? ' (' + inv.placeOfSupply + ')' : '')], ...(inv.refInvoiceNo ? [['Against invoice', inv.refInvoiceNo]] : []), ...(inv.treatment === 'rcm' ? [['Reverse charge', 'Yes']] : []), ...(c.poNo || inv.poNo ? [['PO / reference', inv.poNo || c.poNo]] : [])];
@@ -3455,7 +3470,7 @@ async function invoicePDF(list, opts) {
     if (qrS) { pdfQR(doc, qrText, M, y + 2, qrS); font('normal', 6.8); grey(); doc.text('Scan with any UPI app', M + qrS / 2, y + qrS + 12, { align: 'center' }); ink(); }
     blocks.forEach(([k, lines]) => { font('bold', 7.4); grey(); doc.text(k.toUpperCase(), bx, by + 4); ink(); font('normal', 8.4); doc.text(lines, bx, by + 15); by += 12 + lines.length * 10.2 + 6; });
     const sx = W - M; font('bold', 9); doc.text(pdfSafe('For ' + (fm.name || '')), sx, y + 4, { align: 'right' }); font('normal', 8); grey(); doc.text(fm.firmType || 'Chartered Accountants', sx, y + 15, { align: 'right' }); ink();
-    if (sig) { try { const p = doc.getImageProperties(sig); const sh = 38, sw = Math.min(150, sh * p.width / p.height); doc.addImage(sig, imgFmt(sig), sx - sw, y + 22, sw, sh); } catch (e) { /* bad image */ } }
+    if (sig) { try { const p = doc.getImageProperties(sig); const rr = Math.min(150 / p.width, 40 / p.height); const sw = p.width * rr, sh = p.height * rr; doc.addImage(sig, imgFmt(sig), sx - sw, y + 22 + (40 - sh) / 2, sw, sh); } catch (e) { /* bad image */ } }
     else if (draft) { font('normal', 7.5); grey(); doc.text('(draft - not signed)', sx, y + 44, { align: 'right' }); ink(); }
     font('normal', 8.4); doc.text(pdfSafe((fm.partner || 'Partner') + (fm.membershipNo ? '  |  M. No. ' + fm.membershipNo : '')), sx, y + 72, { align: 'right' }); grey(); doc.text(pdfSafe(CU.signLabel || 'Authorised signatory'), sx, y + 83, { align: 'right' }); ink();
     if (thanks) { const ty = Math.max(by, y + (qrS ? qrS + 18 : 0), y + 92) + 14; font('italic', 9); acc(); doc.text(pdfSafe(thanks).slice(0, 110), W / 2, ty, { align: 'center' }); ink(); }
@@ -5543,7 +5558,7 @@ const ADMIN = {
       fld({ k: 'phone', label: 'Phone', v: fm.phone }) + fld({ k: 'email', label: 'Email', v: fm.email }) + fld({ k: 'website', label: 'Website', v: fm.website }) +
       fld({ k: 'gstin', label: 'Firm GSTIN', v: fm.gstin, mono: 1 }) + fld({ k: 'pan', label: 'Firm PAN', v: fm.pan, mono: 1 }) + fld({ k: 'fyDefault', label: 'Default financial year', type: 'select', options: opts(fyOptions(), fm.fyDefault || C.fyOf(today())) }) +
       '</form><div class="btn-row"><button class="btn pri" data-act="cfg-save" data-f="firm">Save firm profile</button></div>' +
-      '<div class="sect"><h3>Logo</h3><div class="btn-row">' + (fm.logo ? '<img src="' + esc(fm.logo) + '" alt="Firm logo" style="height:56px;border-radius:8px;border:1px solid var(--line)">' : '<span class="muted">No logo</span>') + '<label class="btn sm">' + ico('upload') + ' Choose PNG or JPG<input type="file" id="logoFile" accept="image/png,image/jpeg" hidden></label>' + (fm.logo ? '<button class="btn sm danger" data-act="logo-rm">Remove</button>' : '') + '</div><div class="hint muted" style="font-size:12px">Shown in the sidebar and on invoices. It is resized to 256 px.</div></div>' +
+      '<div class="sect"><h3>Logo</h3><div class="btn-row">' + (fm.logo ? '<img src="' + esc(fm.logo) + '" alt="Firm logo" style="height:56px;border-radius:8px;border:1px solid var(--line)">' : '<span class="muted">No logo</span>') + '<label class="btn sm">' + ico('upload') + ' Choose PNG or JPG<input type="file" id="logoFile" accept="image/png,image/jpeg" hidden></label>' + (fm.logo ? '<button class="btn sm danger" data-act="logo-rm">Remove</button>' : '') + '</div><div class="hint muted" style="font-size:12px">Shown in the sidebar and on invoices. Keeps its proportions; best as a PNG with a transparent or white background, at least 400 px wide.</div></div>' +
       '<div class="sect"><h3>Theme colour</h3><div class="btn-row">' + ACCENTS.map(([c, l]) => '<button class="sw' + ((th.accent || '#23479b') === c ? ' on' : '') + '" style="background:' + c + '" data-act="accent" data-c="' + c + '" title="' + l + '" aria-label="' + l + '"></button>').join('') + '</div><div class="hint muted" style="font-size:12px">Light, dark or system mode is a personal setting in the top bar.</div></div>';
   },
   billing() {
@@ -5636,6 +5651,7 @@ const ADMIN = {
 };
 /* ---------- app updates ---------- */
 const RELEASE_NOTES = [
+  ['1.6.3', 'Invoice logo keeps its true proportions (no squashing) and is vertically aligned with the firm name and address; firm details wrap only at the | separators; sharper logo upload (up to 600 px); signature also keeps its proportions.'],
   ['1.6.2', 'Customise any invoice template: accent colour, font, text size, invoice title, SAC / qty columns, show or hide logo, amount in words, bank & UPI, QR and signature, text under the signature and a closing line — with preview and reset.'],
   ['1.6.1', 'UPI QR type option: amount due pre-filled, or a plain QR where the client enters the amount.'],
   ['1.6.0', 'Five invoice templates (Classic, Modern, Minimal, Elegant, Bold) with PDF preview; compact invoice layout that ends right after the content; UPI scan-to-pay QR; Signature tab; draft PDFs marked DRAFT; edit or delete issued invoices with a recorded reason; SAC optional; “GSTIN: Unregistered”; KYC fields shown by entity type with blank inputs; single CIN / LLPIN / Reg. No column; no compliance tasks before incorporation or GST registration; new Notes page under Work.'],
@@ -5675,7 +5691,7 @@ ADMIN.updates = function () {
     '<div class="sect"><h3>What’s new</h3>' + RELEASE_NOTES.map(([v, n]) => '<div style="font-size:13px"><b>' + v + '</b> — ' + esc(n) + '</div>').join('') + '</div>';
 };
 ACT['upd-apply'] = () => applyUpdate();
-const APP_VERSION = '1.6.2';
+const APP_VERSION = '1.6.3';
 ACT['cfg-save'] = async () => {
   const form = $('[data-cfgform="firm"]'); if (!form) return; const patch = {};
   $$('[data-k]', form).forEach((el) => { const v = el.type === 'checkbox' ? el.checked : el.value.trim(); setPath(patch, el.dataset.k, el.classList.contains('mono') && typeof v === 'string' ? v.toUpperCase() : v); });
@@ -5745,9 +5761,9 @@ async function setLogo(file) {
   if (!/^image\/(png|jpeg)$/.test(file.type)) return toast('Choose a PNG or JPG image', 'bad');
   const url = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = rej; fr.readAsDataURL(file); });
   const img = new Image(); await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
-  const s = Math.min(1, 256 / Math.max(img.width, img.height)); const cv = document.createElement('canvas'); cv.width = Math.round(img.width * s); cv.height = Math.round(img.height * s); cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+  const s = Math.min(1, 600 / Math.max(img.width, img.height)); const cv = document.createElement('canvas'); cv.width = Math.round(img.width * s); cv.height = Math.round(img.height * s); cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
   const out = cv.toDataURL(file.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.88);
-  if (out.length > 120000) return toast('Logo is too detailed. Use a simpler image.', 'bad');
+  if (out.length > 350000) return toast('Logo is too detailed. Use a simpler image.', 'bad');
   await Store.saveCfg('firm', { logo: out }, 'Logo updated'); toast('Logo saved');
 }
 ACT['svc-new'] = () => svcForm(null);

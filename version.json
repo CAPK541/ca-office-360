@@ -1,5 +1,5 @@
 {
- "version": "1.6.2",
+ "version": "1.6.3",
  "released": "2026-11-14",
- "notes": "Customise invoice templates; UPI QR with amount due or plain."
+ "notes": "Logo on invoices keeps its proportions and is aligned with the firm details."
 }
