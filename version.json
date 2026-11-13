@@ -1,5 +1,5 @@
 {
- "version": "1.6.0",
+ "version": "1.6.2",
  "released": "2026-11-14",
- "notes": "Invoice templates, UPI QR, signature, draft PDFs, edit/delete issued invoices with reason, entity-wise KYC, Notes page."
+ "notes": "Customise invoice templates; UPI QR with amount due or plain."
 }

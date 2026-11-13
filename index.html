@@ -3355,18 +3355,20 @@ async function invoicePDF(list, opts) {
   opts = opts || {};
   const JsPDF = await pdfLib(); const fm = Object.assign({}, firm(), opts.firm || {}); const doc = new JsPDF({ unit: 'pt', format: 'a4' }); const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
   const tplKey = INV_TEMPLATES[opts.template || fm.invTemplate] ? (opts.template || fm.invTemplate) : 'classic'; const T = INV_TEMPLATES[tplKey];
-  const A = INV_ACCENTS[opts.accent !== undefined ? opts.accent : fm.invAccent] || T.accent; const F = T.font; const M = 40;
+  const CU = Object.assign({}, (fm.invTplCustom || {})[tplKey] || {}, opts.custom || {}); const hex = (h) => /^#[0-9a-f]{6}$/i.test(h || '') ? [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)) : null;
+  const A = hex(CU.accent) || INV_ACCENTS[opts.accent !== undefined ? opts.accent : fm.invAccent] || T.accent; const F = ['helvetica', 'times', 'courier'].includes(CU.font) ? CU.font : T.font; const M = 40;
+  const ZS = { compact: 0.92, large: 1.1 }[CU.size] || 1;
   const ink = () => doc.setTextColor(25, 28, 33); const grey = () => doc.setTextColor(105, 112, 122); const acc = () => doc.setTextColor(A[0], A[1], A[2]);
-  const font = (st, sz) => { doc.setFont(F, st); if (sz) doc.setFontSize(sz); };
+  const font = (st, sz) => { doc.setFont(F, st); if (sz) doc.setFontSize(sz * ZS); };
   const mark = (txt) => { try { doc.saveGraphicsState(); doc.setGState(new doc.GState({ opacity: 0.07 })); font('bold', 96); doc.setTextColor(0); doc.text(txt, W / 2, H / 2 + 40, { align: 'center', angle: 35 }); doc.restoreGraphicsState(); } catch (e) { /* older viewers */ } ink(); };
   list.forEach((inv, idx) => {
     if (idx) doc.addPage(); const startPage = doc.getNumberOfPages();
     const c = inv._client || Store.get('clients', inv.clientId) || {}; const t = inv.totals; const draft = inv.status === 'draft'; const cancelled = inv.status === 'cancelled';
-    const base = { invoice: fm.gstRegistered === false ? 'INVOICE' : 'TAX INVOICE', credit: 'CREDIT NOTE', debit: 'DEBIT NOTE', proforma: 'ESTIMATE / PROFORMA', opening: 'OPENING BALANCE' }[inv.type || 'invoice'];
+    const base = { invoice: CU.title ? String(CU.title).toUpperCase().slice(0, 30) : fm.gstRegistered === false ? 'INVOICE' : 'TAX INVOICE', credit: 'CREDIT NOTE', debit: 'DEBIT NOTE', proforma: 'ESTIMATE / PROFORMA', opening: 'OPENING BALANCE' }[inv.type || 'invoice'];
     const title = draft ? 'DRAFT ' + base : base; const no = inv.no || ('DRAFT-' + String(inv.id || '').replace(/^in_/, '').slice(-6).toUpperCase());
     if (draft) mark('DRAFT'); else if (cancelled) mark('CANCELLED');
     const firmLines = [fm.address, [fm.phone, fm.email].filter(Boolean).join('  |  '), [fm.gstin ? 'GSTIN: ' + fm.gstin : '', fm.pan ? 'PAN: ' + fm.pan : '', fm.frn ? 'FRN: ' + fm.frn : ''].filter(Boolean).join('  |  ')].filter(Boolean).map(pdfSafe);
-    const logo = imgOk(fm.logo) ? fm.logo : ''; let y;
+    const logo = CU.logo !== false && imgOk(fm.logo) ? fm.logo : ''; let y;
     // ----- header -----
     if (tplKey === 'modern') {
       doc.setFillColor(A[0], A[1], A[2]); doc.rect(0, 0, W, 96, 'F'); let x = M;
@@ -3405,12 +3407,12 @@ async function invoicePDF(list, opts) {
     y = Math.max(y, my) + 10;
     // ----- items -----
     const noGst = ['exempt', 'nongst', 'lut'].includes(inv.treatment) || fm.gstRegistered === false;
-    const items = inv.items || []; const showSac = items.some((it) => it.sac); const showDisc = items.some((it) => it.discount); const showQty = items.some((it) => Number(it.qty) !== 1);
+    const items = inv.items || []; const showSac = CU.sac === 'always' || (CU.sac !== 'hide' && items.some((it) => it.sac)); const showDisc = items.some((it) => it.discount); const showQty = CU.qty === 'always' || items.some((it) => Number(it.qty) !== 1);
     const cols = [['#', (it, i) => String(i + 1), { cellWidth: 20 }], ['Description of service', (it) => pdfSafe(it.desc || '')], ...(showSac ? [['SAC', (it) => it.sac || '', { cellWidth: 46 }]] : []), ...(showQty ? [['Qty', (it) => String(it.qty), { halign: 'right', cellWidth: 32 }], ['Rate', (it) => C.fmtINR(it.rate, { noSym: true }), { halign: 'right', cellWidth: 70 }]] : []),
       ...(showDisc ? [['Discount', (it) => it.discount ? C.fmtINR(it.discount, { noSym: true }) : '', { halign: 'right', cellWidth: 62 }]] : []), ...(noGst ? [] : [['GST', (it) => it.gstRate + '%', { halign: 'right', cellWidth: 36 }]]), ['Amount', (it) => C.fmtINR(Math.round(it.qty * it.rate) - (it.discount || 0), { noSym: true }), { halign: 'right', cellWidth: 78 }]];
     const colStyles = {}; cols.forEach((cl, i) => { if (cl[2]) colStyles[i] = cl[2]; });
     const head = { fillColor: tplKey === 'minimal' || tplKey === 'elegant' ? [255, 255, 255] : A, textColor: tplKey === 'minimal' ? 90 : tplKey === 'elegant' ? A : 255, fontStyle: 'bold', lineWidth: tplKey === 'minimal' || tplKey === 'elegant' ? { bottom: 0.8 } : 0, lineColor: tplKey === 'elegant' ? A : [190, 190, 190] };
-    doc.autoTable({ startY: y, head: [cols.map((cl) => cl[0])], body: items.map((it, i) => cols.map((cl) => cl[1](it, i))), theme: T.table, styles: { font: F, fontSize: 8.6, cellPadding: { top: 5, bottom: 5, left: 5, right: 5 }, textColor: [25, 28, 33], lineColor: [222, 226, 232], lineWidth: T.table === 'grid' ? 0.5 : 0 },
+    doc.autoTable({ startY: y, head: [cols.map((cl) => cl[0])], body: items.map((it, i) => cols.map((cl) => cl[1](it, i))), theme: T.table, styles: { font: F, fontSize: 8.6 * ZS, cellPadding: { top: 5, bottom: 5, left: 5, right: 5 }, textColor: [25, 28, 33], lineColor: [222, 226, 232], lineWidth: T.table === 'grid' ? 0.5 : 0 },
       headStyles: head, alternateRowStyles: T.table === 'striped' ? { fillColor: [246, 248, 251] } : {}, bodyStyles: T.table === 'plain' ? { lineWidth: { bottom: 0.4 }, lineColor: [228, 228, 228] } : {}, columnStyles: colStyles, margin: { left: M, right: M, top: 52, bottom: 44 }, didParseCell: (d) => { const cs = colStyles[d.column.index]; if (d.section === 'head' && cs && cs.halign) d.cell.styles.halign = cs.halign; } });
     y = doc.lastAutoTable.finalY + 12;
     // ----- totals (right) + amount in words (left) -----
@@ -3422,8 +3424,9 @@ async function invoicePDF(list, opts) {
     font('normal', 8.6); tot.forEach(([k, v]) => { grey(); doc.text(k, tx0, y + 4); ink(); doc.text(C.fmtINR(v, { noSym: true }), W - M, y + 4, { align: 'right' }); y += 13.5; });
     if (tplKey === 'minimal' || tplKey === 'elegant') { doc.setDrawColor(150); doc.line(tx0, y - 2, W - M, y - 2); } else { doc.setFillColor(A[0], A[1], A[2]); doc.rect(tx0 - 6, y - 4, 206, 22, 'F'); doc.setTextColor(255); }
     font('bold', 10.5); doc.text('Total (Rs.)', tx0, y + 11); doc.text(C.fmtINR(t.total, { noSym: true }), W - M - 4, y + 11, { align: 'right' }); ink(); y += 26;
-    let ly = ty0; font('bold', 7.6); grey(); doc.text('AMOUNT IN WORDS', M, ly + 4); ink(); font('normal', 8.6);
-    const words = doc.splitTextToSize(pdfSafe(C.inWords(t.total)), tx0 - M - 24); doc.text(words, M, ly + 17); ly += 17 + words.length * 10.5;
+    let ly = ty0;
+    if (CU.words !== false) { font('bold', 7.6); grey(); doc.text('AMOUNT IN WORDS', M, ly + 4); ink(); font('normal', 8.6); const words = doc.splitTextToSize(pdfSafe(C.inWords(t.total)), tx0 - M - 24); doc.text(words, M, ly + 17); ly += 17 + words.length * 10.5; }
+    font('normal', 8.6);
     const notesL = [];
     if (inv.treatment === 'rcm') notesL.push('Tax of Rs. ' + C.fmtINR(t.rcmTax, { noSym: true }) + ' is payable by the recipient under reverse charge.');
     if (inv.treatment === 'lut') notesL.push('Supply meant for export / SEZ under LUT without payment of IGST.');
@@ -3436,16 +3439,16 @@ async function invoicePDF(list, opts) {
     // ----- payment details + QR (left) and signature (right), placed right after the content -----
     const li = (D().ledger.inv || {})[inv.id] || {}; const due = Math.max(0, (t.total || 0) - (li.settled || 0));
     const payable = !cancelled && inv.type !== 'credit' && due > 0;
-    const qrText = payable && fm.upiQr !== false ? upiLink(fm, due, no) : '';
+    const qrAmt = fm.upiQrMode !== 'plain'; const qrText = payable && fm.upiQr !== false && CU.qr !== false ? upiLink(fm, qrAmt ? due : 0, qrAmt ? no : '') : '';
     const left = [];
-    if (fm.bankName && payable) left.push(['Bank details', [fm.bankName + (fm.bankBranch ? ', ' + fm.bankBranch : ''), 'A/c ' + (fm.bankAc || '') + (fm.ifsc ? '   IFSC ' + fm.ifsc : ''), fm.bankAcName ? 'A/c name: ' + fm.bankAcName : ''].filter(Boolean).join('\n')]);
-    if (fm.upi && payable) left.push(['UPI', fm.upi + (qrText ? '  (scan the QR to pay Rs. ' + C.fmtINR(due, { noSym: true }) + ')' : '')]);
+    if (fm.bankName && payable && CU.bank !== false) left.push(['Bank details', [fm.bankName + (fm.bankBranch ? ', ' + fm.bankBranch : ''), 'A/c ' + (fm.bankAc || '') + (fm.ifsc ? '   IFSC ' + fm.ifsc : ''), fm.bankAcName ? 'A/c name: ' + fm.bankAcName : ''].filter(Boolean).join('\n')]);
+    if (fm.upi && payable && CU.bank !== false) left.push(['UPI', fm.upi + (qrText ? (qrAmt ? '  (scan the QR to pay Rs. ' + C.fmtINR(due, { noSym: true }) + ')' : '  (scan the QR to pay)') : '')]);
     if (inv.notes) left.push(['Notes', inv.notes]); if (inv.terms) left.push(['Terms', inv.terms]); if (inv.reason) left.push(['Reason', inv.reason]);
     const qrS = qrText ? 76 : 0; const lw = W - 2 * M - 190 - (qrS ? qrS + 16 : 0);
     font('normal', 8.4); const blocks = left.map(([k, v]) => [k, doc.splitTextToSize(pdfSafe(v), lw)]);
     const leftH = blocks.reduce((s, b) => s + 12 + b[1].length * 10.2 + 6, 0);
-    const sig = !draft && !cancelled && fm.sigOnPdf !== false && imgOk(fm.signature) ? fm.signature : '';
-    const blockH = Math.max(leftH, qrS ? qrS + 18 : 0, 92);
+    const sig = !draft && !cancelled && fm.sigOnPdf !== false && CU.sig !== false && imgOk(fm.signature) ? fm.signature : '';
+    const thanks = String(CU.thanks || '').trim(); const blockH = Math.max(leftH, qrS ? qrS + 18 : 0, 92) + (thanks ? 26 : 0);
     if (y + blockH > H - 44) { doc.addPage(); y = 56; }
     y += 6; doc.setDrawColor(228); doc.setLineWidth(0.5); doc.line(M, y - 6, W - M, y - 6); y += 8;
     let by = y; const bx = M + (qrS ? qrS + 16 : 0);
@@ -3454,7 +3457,8 @@ async function invoicePDF(list, opts) {
     const sx = W - M; font('bold', 9); doc.text(pdfSafe('For ' + (fm.name || '')), sx, y + 4, { align: 'right' }); font('normal', 8); grey(); doc.text(fm.firmType || 'Chartered Accountants', sx, y + 15, { align: 'right' }); ink();
     if (sig) { try { const p = doc.getImageProperties(sig); const sh = 38, sw = Math.min(150, sh * p.width / p.height); doc.addImage(sig, imgFmt(sig), sx - sw, y + 22, sw, sh); } catch (e) { /* bad image */ } }
     else if (draft) { font('normal', 7.5); grey(); doc.text('(draft - not signed)', sx, y + 44, { align: 'right' }); ink(); }
-    font('normal', 8.4); doc.text(pdfSafe((fm.partner || 'Partner') + (fm.membershipNo ? '  |  M. No. ' + fm.membershipNo : '')), sx, y + 72, { align: 'right' }); grey(); doc.text('Authorised signatory', sx, y + 83, { align: 'right' }); ink();
+    font('normal', 8.4); doc.text(pdfSafe((fm.partner || 'Partner') + (fm.membershipNo ? '  |  M. No. ' + fm.membershipNo : '')), sx, y + 72, { align: 'right' }); grey(); doc.text(pdfSafe(CU.signLabel || 'Authorised signatory'), sx, y + 83, { align: 'right' }); ink();
+    if (thanks) { const ty = Math.max(by, y + (qrS ? qrS + 18 : 0), y + 92) + 14; font('italic', 9); acc(); doc.text(pdfSafe(thanks).slice(0, 110), W / 2, ty, { align: 'center' }); ink(); }
     // footer, page numbers and the template's page decoration on every page of this document
     const endPage = doc.getNumberOfPages(); const pages = endPage - startPage + 1;
     for (let pg = startPage; pg <= endPage; pg++) {
@@ -5552,18 +5556,19 @@ const ADMIN = {
       '<div class="span-all sect" style="margin:6px 0 0"><h3>Payment details printed on invoices</h3></div>' +
       fld({ k: 'bankName', label: 'Bank name & branch', v: fm.bankName }) + fld({ k: 'bankAcName', label: 'Account name', v: fm.bankAcName }) + fld({ k: 'bankAc', label: 'Account number', v: fm.bankAc, mono: 1 }) + fld({ k: 'ifsc', label: 'IFSC', v: fm.ifsc, mono: 1 }) +
       fld({ k: 'upi', label: 'UPI ID', v: fm.upi, hint: 'e.g. yourfirm@okicici — shown with a scan-to-pay QR' }) + fld({ k: 'upiName', label: 'UPI payee name', v: fm.upiName, hint: 'Name shown in the payer’s UPI app (defaults to firm name)' }) +
-      fld({ k: 'upiQr', label: 'Print UPI QR code on invoices (amount pre-filled with the balance due)', type: 'check', v: fm.upiQr !== false, cls: 'span-all' }) +
+      fld({ k: 'upiQr', label: 'Print UPI QR code on invoices', type: 'check', v: fm.upiQr !== false }) +
+      fld({ k: 'upiQrMode', label: 'UPI QR type', type: 'select', options: opts([['due', 'With amount due pre-filled'], ['plain', 'Plain QR (client enters the amount)']], fm.upiQrMode || 'due'), hint: 'Plain QR works for any amount, including part payments' }) + '<div></div>' +
       fld({ k: 'terms', label: 'Default terms and conditions', type: 'textarea', v: fm.terms, cls: 'span-all', rows: 3, ph: 'Payment within 15 days. Interest may be charged on delayed payment. Subject to Hyderabad jurisdiction.' }) + '</form><div class="btn-row"><button class="btn pri" data-act="cfg-save" data-f="firm">Save invoicing settings</button></div>' +
       '<div class="muted" style="font-size:12.5px">Numbers are assigned only when a document is issued, in date order of issue, and never reused. GST rules limit invoice numbers to 16 characters using letters, digits, “/” and “-”. Tax rates are set per service and per invoice line; changing a default does not change issued invoices.</div>';
   },
   templates() {
     const fm = firm(); const cur = INV_TEMPLATES[fm.invTemplate] ? fm.invTemplate : 'classic';
-    const mock = (k) => { const a = 'rgb(' + (INV_ACCENTS[fm.invAccent] || INV_TEMPLATES[k].accent).join(',') + ')';
+    const mock = (k) => { const ca = (((fm.invTplCustom || {})[k] || {}).accent) || ''; const a = /^#[0-9a-f]{6}$/i.test(ca) ? ca : 'rgb(' + (INV_ACCENTS[fm.invAccent] || INV_TEMPLATES[k].accent).join(',') + ')';
       const hd = { classic: '<div class="tm-h" style="border-bottom:2px solid ' + a + '"><i style="background:' + a + ';width:45%"></i><i style="background:' + a + ';width:22%;margin-left:auto"></i></div>', modern: '<div class="tm-h" style="background:' + a + ';margin:-10px -10px 6px;padding:12px 10px"><i style="background:#fff;width:45%"></i><i style="background:#fff;width:22%;margin-left:auto"></i></div>', minimal: '<div class="tm-h" style="border-bottom:1px solid #ddd"><i style="background:#333;width:40%"></i><i style="background:#bbb;width:18%;margin-left:auto"></i></div>', elegant: '<div class="tm-h" style="flex-direction:column;align-items:center;border-bottom:3px double ' + a + '"><i style="background:' + a + ';width:50%"></i><i style="background:#999;width:30%;height:3px"></i></div>', bold: '<div class="tm-h" style="border-left:5px solid ' + a + ';margin-left:-10px;padding-left:8px"><i style="background:' + a + ';width:55%;height:9px"></i><i style="background:#999;width:20%;margin-left:auto"></i></div>' }[k];
       const th = k === 'minimal' || k === 'elegant' ? 'border-bottom:1px solid ' + (k === 'elegant' ? a : '#999') : 'background:' + a;
       return '<div class="tm">' + hd + '<div class="tm-row"><i style="width:35%"></i><i style="width:25%;margin-left:auto"></i></div><div class="tm-t" style="' + th + '"></div>' + [1, 2, 3].map((n) => '<div class="tm-r' + ((k === 'modern' || k === 'bold') && n % 2 ? ' z' : '') + '"></div>').join('') + '<div class="tm-tot" style="background:' + (k === 'minimal' || k === 'elegant' ? '#ccc' : a) + '"></div><div class="tm-f"><b class="qr"></b><i style="width:30%;margin-left:auto"></i></div></div>'; };
     return '<div class="muted" style="font-size:13px">Choose how your invoices, notes and estimates look. Every template carries the same GST details; only the design changes. Preview opens a sample PDF with demo data.</div>' +
-      '<div class="tplgrid">' + Object.entries(INV_TEMPLATES).map(([k, t]) => '<div class="tplc' + (k === cur ? ' on' : '') + '">' + mock(k) + '<div class="tplc-b"><div class="strong">' + esc(t.name) + (k === cur ? ' ' + badge('In use', 'green') : '') + '</div><div class="sub">' + esc(t.desc) + '</div><div class="btn-row" style="margin-top:8px">' + (k === cur ? '' : '<button class="btn xs pri" data-act="inv-tpl" data-t="' + k + '">Use this</button>') + '<button class="btn xs" data-act="inv-tpl-prev" data-t="' + k + '">' + ico('download') + ' Preview PDF</button></div></div></div>').join('') + '</div>' +
+      '<div class="tplgrid">' + Object.entries(INV_TEMPLATES).map(([k, t]) => '<div class="tplc' + (k === cur ? ' on' : '') + '">' + mock(k) + '<div class="tplc-b"><div class="strong">' + esc(t.name) + (k === cur ? ' ' + badge('In use', 'green') : '') + '</div><div class="sub">' + esc(t.desc) + '</div><div class="btn-row" style="margin-top:8px">' + (k === cur ? '' : '<button class="btn xs pri" data-act="inv-tpl" data-t="' + k + '">Use this</button>') + '<button class="btn xs" data-act="inv-tpl-edit" data-t="' + k + '">' + ico('edit') + ' Customise</button><button class="btn xs" data-act="inv-tpl-prev" data-t="' + k + '">' + ico('download') + ' Preview</button></div>' + (tplCustomised(k) ? '<div class="sub" style="margin-top:6px">✎ Customised</div>' : '') + '</div></div>').join('') + '</div>' +
       '<form class="grid g3" data-cfgform="firm" onsubmit="return false">' + fld({ k: 'invAccent', label: 'Accent colour', type: 'select', options: Object.keys(INV_ACCENTS).map((k) => opt(k, k ? k.charAt(0).toUpperCase() + k.slice(1) : INV_ACCENTS[''], fm.invAccent || '')).join('') }) +
       fld({ k: 'firmType', label: 'Line under the firm name at the signature', v: fm.firmType || 'Chartered Accountants' }) + fld({ k: 'footerNote', label: 'Footer note (optional)', v: fm.footerNote, ph: 'e.g. Subject to Hyderabad jurisdiction' }) +
       '</form><div class="btn-row"><button class="btn pri" data-act="cfg-save" data-f="firm">Save</button></div>';
@@ -5631,6 +5636,8 @@ const ADMIN = {
 };
 /* ---------- app updates ---------- */
 const RELEASE_NOTES = [
+  ['1.6.2', 'Customise any invoice template: accent colour, font, text size, invoice title, SAC / qty columns, show or hide logo, amount in words, bank & UPI, QR and signature, text under the signature and a closing line — with preview and reset.'],
+  ['1.6.1', 'UPI QR type option: amount due pre-filled, or a plain QR where the client enters the amount.'],
   ['1.6.0', 'Five invoice templates (Classic, Modern, Minimal, Elegant, Bold) with PDF preview; compact invoice layout that ends right after the content; UPI scan-to-pay QR; Signature tab; draft PDFs marked DRAFT; edit or delete issued invoices with a recorded reason; SAC optional; “GSTIN: Unregistered”; KYC fields shown by entity type with blank inputs; single CIN / LLPIN / Reg. No column; no compliance tasks before incorporation or GST registration; new Notes page under Work.'],
   ['1.5.2', 'Reconnect this device can now use the office recovery key (and set a new password) when the password from the other device is not known.'],
   ['1.5.1', 'Fix: a second device (e.g. phone) now signs in with the office password instead of creating its own key; a device that already has a different key shows “Reconnect this device” and merges its changes; opening encrypted Drive data on a new device no longer fails.'],
@@ -5668,7 +5675,7 @@ ADMIN.updates = function () {
     '<div class="sect"><h3>What’s new</h3>' + RELEASE_NOTES.map(([v, n]) => '<div style="font-size:13px"><b>' + v + '</b> — ' + esc(n) + '</div>').join('') + '</div>';
 };
 ACT['upd-apply'] = () => applyUpdate();
-const APP_VERSION = '1.6.0';
+const APP_VERSION = '1.6.2';
 ACT['cfg-save'] = async () => {
   const form = $('[data-cfgform="firm"]'); if (!form) return; const patch = {};
   $$('[data-k]', form).forEach((el) => { const v = el.type === 'checkbox' ? el.checked : el.value.trim(); setPath(patch, el.dataset.k, el.classList.contains('mono') && typeof v === 'string' ? v.toUpperCase() : v); });
@@ -5684,6 +5691,37 @@ ACT['cfg-save'] = async () => {
 };
 ACT['accent'] = async (a) => { await Store.saveCfg('firm', { theme: { accent: a.dataset.c } }, 'Theme colour changed'); applyTheme(); };
 ACT['inv-tpl'] = async (a) => { await Store.saveCfg('firm', { invTemplate: a.dataset.t }, 'Invoice template changed to ' + INV_TEMPLATES[a.dataset.t].name); toast(INV_TEMPLATES[a.dataset.t].name + ' template in use'); };
+const TPL_DEFAULT = { accent: '', font: '', size: '', title: '', sac: '', qty: '', logo: true, words: true, bank: true, qr: true, sig: true, signLabel: '', thanks: '' };
+function tplCustomised(k) { const c = (firm().invTplCustom || {})[k] || {}; return Object.keys(TPL_DEFAULT).some((x) => c[x] !== undefined && c[x] !== TPL_DEFAULT[x]); }
+ACT['inv-tpl-edit'] = (a) => tplEditor(a.dataset.t);
+/** Customise one invoice template: colour, font, size, title, what to show, closing line. Saved per template. */
+function tplEditor(k) {
+  const T = INV_TEMPLATES[k]; const fm = firm(); const cu = Object.assign({}, TPL_DEFAULT, (fm.invTplCustom || {})[k] || {});
+  const defHex = '#' + T.accent.map((x) => x.toString(16).padStart(2, '0')).join('');
+  const st = { accent: cu.accent || defHex, font: cu.font || T.font, size: cu.size || 'normal', title: cu.title, sac: cu.sac || 'auto', qty: cu.qty || 'auto', logo: cu.logo !== false, words: cu.words !== false, bank: cu.bank !== false, qr: cu.qr !== false, sig: cu.sig !== false, signLabel: cu.signLabel, thanks: cu.thanks };
+  // full object every time: settings are merged on save, so “default” must be written explicitly
+  const toCustom = () => ({ accent: st.accent && st.accent.toLowerCase() !== defHex ? st.accent.toLowerCase() : '', font: st.font !== T.font ? st.font : '', size: st.size !== 'normal' ? st.size : '', title: String(st.title || '').trim().slice(0, 30),
+    sac: st.sac !== 'auto' ? st.sac : '', qty: st.qty !== 'auto' ? st.qty : '', logo: !!st.logo, words: !!st.words, bank: !!st.bank, qr: !!st.qr, sig: !!st.sig, signLabel: String(st.signLabel || '').trim().slice(0, 40), thanks: String(st.thanks || '').trim().slice(0, 110) });
+  openDrawer({ title: 'Customise ' + T.name + ' template', narrow: true, state: st,
+    render: () => '<div class="sect"><h3>Look</h3><div class="grid g2">' +
+      '<div class="field"><label for="tpl_acc">Accent colour</label><input class="inp" id="tpl_acc" type="color" data-k="accent" value="' + esc(st.accent) + '" style="height:38px;padding:3px"></div>' +
+      fld({ k: 'font', label: 'Font', type: 'select', options: opts([['helvetica', 'Sans (Helvetica)'], ['times', 'Serif (Times)'], ['courier', 'Typewriter (Courier)']], st.font) }) +
+      fld({ k: 'size', label: 'Text size', type: 'select', options: opts([['compact', 'Compact'], ['normal', 'Normal'], ['large', 'Large']], st.size) }) +
+      fld({ k: 'title', label: 'Title for invoices', v: st.title, ph: fm.gstRegistered === false ? 'INVOICE' : 'TAX INVOICE', max: 30, hint: 'Notes and estimates keep their own titles' }) + '</div></div>' +
+      '<div class="sect"><h3>Columns</h3><div class="grid g2">' + fld({ k: 'sac', label: 'SAC column', type: 'select', options: opts([['auto', 'Only when a line has SAC'], ['always', 'Always'], ['hide', 'Never']], st.sac) }) +
+      fld({ k: 'qty', label: 'Qty & rate columns', type: 'select', options: opts([['auto', 'Only when qty is not 1'], ['always', 'Always']], st.qty) }) + '</div></div>' +
+      '<div class="sect"><h3>Show on the invoice</h3><div class="grid g2">' + fld({ k: 'logo', label: 'Firm logo', type: 'check', v: st.logo }) + fld({ k: 'words', label: 'Amount in words', type: 'check', v: st.words }) +
+      fld({ k: 'bank', label: 'Bank & UPI details', type: 'check', v: st.bank }) + fld({ k: 'qr', label: 'UPI QR code', type: 'check', v: st.qr }) + fld({ k: 'sig', label: 'Signature image', type: 'check', v: st.sig }) + '<div></div>' +
+      fld({ k: 'signLabel', label: 'Text under the signature', v: st.signLabel, ph: 'Authorised signatory', max: 40 }) + fld({ k: 'thanks', label: 'Closing line (optional)', v: st.thanks, ph: 'Thank you for your business', max: 110 }) + '</div></div>' +
+      '<div class="muted" style="font-size:12px">GST details (GSTINs, place of supply, tax split, totals, number and date) are always printed. Changes apply to every document downloaded with this template, including re-downloads of earlier invoices.</div>',
+    footer: () => '<button class="btn" data-d="reset">Reset to default</button><span class="sp"></span><button class="btn" data-d="prev">' + ico('download') + ' Preview</button><button class="btn pri" data-d="save">Save</button>',
+    mount: (dr) => bindInputs(dr.body, st, () => { dr.dirty = true; }),
+    acts: {
+      prev: async () => { try { await invoicePDF([sampleInvoice()], { template: k, custom: toCustom(), fileName: 'Template_preview_' + k }); } catch (e) { toast(e.message, 'bad'); } },
+      save: async (a, dr) => { await Store.saveCfg('firm', { invTplCustom: { [k]: toCustom() } }, 'Invoice template ' + T.name + ' customised'); dr.dirty = false; dr.close(true); toast(T.name + ' template saved'); },
+      reset: () => confirmBox('Reset ' + T.name + ' to default?', 'Your colour, font and show/hide choices for this template are removed.', 'Reset', async () => { await Store.saveCfg('firm', { invTplCustom: { [k]: Object.assign({}, TPL_DEFAULT) } }, 'Invoice template ' + T.name + ' reset'); drawers.slice().forEach((x) => { x.dirty = false; x.close(true); }); toast(T.name + ' reset to default'); }),
+    } });
+}
 ACT['inv-tpl-prev'] = async (a) => { try { await invoicePDF([sampleInvoice()], { template: a.dataset.t || undefined, fileName: 'Template_preview_' + (a.dataset.t || firm().invTemplate || 'classic') }); } catch (e) { toast(e.message, 'bad'); } };
 ACT['sig-rm'] = () => confirmBox('Remove the signature?', 'Invoices will print a blank space for a manual signature.', 'Remove', async () => { await Store.saveCfg('firm', { signature: '' }, 'Signature removed'); toast('Signature removed'); });
 async function setSignature(file, clean) {
